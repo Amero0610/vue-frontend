@@ -1,0 +1,163 @@
+{
+  "id": "3137755",
+  "name": "mytest",
+  "font_family": "iconfont",
+  "css_prefix_text": "el-icon-my-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "380331",
+      "name": "dot",
+      "font_class": "dot",
+      "unicode": "e63f",
+      "unicode_decimal": 58943
+    },
+    {
+      "icon_id": "1175005",
+      "name": "user",
+      "font_class": "user",
+      "unicode": "e677",
+      "unicode_decimal": 58999
+    },
+    {
+      "icon_id": "7736183",
+      "name": "lock",
+      "font_class": "lock",
+      "unicode": "e8fc",
+      "unicode_decimal": 59644
+    },
+    {
+      "icon_id": "14629163",
+      "name": "exam",
+      "font_class": "exam",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "938260",
+      "name": "score",
+      "font_class": "score",
+      "unicode": "e63e",
+      "unicode_decimal": 58942
+    },
+    {
+      "icon_id": "1387576",
+      "name": "test",
+      "font_class": "test",
+      "unicode": "e67b",
+      "unicode_decimal": 59003
+    },
+    {
+      "icon_id": "16449159",
+      "name": "main-sy",
+      "font_class": "main-sy",
+      "unicode": "e6d4",
+      "unicode_decimal": 59092
+    },
+    {
+      "icon_id": "128724",
+      "name": "paper",
+      "font_class": "paper",
+      "unicode": "e6c0",
+      "unicode_decimal": 59072
+    },
+    {
+      "icon_id": "2418277",
+      "name": "展开",
+      "font_class": "zhankai",
+      "unicode": "e679",
+      "unicode_decimal": 59001
+    },
+    {
+      "icon_id": "6941975",
+      "name": "展开",
+      "font_class": "zhankai-",
+      "unicode": "e648",
+      "unicode_decimal": 58952
+    },
+    {
+      "icon_id": "7233046",
+      "name": "退出",
+      "font_class": "tuichu",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
+      "icon_id": "7233630",
+      "name": "搜索",
+      "font_class": "sousuo",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "7234013",
+      "name": "项目管理",
+      "font_class": "xiangmuguanli",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "7235532",
+      "name": "账号",
+      "font_class": "zhanghao",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "7257544",
+      "name": "全部管理",
+      "font_class": "quanbuguanli",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "7316717",
+      "name": "项目详情",
+      "font_class": "xiangmuxiangqing",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "7316911",
+      "name": "题卡题库",
+      "font_class": "tiqiatiku",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "7338500",
+      "name": "制卷制卡",
+      "font_class": "zhijuanzhiqia",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "7338624",
+      "name": "成绩分析",
+      "font_class": "chengjifenxi",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "7338669",
+      "name": "试卷点评",
+      "font_class": "shijuandianping",
+      "unicode": "e62f",
+      "unicode_decimal": 58927
+    },
+    {
+      "icon_id": "7361129",
+      "name": "记录抽查",
+      "font_class": "jiluchoucha",
+      "unicode": "e634",
+      "unicode_decimal": 58932
+    },
+    {
+      "icon_id": "7534762",
+      "name": "删除",
+      "font_class": "shanchu",
+      "unicode": "e63b",
+      "unicode_decimal": 58939
+    }
+  ]
+}
