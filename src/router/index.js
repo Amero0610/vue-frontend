@@ -2,8 +2,8 @@
  * @Author: AmeroL
  * @Date: 2022-04-08 01:32:21
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-04-09 18:38:12
- * @FilePath: \vue-frontend\src\router\index.js
+ * @LastEditTime: 2022-04-16 01:03:32
+ * @FilePath: /vue-frontend/src/router/index.js
  * @email: vian8416@163.com
  */
 import Vue from 'vue';
@@ -14,7 +14,6 @@ import comWelcome from '../views/welcomePage.vue';
 
 //loginPage
 import comLoginPage from '../views/loginPart/loginPage.vue';
-import comSignUpPage from '../views/loginPart/signUpPage.vue';
 
 //Student Management
 import comAddStudent from '../views/studentManage/addStudent.vue';
@@ -48,11 +47,6 @@ const routes = [
     path: '/userlogin',
     name: 'UserLogin',
     component: comLoginPage,
-  },
-  {
-    path: '/usersignup',
-    name: 'UserSignUp',
-    component: comSignUpPage,
   },
   {
     path: '/main',

@@ -9,10 +9,10 @@
       size="medium "
     >
       <el-radio-button :label="false">
-        <i class="el-icon-my-zhankai-"></i>Expand</el-radio-button
+        <i class="myicon-zhankai-"></i>Expand</el-radio-button
       >
       <el-radio-button :label="true" >
-        <i class="el-icon-my-zhankai"></i>Collapse</el-radio-button
+        <i class="myicon-zhankai"></i>Collapse</el-radio-button
       >
     </el-radio-group> -->
     <!-- <el-row type="flex" justify="start" align="top">
@@ -22,7 +22,7 @@
         <el-button id="MenuButton"
                    type="primary"
                    circle
-                   icon="el-icon-my-zhankai-"
+                   icon="myicon-zhankai-"
                    size="mini"
                    :class="{
             arrowTransform: !isCollapse,
@@ -44,8 +44,7 @@
         <el-menu-item index="/main/welcome"
                       route="/main/welcome"
                       class="menuItemContentleft">
-          <i class="el-icon-my-main-sy"
-             style="font-size:23px"></i>
+          <i class="myicon-main-sy"></i>
           <span slot="title">MainPage</span>
         </el-menu-item>
 
@@ -59,7 +58,7 @@
         <el-submenu index="1"
                     class="menuItemContentleft">
           <template slot="title">
-            <i class="el-icon-my-zhanghao"></i>
+            <i class="myicon-zhanghao"></i>
             <span slot="title">Student Management</span>
           </template>
           <el-menu-item-group class="menuItemContentcenter">
@@ -74,7 +73,7 @@
         <el-submenu index="2"
                     class="menuItemContentleft">
           <template slot="title">
-            <i class="el-icon-my-score"></i>
+            <i class="myicon-score"></i>
             <span slot="title">Score Management</span>
           </template>
           <el-menu-item-group class="menuItemContentcenter">
@@ -87,7 +86,7 @@
         <el-submenu index="3"
                     class="menuItemContentleft">
           <template slot="title">
-            <i class="el-icon-my-paper"></i>
+            <i class="myicon-paper"></i>
             <span slot="title">Exampaper Management</span>
           </template>
           <el-menu-item-group class="menuItemContentcenter">
@@ -102,7 +101,7 @@
         <el-submenu index="4"
                     class="menuItemContentleft">
           <template slot="title">
-            <i class="el-icon-my-exam"></i>
+            <i class="myicon-exam"></i>
             <span slot="title">Online Exam Management</span>
           </template>
           <el-menu-item-group class="menuItemContentcenter">
@@ -121,7 +120,11 @@
     </div>
   </div>
 </template>
-<style>
+<style scoped>
+i {
+  font-size: 23px;
+  margin-right: 10px;
+}
 .MenuItemtext .atestbox .el-menu-vertical-demo .el-menu-item {
   text-align: left;
   margin-left: 10px;
@@ -224,4 +227,13 @@ export default {
     },
   },
 };
+
+
+
+
+
+
+
+
+
 </script>

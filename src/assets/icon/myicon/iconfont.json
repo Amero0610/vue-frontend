@@ -2,7 +2,7 @@
   "id": "3137755",
   "name": "mytest",
   "font_family": "iconfont",
-  "css_prefix_text": "el-icon-my-",
+  "css_prefix_text": "myicon-",
   "description": "",
   "glyphs": [
     {

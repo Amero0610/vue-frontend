@@ -2,8 +2,8 @@
  * @Author: AmeroL
  * @Date: 2022-04-08 22:39:22
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-04-09 19:19:11
- * @FilePath: \vue-frontend\src\main.js
+ * @LastEditTime: 2022-04-16 01:51:08
+ * @FilePath: /vue-frontend/src/main.js
  * @email: vian8416@163.com
  */
 import Vue from 'vue';
@@ -13,6 +13,7 @@ import router from './router';
 import store from './store';
 import './plugins/element.js';
 import './assets/icon/myicon/iconfont.css';
+import './../public/style/theme/index.css';
 import '../public/font-awesome-4.7.0/css/font-awesome.min.css';
 import VueCookies from 'vue-cookies';
 Vue.use(VueCookies);
