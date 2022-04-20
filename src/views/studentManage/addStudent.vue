@@ -2,7 +2,7 @@
  * @Author: Amero
  * @Date: 2022-02-10 19:06:55
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-04-16 02:10:09
+ * @LastEditTime: 2022-04-19 17:08:44
  * @FilePath: /vue-frontend/src/views/studentManage/addStudent.vue
 -->
 <template>
