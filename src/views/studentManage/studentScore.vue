@@ -2,8 +2,8 @@
  * @Author: AmeroL
  * @Date: 2022-04-20 21:44:50
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-04-21 00:25:50
- * @FilePath: \vue-frontend\src\views\studentManage\studentScore.vue
+ * @LastEditTime: 2022-04-21 01:58:32
+ * @FilePath: /vue-frontend/src/views/studentManage/studentScore.vue
  * @email: vian8416@163.com
 -->
 
@@ -11,17 +11,21 @@
   <div>
     <comHeader></comHeader>
     this is student score!;
+
     <el-dialog title="UpdateScore"
                :visible.sync="dialogVisible">
       <div id="scoreInputBox">
         <el-form label-position="right"
                  label-width="150px"
-                 v-model="updateScoreList">
+                 v-model="updateScoreList"
+                 status-icon="true">
           <el-form-item label="WriteScore:">
-            <el-input v-model="updateScoreList.writeScore"></el-input>
+            <el-input v-model.number="updateScoreList.writeScore"
+                      :placeholder="writeScorePlace"></el-input>
           </el-form-item>
           <el-form-item label="TranslateScore:">
-            <el-input v-model="updateScoreList.translateScore"></el-input>
+            <el-input v-model.number="updateScoreList.translateScore"
+                      :placeholder="translateScorePlace"></el-input>
           </el-form-item>
         </el-form>
 
@@ -39,7 +43,8 @@
                plain
                @click="toStudentListPage"> StudentListPage </el-button>
 
-    <el-table :data="studentScoreList">
+    <el-table :data="studentScoreList"
+              height="800px">
       <el-table-column label="Name"
                        prop="examPaperName"></el-table-column>
       <el-table-column label="ListenScore"
@@ -53,16 +58,23 @@
       </el-table-column>
       <el-table-column label="TotalScore"
                        prop="totalScore"></el-table-column>
+
       <el-table-column label="Operation">
 
         <template slot-scope="scope">
           <el-button @click="editScore(scope.row)"
                      type="primary"
                      size="mini">Edit</el-button>
-          <el-button @click="deleteScore(scope.row)"
-                     type="danger"
-                     plain
-                     size="mini">Delete</el-button>
+          <el-popconfirm title="Confirm to delete this item"
+                         confirm-button-text="Confirm"
+                         @confirm="deleteScore(scope.row)"
+                         cancel-button-text="Cancel"
+                         style="margin-left:10px">
+            <el-button type="danger"
+                       plain
+                       size="mini"
+                       slot="reference">Delete</el-button>
+          </el-popconfirm>
         </template>
 
       </el-table-column>
@@ -75,6 +87,9 @@
 import comHeader from '../../components/comMainPage/comHeader.vue';
 export default {
   data: () => ({
+    popoveriable: false,
+    writeScorePlace: '',
+    translateScorePlace: '',
     dialogVisible: false,
     updateScoreList: [
       {
@@ -84,22 +99,7 @@ export default {
     ],
     updateName: "",
     studentScoreList: [
-      {
-        examPaperName: "examPaperName1",
-        listenScore: "listenScore1",
-        readScore: "readScore1",
-        writeScore: "writeScore1",
-        translateScore: "translateScore1",
-        totalScore: "totalScore1",
-      },
-      {
-        examPaperName: "examPaperName2",
-        listenScore: "listenScore2",
-        readScore: "readScore2",
-        writeScore: "writeScore2",
-        translateScore: "translateScore2",
-        totalScore: "totalScore2",
-      },
+
     ]
   }),
   components: {
@@ -108,16 +108,39 @@ export default {
   beforeCreate () {
     //that = this;
   },
+  beforeMount () {
+    // init data from server
+    this.studentScoreList = [
+      {
+        examPaperName: "examPaperName1",
+        listenScore: "listenScore1",
+        readScore: "readScore1",
+        writeScore: "122",
+        translateScore: "123",
+        totalScore: "totalScore1",
+      },
+      {
+        examPaperName: "examPaperName2",
+        listenScore: "listenScore2",
+        readScore: "readScore2",
+        writeScore: "124",
+        translateScore: "125",
+        totalScore: "totalScore2",
+      },
+    ]
+
+  },
   methods: {
     editScore (row) {
       this.dialogVisible = true;
       this.updateName = row.examPaperName;
-      this.updateScoreList.writeScore = row.writeScore;
-      this.updateScoreList.translateScore = row.translateScore;
+      this.writeScorePlace = row.writeScore;
+      this.translateScorePlace = row.translateScore;
     },
     deleteScore (row) {
-      console.log(row);
-      console.log(this.$route.params.studentNumber)
+      this.popoveriable = true;
+      this.studentScoreList.splice(this.studentScoreList.indexOf(row), 1);
+      // delete data from server
     },
     getUpdateItem (_name) {
       for (let i = 0; i < this.studentScoreList.length; i++) {
@@ -131,6 +154,10 @@ export default {
       let index = this.getUpdateItem(this.updateName);
       this.studentScoreList[index].writeScore = this.updateScoreList.writeScore;
       this.studentScoreList[index].translateScore = this.updateScoreList.translateScore;
+      this.updateScoreList.writeScore = "";
+      this.updateScoreList.translateScore = "";
+
+      // upload date to server
 
     },
     toStudentListPage () {
@@ -143,8 +170,8 @@ export default {
   },
   filters: {
     writeScoreFilter (value) {
-      console.log(value);
-      let resScore = value.writeScore + value.translateScore;
+
+      let resScore = Number(value.writeScore) + Number(value.translateScore);
       return resScore;
     }
   }

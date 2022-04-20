@@ -2,13 +2,24 @@
  * @Author: Amero
  * @Date: 2022-02-10 19:06:55
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-04-20 21:22:31
- * @FilePath: \vue-frontend\src\views\studentManage\addStudent.vue
+ * @LastEditTime: 2022-04-21 01:49:23
+ * @FilePath: /vue-frontend/src/views/studentManage/addStudent.vue
 -->
 <template>
   <div id="userinfoBox">
-    <p>Add Student Page</p>
-    <div class="userInfoMainbox">
+    <el-result icon="success"
+               title="Success"
+               subTitle="Add new student successfully!"
+               v-show="showResult">
+      <template slot="extra">
+        <el-button type="primary"
+                   @click="ResultBack"
+                   size="medium">Back</el-button>
+      </template>
+    </el-result>
+
+    <div v-show="!showResult"
+         class="userInfoMainbox">
       <div class="optionBox">
         <el-row type="flex"
                 justify="center"
@@ -107,6 +118,7 @@
 <script>
 export default {
   data: () => ({
+    showResult: true,
     isSubmit: true,
     userInfoList: {
       name: "",
@@ -122,6 +134,7 @@ export default {
         message: this.userInfoList.name + " has been added",
         type: "success",
       });
+      this.showResult = true;
       // clear unserInfoList 
       this.userInfoList = {
         name: "",
@@ -129,8 +142,6 @@ export default {
         studentNumber: "",
         password: "",
       };
-
-
     },
     judgeIsDisable: function (dataList) {
       let jIndex = 0;
@@ -143,6 +154,9 @@ export default {
       jIndex == Object.keys(dataList).length
         ? (this.isSubmit = false)
         : (this.isSubmit = true);
+    },
+    ResultBack: function () {
+      this.showResult = false;
     },
   },
   watch: {

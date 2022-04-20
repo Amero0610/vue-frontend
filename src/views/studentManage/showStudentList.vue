@@ -2,8 +2,8 @@
  * @Author: AmeroL
  * @Date: 2022-04-09 01:13:58
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-04-20 21:48:55
- * @FilePath: \vue-frontend\src\views\studentManage\showStudentList.vue
+ * @LastEditTime: 2022-04-21 01:41:27
+ * @FilePath: /vue-frontend/src/views/studentManage/showStudentList.vue
  * @email: vian8416@163.com
 -->
 <template>
@@ -34,6 +34,8 @@
 <script>
 export default {
   data: () => ({
+
+
     studentList: [{
       name: "amero",
       studentNumber: "1234569",
