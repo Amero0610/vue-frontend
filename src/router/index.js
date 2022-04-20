@@ -2,8 +2,8 @@
  * @Author: AmeroL
  * @Date: 2022-04-08 01:32:21
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-04-16 01:03:32
- * @FilePath: /vue-frontend/src/router/index.js
+ * @LastEditTime: 2022-04-21 00:01:16
+ * @FilePath: \vue-frontend\src\router\index.js
  * @email: vian8416@163.com
  */
 import Vue from 'vue';
@@ -16,9 +16,11 @@ import comWelcome from '../views/welcomePage.vue';
 import comLoginPage from '../views/loginPart/loginPage.vue';
 
 //Student Management
+//import comAddStudent from '../views/studentManage/testAdd.vue';
 import comAddStudent from '../views/studentManage/addStudent.vue';
 import comStudentList from '../views/studentManage/showStudentList.vue';
 import comUpdateStudent from '../views/studentManage/updateStudent.vue';
+import comStudentScore from '../views/studentManage/studentScore.vue';
 
 //Score Management
 import comScoreList from '../views/scoreManage/showScoreList.vue';
@@ -111,6 +113,11 @@ const routes = [
     path: '/exam',
     name: 'Exam',
     component: comExam,
+  },
+  {
+    path: '/studentscore',
+    name: 'StudentScore',
+    component: comStudentScore,
   },
 ];
 

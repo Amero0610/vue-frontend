@@ -2,8 +2,8 @@
  * @Author: Amero
  * @Date: 2022-02-10 19:06:55
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-04-19 17:08:44
- * @FilePath: /vue-frontend/src/views/studentManage/addStudent.vue
+ * @LastEditTime: 2022-04-20 21:22:31
+ * @FilePath: \vue-frontend\src\views\studentManage\addStudent.vue
 -->
 <template>
   <div id="userinfoBox">
@@ -16,7 +16,8 @@
           <el-col :span="3">
             <p>User Name:</p>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="9"
+                  class="inputBox">
             <el-input class="myinputbox"
                       v-model="userInfoList.name"
                       placeholder=""></el-input>
@@ -31,7 +32,8 @@
           <el-col :span="3">
             <p>permission:</p>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="9"
+                  class="inputBox">
             <el-select class="myinputbox"
                        v-model="userInfoList.permission"
                        placeholder="Please select sex">
@@ -52,7 +54,8 @@
           <el-col :span="3">
             <p>StudentNumber:</p>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="9"
+                  class="inputBox">
             <el-input class="myinputbox"
                       v-model="userInfoList.studentNumber"
                       placeholder="Please input Student Number"></el-input>
@@ -66,7 +69,8 @@
           <el-col :span="3">
             <p>password:</p>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="9"
+                  class="inputBox">
             <el-input class="myinputbox"
                       v-model="userInfoList.password"
                       placeholder="Please input your password"></el-input>
@@ -74,27 +78,27 @@
         </el-row>
       </div>
       <div class="optionBox">
-        <el-row type="flex"
-                justify="center"
-                align="middle">
-          <el-col :span="3"></el-col>
-          <el-col :span="9">
-            <el-button class="subBtn"
-                       type="primary"
-                       :disabled="isSubmit"
-                       @click="submitClick">Submit</el-button>
-          </el-col>
-        </el-row>
+
+        <el-button class="subBtn"
+                   type="primary"
+                   :disabled="isSubmit"
+                   @click="submitClick">Submit</el-button>
       </div>
     </div>
   </div>
 </template>
 <style scoped>
+.inputBox {
+  margin-left: 20px;
+}
+.subBtn {
+  width: 120px;
+}
 .optionBox .myinputbox {
   width: 100%;
 }
 .optionBox {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 .optionBox p {
   text-align: left;
