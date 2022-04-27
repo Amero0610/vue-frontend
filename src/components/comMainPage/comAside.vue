@@ -66,23 +66,18 @@
                           route="/main/showstudentlist">Student List</el-menu-item>
             <el-menu-item index="/main/addstudent"
                           route="/main/addstudent">Add Student</el-menu-item>
-            <el-menu-item index="/main/updatestudent"
-                          route="/main/updatestudent">Update Student</el-menu-item>
+            <!-- <el-menu-item index="/main/updatestudent"
+                          route="/main/updatestudent">Update Student</el-menu-item> -->
           </el-menu-item-group>
         </el-submenu>
-        <el-submenu index="2"
-                    class="menuItemContentleft">
-          <template slot="title">
-            <i class="myicon-score"></i>
-            <span slot="title">Score Management</span>
-          </template>
-          <el-menu-item-group class="menuItemContentcenter">
-            <el-menu-item index="/main/showscorelist"
-                          route="/main/showscorelist">Show Score List</el-menu-item>
-            <el-menu-item index="/main/updatescore"
-                          route="/main/updatescore">Update List</el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
+      </el-menu>
+
+      <el-menu :default-active="this.$route.path"
+               class="el-menu-vertical-demo"
+               @open="handleOpen"
+               @close="handleClose"
+               :collapse="isCollapse"
+               router>
         <el-submenu index="3"
                     class="menuItemContentleft">
           <template slot="title">
@@ -117,6 +112,27 @@
           </el-menu-item-group>
         </el-submenu>
       </el-menu>
+      <el-menu class="el-menu-vertical-demo2"
+               @open="handleOpen"
+               @close="handleClose"
+               :collapse="isCollapse"
+               router
+               :default-active="this.$route.path">
+
+        <el-menu-item index="/main/showscorelist"
+                      route="/main/showscorelist"
+                      class="menuItemContentleft">
+          <i class="myicon-score"></i>
+          <span slot="title"> Show Score List</span>
+        </el-menu-item>
+        <el-menu-item index="/main/studentscore"
+                      route="/main/studentscore"
+                      class="menuItemContentleft">
+          <i class="myicon-score"></i>
+          <span slot="title"> Student List</span>
+        </el-menu-item>
+      </el-menu>
+
     </div>
   </div>
 </template>

@@ -2,8 +2,8 @@
  * @Author: AmeroL
  * @Date: 2022-04-08 01:32:21
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-04-21 00:01:16
- * @FilePath: \vue-frontend\src\router\index.js
+ * @LastEditTime: 2022-04-28 01:07:21
+ * @FilePath: /vue-frontend/src/router/index.js
  * @email: vian8416@163.com
  */
 import Vue from 'vue';
@@ -24,7 +24,7 @@ import comStudentScore from '../views/studentManage/studentScore.vue';
 
 //Score Management
 import comScoreList from '../views/scoreManage/showScoreList.vue';
-import comUpdateScore from '../views/scoreManage/updateScore.vue';
+import comUpdateScore from '../views/scoreManage/studentScorePage.vue';
 
 //Exampaper Management
 import comAddExampaper from '../views/paperManage/addExampaper.vue';
@@ -98,8 +98,8 @@ const routes = [
         component: comScoreList,
       },
       {
-        path: 'updatescore',
-        name: 'UpdateScore',
+        path: 'studentscore',
+        name: 'MainStudentScore',
         component: comUpdateScore,
       },
       {
