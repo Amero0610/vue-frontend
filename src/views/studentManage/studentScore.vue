@@ -2,15 +2,17 @@
  * @Author: AmeroL
  * @Date: 2022-04-20 21:44:50
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-04-21 01:58:32
+ * @LastEditTime: 2022-04-27 01:55:32
  * @FilePath: /vue-frontend/src/views/studentManage/studentScore.vue
  * @email: vian8416@163.com
 -->
 
 <template>
-  <div>
+  <div id="studentScorePage">
     <comHeader></comHeader>
-    this is student score!;
+
+    <el-page-header @back="goBack">
+    </el-page-header>
 
     <el-dialog title="UpdateScore"
                :visible.sync="dialogVisible">
@@ -37,11 +39,11 @@
                    @click="submitUpdate">Confirm</el-button>
       </div>
     </el-dialog>
-
-    <p>StudentNumber: {{this.$route.params.studentNumber}}</p>
-    <el-button type="primart"
+    <!-- 
+    <p>StudentNumber: {{this.$route.params.studentNumber}}</p> -->
+    <!-- <el-button type="primart"
                plain
-               @click="toStudentListPage"> StudentListPage </el-button>
+               @click="toStudentListPage"> StudentListPage </el-button> -->
 
     <el-table :data="studentScoreList"
               height="800px">
@@ -91,12 +93,11 @@ export default {
     writeScorePlace: '',
     translateScorePlace: '',
     dialogVisible: false,
-    updateScoreList: [
-      {
-        writeScore: "",
-        translateScore: "",
-      }
-    ],
+    updateScoreList:
+    {
+      writeScore: "",
+      translateScore: "",
+    },
     updateName: "",
     studentScoreList: [
 
@@ -152,6 +153,16 @@ export default {
     submitUpdate () {
       this.dialogVisible = false;
       let index = this.getUpdateItem(this.updateName);
+      // check is number
+      if (isNaN(this.updateScoreList.writeScore) || isNaN(this.updateScoreList.translateScore)) {
+        this.$message({
+          message: 'Please input number',
+          type: 'warning'
+        });
+        this.updateScoreList.writeScore = "";
+        this.updateScoreList.translateScore = "";
+        return;
+      }
       this.studentScoreList[index].writeScore = this.updateScoreList.writeScore;
       this.studentScoreList[index].translateScore = this.updateScoreList.translateScore;
       this.updateScoreList.writeScore = "";
@@ -159,6 +170,9 @@ export default {
 
       // upload date to server
 
+    },
+    goBack () {
+      this.$router.go(-1);
     },
     toStudentListPage () {
       this.$router.push(
@@ -177,3 +191,18 @@ export default {
   }
 };
 </script>
+<style scoped>
+#studentScorePage >>> .el-page-header__title {
+  font-size: 17px;
+  margin-top: 10px;
+}
+#studentScorePage >>> .el-icon-back {
+  font-size: 20px;
+  margin-left: 5px;
+  margin-top: 10px;
+}
+#studenScorePage >>> .el-page-header__title::after,
+#studentScorePage >>> .el-page-header__left::after {
+  display: none;
+}
+</style>
