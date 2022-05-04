@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-04-09 01:22:08
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-04-27 02:06:27
+ * @LastEditTime: 2022-04-29 01:41:32
  * @FilePath: /vue-frontend/src/views/scoreManage/showScoreList.vue
  * @email: vian8416@163.com
 -->
@@ -39,8 +39,9 @@
         <el-col :span="8">
           <p id="ExamPaperTitle">{{this.currentExampaperTitle}}</p>
         </el-col>
-        <el-col :span="12">
+        <el-col :span="8">
           <el-select v-model="currentExampaper"
+                     id="selectExamPaperArea"
                      placeholder="Please Select Exampaper"
                      @change="getCurrentItem">
             <el-option v-for="item in ExampaperList"
@@ -54,7 +55,12 @@
     </div>
 
     <el-divider></el-divider>
-    <el-table :data="scoreList">
+    <el-empty description="Please Select Exampaper"
+              v-show="!currentExampaper.length"></el-empty>
+
+    <el-table v-show="currentExampaper.length"
+              :data="scoreList"
+              :border="true">
       <el-table-column label="StudentNumber"
                        prop="scStudentNumber"></el-table-column>
       <el-table-column label="Listening"
@@ -198,20 +204,26 @@ export default {
 }
 </script>
 <style scoped>
-#ScoreListTable {
+.el-table {
   width: 100%;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
+.el-row {
+  height: 62.5px;
+}
 #ExamPaperTitle {
   text-align: left;
+  margin-left: 20px;
+}
+#ScoreListTable >>> .el-select {
+  /* margin-left: 180px; */
 }
 .el-select {
-  margin-right: 0px;
   width: 300px;
 }
 .el-divider {
-  margin-top: 10px;
-  margin-bottom: 20px;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 </style>

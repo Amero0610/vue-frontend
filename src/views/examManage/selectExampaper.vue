@@ -2,14 +2,15 @@
  * @Author: AmeroL
  * @Date: 2022-04-09 18:37:38
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-04-28 01:28:35
+ * @LastEditTime: 2022-04-29 00:59:35
  * @FilePath: /vue-frontend/src/views/examManage/selectExampaper.vue
  * @email: vian8416@163.com
 -->
 <template>
   <div>
-    <p id="pageTitle">Select Exampaper</p>
-    <el-divider></el-divider>
+    <!-- <p id="pageTitle">Select Exampaper</p>
+    <el-divider></el-divider> -->
+    <comPageTitile titleContent="Select Exampaper"></comPageTitile>
     <el-select v-model="currentSelectExamPaper"
                @change="selectExamPaperChange"
                placeholder="Please Select Exampaper Type">
@@ -44,7 +45,11 @@
   </div>
 </template>
 <script>
+import comPageTitile from '../../components/publicComponents/comPageTitile.vue'
 export default {
+  components: {
+    comPageTitile
+  },
   data: () => ({
     currentSelectExamPaper: '',
 
@@ -97,6 +102,7 @@ export default {
 <style scoped>
 .el-select {
   width: 330px;
+  margin-top: 20px;
 }
 #pageTitle {
   font-size: 20px;
@@ -104,11 +110,11 @@ export default {
   margin-top: 10px;
 }
 .el-divider {
-  margin-top: 10px;
+  margin-top: 21px;
   margin-bottom: 20px;
 }
 .el-table {
-  width: 500px;
+  width: 600px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 20px;

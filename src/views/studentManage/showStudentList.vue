@@ -2,14 +2,14 @@
  * @Author: AmeroL
  * @Date: 2022-04-09 01:13:58
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-04-22 01:15:57
+ * @LastEditTime: 2022-04-29 01:02:55
  * @FilePath: /vue-frontend/src/views/studentManage/showStudentList.vue
  * @email: vian8416@163.com
 -->
 <template>
   <div id="studentList">
+    <comPageTitile titleContent="Student list"></comPageTitile>
 
-    <el-divider></el-divider>
     <el-dialog title="UpdateScore"
                :visible.sync="dialogVisible">
       <div id="scoreInputBox">
@@ -67,7 +67,11 @@
   </div>
 </template>
 <script>
+import comPageTitile from "../../components/publicComponents/comPageTitile.vue"
 export default {
+  components: {
+    comPageTitile
+  },
   data: () => ({
     namePlace: '',
     studentNumberPlace: '',
@@ -170,5 +174,8 @@ export default {
 </script>
 <style scoped>
 #studentList {
+}
+.el-table {
+  margin-top: 20px;
 }
 </style>

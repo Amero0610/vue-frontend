@@ -2,14 +2,16 @@
  * @Author: AmeroL
  * @Date: 2022-04-09 01:22:14
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-04-28 00:17:11
- * @FilePath: /vue-frontend/src/views/scoreManage/updateScore.vue
+ * @LastEditTime: 2022-04-29 01:04:36
+ * @FilePath: /vue-frontend/src/views/scoreManage/studentScorePage.vue
  * @email: vian8416@163.com
+ * @Show Score at student page
 -->
 <template>
   <div>
-
-    <el-table :data="scoreList">
+    <comPageTitile titleContent="Student Score Page"></comPageTitile>
+    <el-table :data="scoreList"
+              :border="true">
       <el-table-column label="ExamPaperName"
                        prop="scExampaperName"></el-table-column>
       <el-table-column label="Listening"
@@ -28,7 +30,11 @@
   </div>
 </template>
 <script>
+import comPageTitile from '../../components/publicComponents/comPageTitile.vue';
 export default {
+  components: {
+    comPageTitile
+  },
   data: () => ({
     scoreList: [
       {
@@ -74,9 +80,8 @@ export default {
 }
 </script>
 <style scoped>
-#ScoreListTable {
-  width: 100%;
-  margin-top: 10px;
+.el-table {
+  margin-top: 20px;
 }
 
 #ExamPaperTitle {
@@ -85,9 +90,5 @@ export default {
 .el-select {
   margin-right: 0px;
   width: 300px;
-}
-.el-divider {
-  margin-top: 10px;
-  margin-bottom: 20px;
 }
 </style>

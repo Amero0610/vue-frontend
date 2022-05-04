@@ -2,11 +2,12 @@
  * @Author: Amero
  * @Date: 2022-02-10 19:06:55
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-04-21 13:58:15
+ * @LastEditTime: 2022-04-29 01:43:28
  * @FilePath: /vue-frontend/src/views/studentManage/addStudent.vue
 -->
 <template>
   <div id="userinfoBox">
+    <comPageTitile titleContent="Add Student"></comPageTitile>
     <el-result icon="success"
                title="Success"
                subTitle="Add new student successfully!"
@@ -116,7 +117,11 @@
 }
 </style>
 <script>
+import comPageTitile from "../../components/publicComponents/comPageTitile.vue";
 export default {
+  components: {
+    comPageTitile
+  },
   data: () => ({
     showResult: false,
     isSubmit: true,

@@ -158,7 +158,8 @@ i {
   /* background-color: rebeccapurple; */
 }
 #buttonBox:hover {
-  background-color: #ecf5ff;
+  /* background-color: #ecf5ff; */
+  background-color: rgb(235, 236, 253);
   /* background-color:rgb(240, 236, 236); */
 }
 
