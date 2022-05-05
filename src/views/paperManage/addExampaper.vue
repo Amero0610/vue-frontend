@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-04-09 01:25:32
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-05 02:16:39
+ * @LastEditTime: 2022-05-06 00:04:50
  * @FilePath: /vue-frontend/src/views/paperManage/addExampaper.vue
  * @email: vian8416@163.com
 -->
@@ -52,6 +52,9 @@ export default {
 }
 </script>
 <style scoped>
+#addExampaperMainBox {
+  text-align: center;
+}
 #addExampaperMainBox >>> .el-tabs {
 }
 </style>

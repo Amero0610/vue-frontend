@@ -2,8 +2,8 @@
  * @Author: AmeroL
  * @Date: 2022-04-08 01:30:40
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-04-09 19:39:48
- * @FilePath: \vue-frontend\src\App.vue
+ * @LastEditTime: 2022-05-06 00:02:44
+ * @FilePath: /vue-frontend/src/App.vue
  * @email: vian8416@163.com
 -->
 <template>
@@ -27,7 +27,7 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  /* text-align: center; */
   color: #2c3e50;
 }
 /* Animation */

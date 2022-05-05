@@ -141,6 +141,9 @@ i {
   font-size: 23px;
   margin-right: 10px;
 }
+.MenuItemtext {
+  text-align: center;
+}
 .MenuItemtext .atestbox .el-menu-vertical-demo .el-menu-item {
   text-align: left;
   margin-left: 10px;

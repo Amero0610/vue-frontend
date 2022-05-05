@@ -2,7 +2,7 @@
  * @Author: Amero
  * @Date: 2022-02-10 19:06:55
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-04-29 01:43:28
+ * @LastEditTime: 2022-05-06 00:04:17
  * @FilePath: /vue-frontend/src/views/studentManage/addStudent.vue
 -->
 <template>
@@ -100,6 +100,8 @@
   </div>
 </template>
 <style scoped>
+#userinfoBox {
+}
 .inputBox {
   margin-left: 20px;
 }
@@ -110,6 +112,7 @@
   width: 100%;
 }
 .optionBox {
+  text-align: center;
   margin-top: 30px;
 }
 .optionBox p {

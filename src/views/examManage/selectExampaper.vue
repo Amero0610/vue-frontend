@@ -2,12 +2,12 @@
  * @Author: AmeroL
  * @Date: 2022-04-09 18:37:38
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-04-29 00:59:35
+ * @LastEditTime: 2022-05-06 00:05:53
  * @FilePath: /vue-frontend/src/views/examManage/selectExampaper.vue
  * @email: vian8416@163.com
 -->
 <template>
-  <div>
+  <div id="selectExampaperBox">
     <!-- <p id="pageTitle">Select Exampaper</p>
     <el-divider></el-divider> -->
     <comPageTitile titleContent="Select Exampaper"></comPageTitile>
@@ -100,6 +100,9 @@ export default {
 }
 </script>
 <style scoped>
+#selectExampaperBox {
+  text-align: center;
+}
 .el-select {
   width: 330px;
   margin-top: 20px;
