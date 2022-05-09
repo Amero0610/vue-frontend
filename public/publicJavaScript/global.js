@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-05-06 01:27:40
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-06 02:22:23
+ * @LastEditTime: 2022-05-06 02:22:37
  * @FilePath: /vue-frontend/public/publicJavaScript/global.js
  * @email: vian8416@163.com
  */
