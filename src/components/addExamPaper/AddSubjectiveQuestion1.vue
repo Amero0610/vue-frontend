@@ -1,13 +1,4 @@
-<!--
- * @Author: AmeroL
- * @Date: 2022-05-04 02:19:35
- * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-05 02:04:00
- * @FilePath: /vue-frontend/src/components/addExamPaper/AddSubjectiveQuestion1.vue
- * @email: vian8416@163.com
- AddSubjuectiveBox
- AddSubjuectiveQuestion
--->
+
 <template>
   <div id="addExampaperBox">
     <div id="addChoose">
@@ -38,7 +29,7 @@
                         prop="desc"
                         id="questionMainContent">
             <el-input type="textarea"
-                      :autosize="{ minRows: 1, maxRows: 10}"
+                      :autosize="{ minRows: 5, maxRows: 10}"
                       v-model="questionMainContentform.questionMainContent"></el-input>
           </el-form-item>
         </el-form>
@@ -166,10 +157,11 @@ export default {
 </script>
 <style scoped>
 #addExampaperBox {
+  height: 72vh;
 }
 #addChoose {
   width: 95%;
-  height: 70vh;
+
   /* background-color: pink; */
   margin-left: auto;
   margin-right: auto;
@@ -197,7 +189,7 @@ export default {
   margin-left: 10px;
 }
 #questionMainContent {
-  width: 500px;
+  width: 80%;
 }
 
 #questionMainContent >>> .el-textarea__inner {

@@ -2,8 +2,8 @@
  * @Author: AmeroL
  * @Date: 2022-05-04 01:26:03
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-04 02:25:06
- * @FilePath: /vue-frontend/src/components/addExamPaper/comAddNormalChoose.vue
+ * @LastEditTime: 2022-05-09 17:49:13
+ * @FilePath: \vue-frontend\src\components\addExamPaper\comAddNormalChoose.vue
  * @email: vian8416@163.com
 -->
 <!--
@@ -168,6 +168,7 @@ export default {
 </script>
 <style scoped>
 #addExampaperBox {
+  height: 72vh;
 }
 #addChoose {
   width: 90%;

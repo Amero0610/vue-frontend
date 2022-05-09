@@ -2,8 +2,8 @@
  * @Author: AmeroL
  * @Date: 2022-05-04 02:47:07
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-05 01:59:52
- * @FilePath: /vue-frontend/src/components/addExamPaper/AddSubjectiveQuestion2.vue
+ * @LastEditTime: 2022-05-09 17:52:43
+ * @FilePath: \vue-frontend\src\components\addExamPaper\AddSubjectiveQuestion2.vue
  * @email: vian8416@163.com
 -->
 <template>
@@ -36,7 +36,7 @@
                         prop="desc"
                         id="questionMainContent">
             <el-input type="textarea"
-                      :autosize="{ minRows: 1, maxRows: 10}"
+                      :autosize="{minRows: 5, maxRows: 9}"
                       v-model="questionMainContentform.questionMainContent"></el-input>
           </el-form-item>
         </el-form>
@@ -97,11 +97,11 @@
 
           </div>
         </el-form>
-
-        <el-button type="primary"
-                   @click="submitForm">Submit</el-button>
-        <el-button @click="addOption">Add</el-button>
-
+        <div id="ButtonArea">
+          <el-button type="primary"
+                     @click="submitForm">Submit</el-button>
+          <el-button @click="addOption">Add</el-button>
+        </div>
       </div>
     </div>
 
@@ -176,10 +176,12 @@ export default {
 </script>
 <style scoped>
 #addExampaperBox {
+  height: 72vh;
 }
 #addChoose {
   width: 95%;
-  height: 70vh;
+
+  /* height: 100%; */
   /* background-color: pink; */
   margin-left: auto;
   margin-right: auto;
@@ -207,7 +209,7 @@ export default {
   margin-left: 10px;
 }
 #questionMainContent {
-  width: 500px;
+  width: 80%;
 }
 
 #questionMainContent >>> .el-textarea__inner {
@@ -254,5 +256,9 @@ export default {
 }
 .questionWordContent {
   width: 220px;
+}
+#ButtonArea {
+  padding-bottom: 20px;
+  /* height: 100%; */
 }
 </style>
