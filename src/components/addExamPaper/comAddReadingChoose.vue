@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-05-09 17:57:52
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-10 22:01:05
+ * @LastEditTime: 2022-05-11 19:39:07
  * @FilePath: /vue-frontend/src/components/addExamPaper/comAddReadingChoose.vue
  * @email: vian8416@163.com
 -->
@@ -122,6 +122,7 @@
 let that;
 import GLOBAL from "../../../public/publicJavaScript/global.js"
 export default {
+  props: ["paperInfo"],
   name: 'AddReadingChoose',
   data: () => ({
     questionNumber: '0',

@@ -110,6 +110,7 @@
 <script>
 let that;
 export default {
+  props: ["paperInfo"],
   data: () => ({
     questionNumber: '',
     questionType: '',

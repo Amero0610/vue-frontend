@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-05-04 01:47:23
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-04 02:11:29
+ * @LastEditTime: 2022-05-11 19:35:36
  * @FilePath: /vue-frontend/src/components/addExamPaper/addWrite.vue
  * @email: vian8416@163.com
 -->
@@ -47,6 +47,7 @@
 </template>
 <script>
 export default {
+  props: ["paperInfo"],
   name: "AddWrite",
   data: () => ({
     questionType: '1',
@@ -60,6 +61,7 @@ export default {
       let question = new Array();
       question.push(this.questionType);
       question.push(this.questionContent);
+      console.log(this.paperInfo);
       console.log(question);
     }
   }
