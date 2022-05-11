@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-04-08 01:32:21
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-11 20:44:44
+ * @LastEditTime: 2022-05-11 21:08:50
  * @FilePath: \vue-frontend\src\router\index.js
  * @email: vian8416@163.com
  */
@@ -28,6 +28,7 @@ import comUpdateScore from '../views/scoreManage/studentScorePage.vue';
 
 //Exampaper Management
 import comAddExampaper from '../views/paperManage/addExampaper.vue';
+import comReviewExamPaper from '../views/paperManage/examPaperReview.vue';
 import comUpdateExampaper from '../views/paperManage/updateExampaper.vue';
 import comExampaperList from '../views/paperManage/showExampaperList.vue';
 
@@ -85,6 +86,11 @@ const routes = [
         path: 'showexampaperlist',
         name: 'ShowExamPaperList',
         component: comExampaperList,
+      },
+      {
+        path: 'reviewexampaper',
+        name: 'ReviewExamPaper',
+        component: comReviewExamPaper,
       },
       {
         path: 'updateexampaper',

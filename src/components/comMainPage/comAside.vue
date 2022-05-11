@@ -89,8 +89,8 @@
                           route="/main/addexampaper">Add Exampaper</el-menu-item>
             <el-menu-item index="/main/showexampaperlist"
                           route="/main/showexampaperlist">Show Exampaper List</el-menu-item>
-            <el-menu-item index="/main/updateexampaper"
-                          route="/main/updateexampaper">Update Exampaper</el-menu-item>
+            <!-- <el-menu-item index="/main/updateexampaper"
+                          route="/main/updateexampaper">Update Exampaper</el-menu-item> -->
           </el-menu-item-group>
         </el-submenu>
         <el-submenu index="4"

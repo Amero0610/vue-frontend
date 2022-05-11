@@ -2,10 +2,167 @@
  * @Author: AmeroL
  * @Date: 2022-04-09 01:25:14
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-04-09 01:25:14
+ * @LastEditTime: 2022-05-11 21:09:27
  * @FilePath: \vue-frontend\src\views\paperManage\showExampaperList.vue
  * @email: vian8416@163.com
 -->
 <template>
-  <div>this is showExampaperList page</div>
+  <div id="selectExampaperBox">
+    <!-- <p id="pageTitle">Select Exampaper</p>
+    <el-divider></el-divider> -->
+    <comPageTitile titleContent="PaperList"></comPageTitile>
+    <el-select v-model="currentSelectExamPaper"
+               @change="selectExamPaperChange"
+               placeholder="Please Select Exampaper Type">
+      <el-option label="CET-4"
+                 value="4"></el-option>
+      <el-option label="CET-6"
+                 value="6"></el-option>
+    </el-select>
+    <el-empty description="Please Select Exampaper"
+              v-show="!showExamPaperList.length"></el-empty>
+    <el-table :data="showExamPaperList"
+              :border="true"
+              v-show="showExamPaperList.length">
+      <el-table-column label="ExamPaperName"
+                       prop="name">
+      </el-table-column>
+      <el-table-column label="Option"
+                       width="150px">
+        <template slot-scope="scope">
+          <el-popconfirm title="Confirm to selelct this exampaper"
+                         confirm-button-text="Confirm"
+                         @confirm="reviewExamPaper(scope.row)"
+                         cancel-button-text="Cancel"
+                         style="margin-left:10px">
+            <el-button type="success"
+                       plain
+                       size="mini"
+                       slot="reference">Review</el-button>
+          </el-popconfirm>
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
 </template>
+<script>
+import router from '@/router';
+import comPageTitile from '../../components/publicComponents/comPageTitile.vue'
+export default {
+  components: {
+    comPageTitile
+  },
+  data: () => ({
+    currentSelectExamPaper: '',
+
+    examPaperList: [
+      {
+        name: '4paper1',
+        type: 'cet4',
+        year: '2019',
+        month: '12',
+        index: '02',
+        examPaperType: '4',
+        id: '1'
+      },
+      {
+        name: '4paper2',
+        type: '',
+        year: '',
+        month: '',
+        index: '',
+        examPaperType: '4',
+        id: '2'
+      },
+      {
+        name: '4paper3',
+        type: '',
+        year: '',
+        month: '',
+        index: '',
+        examPaperType: '4',
+        id: '3'
+      },
+      {
+        name: '6paper1',
+        type: '',
+        year: '',
+        month: '',
+        index: '',
+        examPaperType: '6',
+        id: '1'
+      },
+      {
+        name: '6paper2',
+        type: '',
+        year: '',
+        month: '',
+        index: '',
+        examPaperType: '6',
+        id: '2'
+      },
+      {
+        name: '6paper3',
+        type: '',
+        year: '',
+        month: '',
+        index: '',
+        examPaperType: '6',
+        id: '3'
+      }
+    ],
+    showExamPaperList: [
+    ],
+  }),
+  created () {
+    for (let i = 0; i < this.examPaperList.length; i++) {
+      let type = this.examPaperList[i].examPaperType;
+      let year = this.examPaperList[i].year;
+      let month = this.examPaperList[i].month;
+      let index = this.examPaperList[i].index;
+      this.examPaperList[i].name = "CET" + type + "  " + year + "." + month + " " + "No." + index;
+    }
+  },
+  methods: {
+    reviewExamPaper (value) {
+      router.push("reviewexampaper");
+      console.log(value);
+
+    },
+    selectExamPaperChange (value) {
+      this.currentSelectExamPaper = value;
+      this.showExamPaperList = this.examPaperList.filter(item => {
+        return item.examPaperType === value;
+      });
+    },
+    //get StudentScoreList
+  },
+}
+</script>
+<style scoped>
+#selectExampaperBox {
+  text-align: center;
+}
+.el-select {
+  width: 330px;
+  margin-top: 20px;
+}
+#pageTitle {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+.el-divider {
+  margin-top: 21px;
+  margin-bottom: 20px;
+}
+.el-table {
+  width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
+.el-button {
+  width: 100px;
+}
+</style>

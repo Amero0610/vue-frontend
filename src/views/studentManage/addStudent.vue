@@ -2,8 +2,8 @@
  * @Author: Amero
  * @Date: 2022-02-10 19:06:55
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-06 00:04:17
- * @FilePath: /vue-frontend/src/views/studentManage/addStudent.vue
+ * @LastEditTime: 2022-05-11 21:38:50
+ * @FilePath: \vue-frontend\src\views\studentManage\addStudent.vue
 -->
 <template>
   <div id="userinfoBox">
@@ -37,7 +37,7 @@
         </el-row>
       </div>
 
-      <div class="optionBox">
+      <!-- <div class="optionBox">
         <el-row type="flex"
                 justify="center"
                 align="middle">
@@ -58,7 +58,7 @@
             </el-select>
           </el-col>
         </el-row>
-      </div>
+      </div> -->
       <div class="optionBox">
         <el-row type="flex"
                 justify="center"
@@ -130,13 +130,13 @@ export default {
     isSubmit: true,
     userInfoList: {
       name: "",
-      permission: "",
       studentNumber: "",
       password: "",
     },
   }),
   methods: {
     submitClick: function () {
+      console.log(this.userInfoList);
       // submit data to server
       this.$message({
         message: this.userInfoList.name + " has been added",
@@ -146,7 +146,6 @@ export default {
       // clear unserInfoList 
       this.userInfoList = {
         name: "",
-        permission: "",
         studentNumber: "",
         password: "",
       };

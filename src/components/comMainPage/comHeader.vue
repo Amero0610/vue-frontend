@@ -2,8 +2,8 @@
  * @Author: AmeroL
  * @Date: 2022-04-08 21:50:40
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-04-16 01:59:49
- * @FilePath: /vue-frontend/src/components/comMainPage/comHeader.vue
+ * @LastEditTime: 2022-05-11 21:54:33
+ * @FilePath: \vue-frontend\src\components\comMainPage\comHeader.vue
  * @email: vian8416@163.com
 -->
 <template>
@@ -32,8 +32,11 @@
           </el-col>
           <el-col :span="2">
             <div id="HeaderPersonalIcon">
-              <el-avatar size="large"
-                         :src="avatarIconSrc"></el-avatar>
+              <!-- <el-avatar size="large"
+                         :src="avatarIconSrc"></el-avatar> -->
+              <el-button type="danger"
+                         @click="ExitSystem"
+                         plain>Exit</el-button>
             </div>
           </el-col>
         </el-row>
@@ -81,5 +84,16 @@ export default {
       avatarIconSrc: require('../../assets/PersonalIcon.png'),
     };
   },
+  methods: {
+    ExitSystem () {
+      this.$confirm("Are you exit this System?", "Tip").then(() => {
+        this.$store.commit('logout');
+        this.$router.push('/userlogin');
+      }).catch(() => {
+        this.$message('Cancel');
+      });
+    }
+  }
+
 };
 </script>

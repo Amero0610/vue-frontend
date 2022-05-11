@@ -2,8 +2,8 @@
  * @Author: AmeroL
  * @Date: 2022-04-20 21:44:50
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-04-27 01:55:32
- * @FilePath: /vue-frontend/src/views/studentManage/studentScore.vue
+ * @LastEditTime: 2022-05-11 21:41:44
+ * @FilePath: \vue-frontend\src\views\studentManage\studentScore.vue
  * @email: vian8416@163.com
 -->
 
@@ -16,11 +16,26 @@
 
     <el-dialog title="UpdateScore"
                :visible.sync="dialogVisible">
+      <el-collapse v-model="activeNames"
+                   accordion>
+        <el-collapse-item title="Write Content"
+                          name="1">
+          <p class="AnsContent"
+             v-for="(item,index) in updateScoreList.writeContent"
+             :key="index">{{item}}</p>
+        </el-collapse-item>
+        <el-collapse-item title="Translate Content"
+                          name="2">
+          <p class="AnsContent"
+             v-for="(item,index) in updateScoreList.translateContent"
+             :key="index">{{item}}</p>
+        </el-collapse-item>
+      </el-collapse>
       <div id="scoreInputBox">
         <el-form label-position="right"
                  label-width="150px"
                  v-model="updateScoreList"
-                 status-icon="true">
+                 :status-icon="true">
           <el-form-item label="WriteScore:">
             <el-input v-model.number="updateScoreList.writeScore"
                       :placeholder="writeScorePlace"></el-input>
@@ -89,12 +104,15 @@
 import comHeader from '../../components/comMainPage/comHeader.vue';
 export default {
   data: () => ({
+    activeNames: '1',
     popoveriable: false,
     writeScorePlace: '',
     translateScorePlace: '',
     dialogVisible: false,
     updateScoreList:
     {
+      writeContent: ["2", "2", "3"],
+      translateContent: ["2", "2", "3"],
       writeScore: "",
       translateScore: "",
     },

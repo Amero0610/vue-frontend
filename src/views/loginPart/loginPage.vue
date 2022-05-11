@@ -2,7 +2,7 @@
  * @Author: Amero
  * @Date: 2022-02-06 22:49:01
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-11 20:55:05
+ * @LastEditTime: 2022-05-11 21:49:53
  * @FilePath: \vue-frontend\src\views\loginPart\loginPage.vue
 -->
 <template>
@@ -274,6 +274,7 @@ export default {
           type: 'success',
           message: 'Login successful, jumping to new page',
         });
+        this.$store.state.username = "test";
 
         setTimeout(() => {
           this.fullscreenLoading = true;

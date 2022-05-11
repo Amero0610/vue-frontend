@@ -2,8 +2,8 @@
  * @Author: AmeroL
  * @Date: 2022-04-08 01:30:40
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-11 01:24:48
- * @FilePath: /vue-frontend/src/App.vue
+ * @LastEditTime: 2022-05-11 21:58:06
+ * @FilePath: \vue-frontend\src\App.vue
  * @email: vian8416@163.com
 -->
 <template>
@@ -19,6 +19,15 @@
 export default {
   name: 'app',
   components: {},
+  beforeCreate () {
+    // if (this.$store.state.username == 'nologin') {
+    //   this.$router.push('/userlogin');
+    //   this.$message({
+    //     message: "Please Login First!",
+    //     type: 'warning'
+    //   })
+    // }
+  }
 };
 </script>
 

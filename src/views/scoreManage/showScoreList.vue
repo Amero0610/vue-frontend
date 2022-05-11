@@ -2,14 +2,31 @@
  * @Author: AmeroL
  * @Date: 2022-04-09 01:22:08
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-04-29 01:41:32
- * @FilePath: /vue-frontend/src/views/scoreManage/showScoreList.vue
+ * @LastEditTime: 2022-05-11 21:43:56
+ * @FilePath: \vue-frontend\src\views\scoreManage\showScoreList.vue
  * @email: vian8416@163.com
 -->
 <template>
   <div>
     <el-dialog title="UpdateScore"
                :visible.sync="dialogVisible">
+      <div class="studentAnsContent">
+        <el-collapse v-model="activeNames"
+                     accordion>
+          <el-collapse-item title="Write Content"
+                            name="1">
+            <p class="AnsContent"
+               v-for="(item,index) in updateScoreList.writeContent"
+               :key="index">{{item}}</p>
+          </el-collapse-item>
+          <el-collapse-item title="Translate Content"
+                            name="2">
+            <p class="AnsContent"
+               v-for="(item,index) in updateScoreList.translateContent"
+               :key="index">{{item}}</p>
+          </el-collapse-item>
+        </el-collapse>
+      </div>
       <div id="scoreInputBox">
         <el-form label-position="right"
                  label-width="150px"
@@ -33,6 +50,7 @@
       </div>
     </el-dialog>
     <div id="ScoreListTable">
+
       <el-row type="flex"
               justify="space-between"
               align="middle">
@@ -100,6 +118,7 @@
 <script>
 export default {
   data: () => ({
+    activeNames: '1',
     dialogVisible: false,
     currentExampaperTitle: '',
     writeScorePlace: '',
@@ -107,6 +126,8 @@ export default {
     updateStudentNumber: '',
     updateScoreList:
     {
+      writeContent: ["2", "2", "3"],
+      translateContent: ["2", "2", "3"],
       writeScore: "",
       translateScore: "",
     },

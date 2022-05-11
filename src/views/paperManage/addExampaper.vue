@@ -2,8 +2,8 @@
  * @Author: AmeroL
  * @Date: 2022-04-09 01:25:32
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-11 19:41:25
- * @FilePath: /vue-frontend/src/views/paperManage/addExampaper.vue
+ * @LastEditTime: 2022-05-11 21:22:20
+ * @FilePath: \vue-frontend\src\views\paperManage\addExampaper.vue
  * @email: vian8416@163.com
 -->
 <template>
@@ -11,7 +11,7 @@
     <el-dialog title="Input ExamPaper Information"
                :close-on-click-modal="false"
                :close-on-press-escape="false"
-               :show-close="false"
+               :show-close="true"
                :visible.sync="dialogFormVisible">
       <el-form :model="paperInfoForm"
                label-width="90px"
