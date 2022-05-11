@@ -2,8 +2,8 @@
  * @Author: AmeroL
  * @Date: 2022-05-04 01:26:03
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-09 17:49:13
- * @FilePath: \vue-frontend\src\components\addExamPaper\comAddNormalChoose.vue
+ * @LastEditTime: 2022-05-10 21:49:56
+ * @FilePath: /vue-frontend/src/components/addExamPaper/comAddListeningChoose.vue
  * @email: vian8416@163.com
 -->
 <!--
@@ -24,7 +24,7 @@
               align="middle">
         <el-col :span="5">
           <p id="descriptText">
-            Please Select Number :
+            Select Number :
           </p>
         </el-col>
         <el-col :span="5">
@@ -35,35 +35,35 @@
                            size="large"></el-input-number>
         </el-col>
 
-        <el-col :span="0">
+        <el-col :span="5">
           <p id="descriptText">
-            Please Select Type :
+            Select True Option :
           </p>
         </el-col>
-        <el-col :span="0">
-          <el-select v-model="questionType"
-                     @change="handleSelectChooseQuestion">
-            <el-option label="chooseQuestion"
-                       value="1"></el-option>
-            <el-option label="subpectQuestion"
-                       value="2"></el-option>
+        <el-col :span="5">
+          <el-select v-model="questionAns">
+            <el-option v-for="(item,index) in questionContentform.questions"
+                       :key="index"
+                       :label="wordList[index]"
+                       :value="wordList[index]"></el-option>
           </el-select>
         </el-col>
       </el-row>
 
       <div id="questionAddBox">
-
-        <el-form label-position="top"
-                 label-width="100px"
-                 :model="questionMainContentform">
-          <el-form-item :label="'QuestionContent'"
-                        prop="desc"
-                        id="questionMainContent">
-            <el-input type="textarea"
-                      :autosize="{ minRows: 1, maxRows: 10}"
-                      v-model="questionMainContentform.questionMainContent"></el-input>
-          </el-form-item>
-        </el-form>
+        <div id="ListenContentArea">
+          <el-form label-position="top"
+                   label-width="100px"
+                   :model="questionMainContentform">
+            <el-form-item :label="'QuestionContent'"
+                          prop="desc"
+                          id="questionMainContent">
+              <el-input type="textarea"
+                        :autosize="{ minRows: 1, maxRows: 10}"
+                        v-model="questionMainContentform.questionMainContent"></el-input>
+            </el-form-item>
+          </el-form>
+        </div>
         <el-form :model="questionContentform"
                  label-position="right"
                  label-width="200px"
@@ -104,8 +104,9 @@
 <script>
 export default {
   data: () => ({
+    wordList: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
     questionNumber: '',
-    questionType: '',
+    questionAns: '',
     questionMainContentform: { questionMainContent: '', },
 
     questionContentform: {
@@ -149,9 +150,12 @@ export default {
       });
     },
     submitForm () {
-      let questionContentObj = new Array();
-      questionContentObj.push(this.questionMainContentform.questionMainContent);
-      questionContentObj.push(this.questionContentform.questions);
+      let questionContentObj = new Object();
+      questionContentObj.questionNumber = this.questionNumber;
+      let tempArray = new Array();
+      tempArray.push(this.questionContentform.questions);
+      questionContentObj.questionContent = tempArray;
+      questionContentObj.questionAns = this.questionAns;
       console.log(questionContentObj);
     },
     // index to word 
@@ -187,6 +191,10 @@ export default {
 }
 .el-input-number {
   border-radius: 30px;
+}
+
+#ListenContentArea {
+  display: none;
 }
 
 #questionAddBox {

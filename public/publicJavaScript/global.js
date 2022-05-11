@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-05-06 01:27:40
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-06 02:22:37
+ * @LastEditTime: 2022-05-10 22:30:26
  * @FilePath: /vue-frontend/public/publicJavaScript/global.js
  * @email: vian8416@163.com
  */
@@ -14,7 +14,7 @@ function stringToArrayWithWrap(str) {
     tempobj.value = a[i];
     objArray.push(tempobj);
   }
-  console.log(objArray);
+  // console.log(objArray);
   return objArray;
 }
 
@@ -49,7 +49,30 @@ function returnStringWordLenght(str) {
   return str.match(/[A-Za-z0-9]+/gm).length;
 }
 
+function timeDown(maxtime) {
+  let timeMSg = '';
+  function CountDown() {
+    if (maxtime >= 0) {
+      let minutes = Math.floor(maxtime / 60);
+      let seconds = Math.floor(maxtime % 60);
+      let count = minutes + '分' + seconds + '秒';
+      //let msg = 'Remaining:' + minutes + ':' + seconds + '';
+      --maxtime;
+      timeMSg = count;
+      console.log(count);
+    } else {
+      clearInterval(timer);
+    }
+  }
+
+  let timer = setInterval(() => {
+    CountDown();
+  }, 1000);
+  return timeMSg;
+}
+
 export default {
   stringToArrayWithWrap,
   returnStringWordLenght,
+  timeDown,
 };

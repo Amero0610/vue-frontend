@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-04-09 01:53:53
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-09 02:14:39
+ * @LastEditTime: 2022-05-11 01:47:13
  * @FilePath: /vue-frontend/src/views/examManage/examPage.vue
  * @email: vian8416@163.com
 -->
@@ -11,6 +11,7 @@
     <comHeader></comHeader>
     <el-button type="primart"
                plain
+               style="display:none"
                @click="toMainpage"> toMainPage </el-button>
     <div id="ExamPageBoxStep">
       <el-steps :active="active"
@@ -20,6 +21,9 @@
         <el-step title="ListenPart"></el-step>
         <el-step title="Read&TranslatePart"></el-step>
       </el-steps>
+    </div>
+    <div class="timeDownArea">
+      <p class="timeText">{{timeDown}}</p>
     </div>
     <!-- <el-button type="primary"
                @click="testgetReading">get</el-button> -->
@@ -84,7 +88,8 @@
 
       <el-scrollbar style="height: 100%">
         <comExampaper :questionList="listingContent"
-                      @sendAns="getListenAns"></comExampaper>
+                      ref="comListeningPartRef"
+                      @sendAns="ListenAns"></comExampaper>
       </el-scrollbar>
       <div id="listenCardBox">
 
@@ -286,12 +291,19 @@
   </div>
 </template>
 <script>
+let that;
 import comReadingPaper from "../../components/examingCom/readingPaper";
 import comExampaper from "../../components/examingCom/examPaper.vue"
 import global from '../../../public/publicJavaScript/global.js'
 import comHeader from '../../components/comMainPage/comHeader.vue';
 export default {
   data: () => ({
+    timeFlag: 'false',
+    timeDown: '',
+    timer: '',
+    writingPartTime: 0,
+    ListeningPartTime: 0,
+    ReadingPartTranslatingPartTime: 0,
     active: 2,
     wordLength: '0',
     writingContent: [],
@@ -301,7 +313,7 @@ export default {
 
     listingContent: [
       {
-        userAns: "value",
+        userAns: "",
         questionNo: 1,
         questionContent: "This is Question10",
         AnsA: "10Ans A",
@@ -310,7 +322,7 @@ export default {
         AnsD: "10Ans D",
       },
       {
-        userAns: "value",
+        userAns: "",
         questionNo: 2,
         questionContent: "This is Questdsankdsajhkldh jsakdhjks ahdjksahjkd hjksahd jksahjk shajk hdsjkah jkdsahjk ion10",
         AnsA: "10Ans A",
@@ -319,7 +331,7 @@ export default {
         AnsD: "10Ans D",
       },
       {
-        userAns: "value",
+        userAns: "",
         questionNo: 3,
         questionContent: "This is Questiodsnabdsajkd sajkdhjksahdjks ahjk dhjksahjk dsahkn10",
         AnsA: "10Ans A",
@@ -328,7 +340,7 @@ export default {
         AnsD: "10Ans D",
       },
       {
-        userAns: "value",
+        userAns: "",
         questionNo: 4,
         questionContent: "This is Question11",
         AnsA: "11Ans A",
@@ -381,7 +393,7 @@ export default {
           'this is 4'],
         readingPassageQuestion: [
           {
-            userAns: "value",
+            userAns: "",
             questionNo: 1,
             questionContent: "This is Question10",
             AnsA: "10Ans A",
@@ -391,7 +403,7 @@ export default {
 
           },
           {
-            userAns: "value",
+            userAns: "",
             questionNo: '2',
             questionContent: 'this is 2',
             AnsA: "10Ans A",
@@ -405,7 +417,7 @@ export default {
         Passage: ["this is 3", "this is 4", "this is 5"],
         readingPassageQuestion: [
           {
-            userAns: "value",
+            userAns: "",
             questionNo: 1,
             questionContent: "This is Question10",
             AnsA: "10Ans A",
@@ -415,7 +427,7 @@ export default {
 
           },
           {
-            userAns: "value",
+            userAns: "",
             questionNo: '2',
             questionContent: 'this is 2',
             AnsA: "10Ans A",
@@ -437,18 +449,52 @@ export default {
     comHeader,
     comExampaper
   },
+  created () {
+
+    let loading = this.$loading({
+      lock: true,
+      background: 'rgba(0, 0, 0, 0.9)'
+    });
+    setTimeout(() => {
+      loading.close();
+      this.active = 0;
+      this.startExam();
+    }, 3 * 1000);
+    this.$message({
+      message: "The exam starts in 3 seconds!",
+      type: 'success',
+      duration: 3000
+    });
+  },
+  mounted () {
+    that = this;
+    let length = this.specticalQuestion2Form.Options.length;
+    for (let i = 0; i < length; i++) {
+      this.specticalQuestion2Form.Ans[i] = "";
+    }
+  },
   methods: {
     submitPart3Content () {
+      console.log(this.specticalQuestion1Form.Ans);
+      console.log(this.specticalQuestion2Form.Ans);
       console.log(this.getReadingAns());
-      this.active = 3;
+      console.log(this.translatingAns)
+      this.endExam();
+
+
     },
-    getListenAns (value) {
+    getListeningAns () {
+      console.log(this.$refs.comListeningPartRef.returnAns());
+    },
+
+    ListenAns (value) {
       this.listingAns = value;
       // this.$loading();
       // setTimeout(() => {
       //   this.active = 2;
       //   this.$loading().close();
       // }, 1000);
+
       console.log(this.listingAns);
     },
     getReadingAns () {
@@ -464,13 +510,77 @@ export default {
       this.wordLength = global.returnStringWordLenght(this.writingInputContent);
 
     },
+    startExam () {
+      this.timeFlag = true;
+      if (this.timeFlag == true) {
+        clearInterval(this.timer);
+      }
+      let timeCount = 60 * 60 * 2;
+      this.timer = setInterval(() => {
+        let minutes = Math.floor(timeCount / 60);
+        let seconds = Math.floor(timeCount % 60);
+        if (seconds < 10) {
+          seconds = '0' + seconds;
+        }
+        let msg = '' + minutes + ':' + seconds + '';
+        this.writingPartTime++;
+        this.ListeningPartTime++;
+        timeCount--;
+        this.timeDown = msg;
+        if (timeCount <= 0) {
+          this.submitPart3Content();
+          clearInterval(this.timer);
+        }
+      }, 1000);
+
+    },
+    endExam () {
+      clearInterval(this.timer);
+      this.timeDown = "Exam is over!";
+      this.timeFlag = false;
+      this.active = 3;
+      let loading = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.5)'
+      });
+      this.$message({
+        message: "Exam is over!, 5 seconds back!",
+        type: 'success',
+        duration: 5000
+      })
+      setTimeout(() => {
+        loading.close();
+      }, 5 * 1000);
+    },
     toMainpage () {
 
       // this.$router.push('/main');
-      this.active++;
-      if (this.active == 3) {
-        this.active = 0;
+      // this.active++;
+      // if (this.active == 3) {
+      //   this.active = 0;
+      // }
+      this.timeFlag = true;
+      if (this.timeFlag == true) {
+        clearInterval(this.timer);
       }
+      let timeCount = 60 * 60 * 2;
+      this.timer = setInterval(() => {
+        let minutes = Math.floor(timeCount / 60);
+        let seconds = Math.floor(timeCount % 60);
+        if (seconds < 10) {
+          seconds = '0' + seconds;
+        }
+        let msg = '' + minutes + ':' + seconds + '';
+        this.writingPartTime++;
+        this.ListeningPartTime++;
+        timeCount--;
+        this.timeDown = msg;
+        if (timeCount <= 0) {
+          this.submitPart3Content();
+          clearInterval(this.timer);
+        }
+      }, 1000);
+
     },
     testInput () {
       this.active = 1;
@@ -492,6 +602,24 @@ export default {
         }
       },
       deep: true
+    },
+    writingPartTime: {
+      handler: function (val) {
+        if (val > 5 && val < 7) {
+          this.active = 1;
+          this.testInput();
+        }
+      },
+      deep: true
+    },
+    ListeningPartTime: {
+      handler: function (val) {
+        if (val > 9 && val < 11) {
+
+          that.getListeningAns();
+          this.active = 2;
+        }
+      }
     }
   },
   filters: {
@@ -525,8 +653,20 @@ export default {
 }
 #ExamPageBoxStep {
   width: 100%;
+  margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
+}
+.timeDownArea {
+  width: 100%;
+  height: 40px;
+  background-color: lightgreen;
+}
+.timeText {
+  line-height: 40px;
+  text-align: center;
+  font-size: 21px;
+  font-weight: bold;
 }
 .ExamPagePartBox {
   width: 90%;
@@ -592,10 +732,12 @@ export default {
   left: 40px;
   margin-top: 20px;
   top: 50vh;
+  display: none;
 }
 #listenAudioBox >>> .aplayer-pic {
   width: 100px;
   height: 100px;
+  display: none;
   border-radius: 100px;
 }
 #listenAudioBox >>> .aplayer-icon-miniswitcher {

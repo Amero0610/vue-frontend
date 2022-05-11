@@ -2,7 +2,7 @@
  * @Author: Amero
  * @Date: 2022-02-03 19:54:07
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-09 02:21:10
+ * @LastEditTime: 2022-05-11 00:52:07
  
 -->
 
@@ -147,8 +147,9 @@ export default {
   props: ["questionList"],
   data () {
     return {
+      Ans: [],
       SubmitStatus: "Unsubmitted",
-      isDisabled: false,
+      isDisabled: true,
       processStatus: null,
       processPercent: 0,
       customColors: [
@@ -161,26 +162,45 @@ export default {
     };
   },
   methods: {
+    returnAns () {
+      return this.dealAns(this.Ans);
+    },
+    dealAns (ansArray) {
+      let resaAray = [];
+      for (let i = 0; i < ansArray.length; i++) {
+        let temp = ansArray[i].split('.');
+        resaAray[i] = temp[0];
+      }
+      return resaAray;
+    },
     getValue: function () {
       let ansList = new Array();
       for (let i = 0; i < this.questionList.length; i++) {
         ansList.push(this.questionList[i].userAns);
       }
+      this.Ans = ansList;
       this.SubmitStatus = "Submitted"
       this.processStatus = "success"
       this.$emit("sendAns", ansList);
     },
     judgeIsDisable: function (dataList) {
       let jIndex = 0;
-      // dataList[i].userAns == "A" ||
-      // dataList[i].userAns == "B" ||
-      // dataList[i].userAns == "C" ||
-      // dataList[i].userAns == "D"
+      let tempArray = [];
       for (let i = 0; i < dataList.length; i++) {
-        if (dataList[i].userAns >= "A" && dataList[i].userAns <= "D") {
+        if (dataList[i].userAns == "A." ||
+          dataList[i].userAns == "B." ||
+          dataList[i].userAns == "C." ||
+          dataList[i].userAns == "D.") {
+
+          tempArray[i] = dataList[i].userAns;
           jIndex++;
         }
+        if (dataList[i].userAns == "") {
+          tempArray[i] = "";
+        }
       }
+      this.Ans = tempArray;
+
       jIndex == dataList.length
         ? (this.isDisabled = false)
         : (this.isDisabled = true);
@@ -196,7 +216,7 @@ export default {
       }
       let index = 0;
       for (let i = 0; i < tempList.length; i++) {
-        if (tempList[i] != "value") {
+        if (tempList[i] != "") {
           index++;
         }
       }
