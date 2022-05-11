@@ -2,8 +2,8 @@
  * @Author: AmeroL
  * @Date: 2022-04-08 01:32:21
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-04-28 01:07:21
- * @FilePath: /vue-frontend/src/router/index.js
+ * @LastEditTime: 2022-05-11 20:44:44
+ * @FilePath: \vue-frontend\src\router\index.js
  * @email: vian8416@163.com
  */
 import Vue from 'vue';
@@ -43,7 +43,7 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    redirect: '/main',
+    redirect: 'Main',
   },
   {
     path: '/userlogin',

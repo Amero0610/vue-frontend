@@ -2,7 +2,7 @@
  * @Author: Amero
  * @Date: 2022-02-06 22:49:01
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-04-09 20:07:06
+ * @LastEditTime: 2022-05-11 20:55:05
  * @FilePath: \vue-frontend\src\views\loginPart\loginPage.vue
 -->
 <template>
@@ -24,12 +24,12 @@
                 <p v-for="item in usernameTipList"
                    :key="item"
                    class="TipText">
-                  <i class="el-icon-my-dot mytestclass"></i>
+                  <i class="myicon-dot mytestclass"></i>
                   {{ item }}
                 </p>
               </div>
               <div class="input-field">
-                <i class="el-icon-my-user"></i>
+                <i class="myicon-user"></i>
 
                 <el-input type="text"
                           placeholder="Username"
@@ -45,11 +45,11 @@
                 <p v-for="item in passwordTipList"
                    :key="item"
                    class="TipText">
-                  <i class="el-icon-my-dot mytestclass"></i> {{ item }}
+                  <i class="myicon-dot mytestclass"></i> {{ item }}
                 </p>
               </div>
               <div class="input-field">
-                <i class="el-icon-my-lock"></i>
+                <i class="myicon-lock"></i>
 
                 <el-input type="password"
                           placeholder="Password"
@@ -77,24 +77,22 @@
                 <p v-for="item in usernameTipList"
                    :key="item"
                    class="TipText">
-                  <i class="el-icon-my-dot"></i> {{ item }}
+                  <i class="myicon-dot"></i> {{ item }}
                 </p>
               </div>
               <div class="input-field">
-                <i class="el-icon-my-user"></i>
+                <i class="myicon-user"></i>
                 <el-input type="text"
                           placeholder="Username"
                           v-model.trim="singUpData.signUp_username"></el-input>
               </div>
             </el-tooltip>
-            <!-- <div class="input-field">
-              <i class="fa fa-envelope"></i>
-              <el-input
-                type="email"
-                placeholder="Email"
-                v-model.trim="singUpData.signUp_email"
-              ></el-input>
-            </div> -->
+            <div class="input-field">
+              <i class="myicon-user"></i>
+              <el-input type="text"
+                        placeholder="StudentNumber"
+                        v-model.trim="singUpData.signUp_stuNumber"></el-input>
+            </div>
             <el-tooltip class="item"
                         effect="dark"
                         placement="right"
@@ -104,11 +102,11 @@
                 <p v-for="item in passwordTipList"
                    :key="item"
                    class="TipText">
-                  <i class="el-icon-my-dot"></i> {{ item }}
+                  <i class="myicon-dot"></i> {{ item }}
                 </p>
               </div>
               <div class="input-field">
-                <i class="el-icon-my-lock"></i>
+                <i class="myicon-lock"></i>
 
                 <el-input minlength="6"
                           maxlength="18"
@@ -117,9 +115,10 @@
                           placeholder="Password"
                           v-model.trim="singUpData.signUP_password"></el-input>
               </div>
+
             </el-tooltip>
             <div class="input-field">
-              <i class="el-icon-my-lock"></i>
+              <i class="myicon-lock"></i>
               <el-input minlength="6"
                         maxlength="18"
                         show-password
@@ -154,7 +153,7 @@
       <div class="panels-container">
         <div class="panel left-panel">
           <div class="content">
-            <h3>Please Login System</h3>
+            <h3>Level 4 and Level 6 Mock Exam System</h3>
 
             <div class="mttestTextarea">
               <p>
@@ -228,6 +227,7 @@ export default {
       isloginBtnDisabled: true,
       singUpData: {
         signUp_username: '',
+        signUp_stuNumber: '',
         // signUp_email: "",
         signUP_password: '',
         signUp_password_confirm: '',
