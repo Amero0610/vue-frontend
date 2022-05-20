@@ -2,8 +2,8 @@
  * @Author: AmeroL
  * @Date: 2022-04-08 01:55:38
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-04-12 22:50:13
- * @FilePath: \vue-frontend\src\store\index.js
+ * @LastEditTime: 2022-05-20 19:41:51
+ * @FilePath: /vue-frontend/src/store/index.js
  * @email: vian8416@163.com
  */
 import Vue from 'vue';
@@ -13,8 +13,21 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    userLoginStatus: '',
+    userLoginUserName: '',
+    userLoginUserId: '',
+    userLoginPassword: '',
+    userLoginStuNumber: '',
+    currentExamType: '',
+    currentExamInfo: '',
+    currentReviewExampaperInfo: {},
+    currentExamingExampaperInfo: {},
+    currentExamingExampapeAudioAddr: '',
+    currentAddExampaperInfo: {},
+    permission: '',
+    password: '',
     loginflag: false,
-    username: 'nologin',
+    username: '',
   },
   getters: {},
   mutations: {},

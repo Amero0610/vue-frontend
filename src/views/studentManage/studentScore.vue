@@ -2,8 +2,8 @@
  * @Author: AmeroL
  * @Date: 2022-04-20 21:44:50
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-11 21:41:44
- * @FilePath: \vue-frontend\src\views\studentManage\studentScore.vue
+ * @LastEditTime: 2022-05-19 00:22:54
+ * @FilePath: /vue-frontend/src/views/studentManage/studentScore.vue
  * @email: vian8416@163.com
 -->
 
@@ -74,7 +74,9 @@
 
       </el-table-column>
       <el-table-column label="TotalScore"
-                       prop="totalScore"></el-table-column>
+                       prop="totalScore">
+        <template slot-scope="scope">{{scope.row|totalScoreFilter}}</template>
+      </el-table-column>
 
       <el-table-column label="Operation">
 
@@ -100,7 +102,9 @@
   </div>
 </template>
 <script>
-//let that;
+import Axios from 'axios';
+const APIURL = "http://123.57.7.40:5067/api/examination/";
+let that;
 import comHeader from '../../components/comMainPage/comHeader.vue';
 export default {
   data: () => ({
@@ -109,6 +113,7 @@ export default {
     writeScorePlace: '',
     translateScorePlace: '',
     dialogVisible: false,
+    updateAllInfo: {},
     updateScoreList:
     {
       writeContent: ["2", "2", "3"],
@@ -130,47 +135,128 @@ export default {
   beforeMount () {
     // init data from server
     this.studentScoreList = [
-      {
-        examPaperName: "examPaperName1",
-        listenScore: "listenScore1",
-        readScore: "readScore1",
-        writeScore: "122",
-        translateScore: "123",
-        totalScore: "totalScore1",
-      },
-      {
-        examPaperName: "examPaperName2",
-        listenScore: "listenScore2",
-        readScore: "readScore2",
-        writeScore: "124",
-        translateScore: "125",
-        totalScore: "totalScore2",
-      },
     ]
 
   },
+  created () {
+    that = this;
+    this.api_getScore();
+  },
   methods: {
+    formatName (_data) {
+
+      let _str = "";
+      _str += _data.epType.toUpperCase() + " " + _data.epYear + '.' + _data.epMonth + ' No.' + _data.epIndex;
+      return _str;
+    },
+    showSuccessMessage () {
+      that.$message({
+        message: 'Success',
+        type: 'success'
+      })
+    },
+    pushScoreList (_list) {
+      this.studentScoreList = [];
+      for (let i = 0; i < _list.length; i++) {
+        let obj = new Object();
+        obj.scStudentNumber = _list[i].stuNumber;
+        obj.listenScore = _list[i].scListen;
+        obj.readScore = _list[i].scRead;
+        obj.writeScore = _list[i].scWrite;
+        obj.translateScore = _list[i].scTranslate;
+        obj.totalScore = _list[i].scSum;
+        obj.Sub1Ans = _list[i].scSubject1Ans;
+        obj.Sub2Ans = _list[i].scSubject2Ans;
+        obj.scId = _list[i].scId;
+        obj.epId = _list[i].epId;
+        obj.examPaperName = "";
+        this.api_getExampaperInfo(obj.epId, i);
+        //console.log(obj)
+        this.studentScoreList.push(obj);
+      }
+    },
+    api_updateScore (_obj) {
+      _obj.totalScore = Number(_obj.listenScore) + Number(_obj.readScore) + Number(_obj.writeScore) + Number(_obj.translateScore);
+
+      Axios.post(APIURL + "updateScore", {
+        stuNumber: _obj.scStudentNumber,
+        epId: _obj.epId,
+        scWrite: _obj.writeScore,
+        scListen: _obj.listenScore,
+        scRead: _obj.readScore,
+        scTranslate: _obj.translateScore,
+        scSubject1Ans: _obj.Sub1Ans,
+        scSubject2Ans: _obj.Sub2Ans,
+        scSum: _obj.totalScore,
+      })
+        .then(response => {
+          console.log(response);
+          that.showSuccessMessage();
+          that.api_getScore();
+        })
+        .catch(error => {
+          console.log(error);
+        })
+    },
+    api_getExampaperInfo (_epId, _index) {
+      Axios.get(APIURL + 'getExampaperbyId/', {
+        params: {
+          epId: _epId,
+        }
+      }).then(res => {
+
+        this.studentScoreList[_index].examPaperName = this.formatName(res.data.data[0])
+      })
+    },
+    api_getScore () {
+      Axios.get(APIURL + "getScore/", {
+        params: {
+          stuNumber: this.$route.params.studentNumber
+        }
+      }).then(res => {
+        let remoteList = res.data.data;
+        this.pushScoreList(remoteList)
+      })
+    },
+    api_deleteScore (_stuNumber, _epId) {
+      Axios.post(APIURL + 'deleteScore', {
+        stuNumber: _stuNumber,
+        epId: _epId,
+      }).then(res => {
+        console.log(res);
+      }).catch(err => {
+        console.log(err);
+      })
+    },
     editScore (row) {
+      this.updateAllInfo = row;
       this.dialogVisible = true;
+      this.updateScoreList.writeContent = row.Sub1Ans.split("*");
+      this.updateScoreList.translateContent = row.Sub2Ans.split("*");
       this.updateName = row.examPaperName;
+      this.updateScoreList.writeScore = row.writeScore;
+      this.updateScoreList.translateScore = row.translateScore;
       this.writeScorePlace = row.writeScore;
       this.translateScorePlace = row.translateScore;
     },
     deleteScore (row) {
+      console.log(row);
+      this.api_deleteScore(row.scStudentNumber, row.epId);
       this.popoveriable = true;
       this.studentScoreList.splice(this.studentScoreList.indexOf(row), 1);
       // delete data from server
     },
-    getUpdateItem (_name) {
+    getUpdateItem () {
       for (let i = 0; i < this.studentScoreList.length; i++) {
-        if (this.studentScoreList[i].examPaperName == _name) {
+        if (this.updateAllInfo.studentNumber == this.studentScoreList[i].studentNumber) {
           return i;
         }
       }
     },
     submitUpdate () {
       this.dialogVisible = false;
-      let index = this.getUpdateItem(this.updateName);
+      let index = this.getUpdateItem();
+      console.log(index)
       // check is number
       if (isNaN(this.updateScoreList.writeScore) || isNaN(this.updateScoreList.translateScore)) {
         this.$message({
@@ -181,8 +267,13 @@ export default {
         this.updateScoreList.translateScore = "";
         return;
       }
+
+      //this.api_updateScore(this.updateAllInfo)
+      let totalScore = Number(this.updateScoreList.writeScore) + Number(this.updateScoreList.translateScore) + Number(this.studentScoreList[index].readScore) + Number(this.studentScoreList[index].listenScore);
       this.studentScoreList[index].writeScore = this.updateScoreList.writeScore;
       this.studentScoreList[index].translateScore = this.updateScoreList.translateScore;
+      this.studentScoreList[index].totalScore = totalScore
+      this.api_updateScore(this.studentScoreList[index])
       this.updateScoreList.writeScore = "";
       this.updateScoreList.translateScore = "";
 
@@ -205,6 +296,10 @@ export default {
 
       let resScore = Number(value.writeScore) + Number(value.translateScore);
       return resScore;
+    },
+    totalScoreFilter (value) {
+      const SCORERES = Number(value.listenScore) + Number(value.readScore) + Number(value.writeScore) + Number(value.translateScore);
+      return SCORERES
     }
   }
 };

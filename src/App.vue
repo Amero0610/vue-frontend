@@ -2,8 +2,8 @@
  * @Author: AmeroL
  * @Date: 2022-04-08 01:30:40
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-11 21:58:06
- * @FilePath: \vue-frontend\src\App.vue
+ * @LastEditTime: 2022-05-21 00:44:17
+ * @FilePath: /vue-frontend/src/App.vue
  * @email: vian8416@163.com
 -->
 <template>
@@ -19,14 +19,39 @@
 export default {
   name: 'app',
   components: {},
-  beforeCreate () {
-    // if (this.$store.state.username == 'nologin') {
-    //   this.$router.push('/userlogin');
-    //   this.$message({
-    //     message: "Please Login First!",
-    //     type: 'warning'
-    //   })
-    // }
+  created () {
+    if (!this.checkCookie()) {
+      this.$router.push('/userlogin');
+      this.$message({
+        message: "Please Login First!",
+        type: 'warning'
+      })
+    } else {
+      this.setCookies();
+    }
+  },
+  methods: {
+    checkCookie () {
+      return this.$cookies.isKey('loginflag')
+    },
+    setCookies () {
+      this.$store.state.password = this.$cookies.get('password');
+      this.$store.state.username = this.$cookies.get('username');
+      this.$store.state.permission = this.$cookies.get('permission')
+      switch (this.$store.state.permission) {
+        case '1': {
+          this.$router.push({ path: '/main/showstudentlist' });
+          break;
+        }
+        case '2': {
+          this.$router.push({ name: 'SelectExamPaper' });
+          break;
+        }
+      }
+      this.$store.state.loginflag = this.$cookies.get('loginflag');
+      this.$store.state.userLoginStuNumber = this.$cookies.get('stuNumber');
+    }
+
   }
 };
 </script>

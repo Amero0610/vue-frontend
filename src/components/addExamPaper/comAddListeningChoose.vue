@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-05-04 01:26:03
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-10 21:49:56
+ * @LastEditTime: 2022-05-19 00:03:53
  * @FilePath: /vue-frontend/src/components/addExamPaper/comAddListeningChoose.vue
  * @email: vian8416@163.com
 -->
@@ -81,19 +81,19 @@
                           type="textarea"
                           :autosize="{minRows:1,maxRows:5}"></el-input>
               </el-col>
-              <el-col :span="
+              <!-- <el-col :span="
                           4">
                 <el-button type="danger"
                            plain
                            @click.prevent="removeDomain(domain)">Delete</el-button>
-              </el-col>
+              </el-col> -->
             </el-row>
 
           </el-form-item>
           <el-form-item id="buttonArea">
             <el-button type="primary"
                        @click="submitForm">Submit</el-button>
-            <el-button @click="addOption">Add</el-button>
+            <!-- <el-button @click="addOption">Add</el-button> -->
           </el-form-item>
         </el-form>
       </div>
@@ -102,13 +102,16 @@
   </div>
 </template>
 <script>
+let that;
+import Axios from 'axios';
+const APIURL = "http://123.57.7.40:5067/api/examination/";
 export default {
   props: ["paperInfo"],
   data: () => ({
     wordList: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
     questionNumber: '',
     questionAns: '',
-    questionMainContentform: { questionMainContent: '', },
+    questionMainContentform: { questionMainContent: 'no', },
 
     questionContentform: {
       questions: [
@@ -129,6 +132,9 @@ export default {
 
 
   }),
+  created () {
+    that = this;
+  },
   components: {
   },
   methods: {
@@ -150,6 +156,53 @@ export default {
 
       });
     },
+    api_deleteListen (_epId, _chNumber) {
+      Axios.post(APIURL + "deleteChoise", {
+        epId: _epId,
+        chNumber: _chNumber,
+      }).then(res => {
+        console.log(res);
+      }).catch(err => {
+        console.log(err);
+      })
+
+    },
+    insertQuestion (_epId, _chNumber, _chContent, _chA, _chB, _chC, _chD, _chTrue) {
+      Axios.post(APIURL + "deleteChoise", {
+        epId: _epId,
+        chNumber: _chNumber,
+      }).then(res => {
+        console.log(res);
+        that.api_insertListen(_epId, _chNumber, _chContent, _chA, _chB, _chC, _chD, _chTrue);
+      }).catch(err => {
+        console.log(err);
+      })
+    },
+    showSuccessMessage () {
+      this.$message({
+        message: 'Add Success',
+        type: 'success'
+      })
+    },
+    api_insertListen (_epId, _chNumber, _chContent, _chA, _chB, _chC, _chD, _chTrue) {
+
+      Axios.post(APIURL + 'insertChoise', {
+        epId: _epId,
+        chNumber: _chNumber,
+        chContent: _chContent,
+        chA: _chA,
+        chB: _chB,
+        chC: _chC,
+        chD: _chD,
+        chTrue: _chTrue,
+      }).then(res => {
+        console.log(res);
+        that.showSuccessMessage();
+      }).catch(err => {
+        console.log(err)
+      })
+
+    },
     submitForm () {
       let questionContentObj = new Object();
       questionContentObj.questionNumber = this.questionNumber;
@@ -157,7 +210,9 @@ export default {
       tempArray.push(this.questionContentform.questions);
       questionContentObj.questionContent = tempArray;
       questionContentObj.questionAns = this.questionAns;
-      console.log(questionContentObj);
+      this.insertQuestion(this.paperInfo.epId, questionContentObj.questionNumber, " ", questionContentObj.questionContent[0][0].value, questionContentObj.questionContent[0][1].value, questionContentObj.questionContent[0][2].value, questionContentObj.questionContent[0][3].value, questionContentObj.questionAns);
+
+
     },
     // index to word 
 

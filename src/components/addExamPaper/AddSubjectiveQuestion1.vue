@@ -82,12 +82,14 @@
   </div>
 </template>
 <script>
+import Axios from 'axios';
+const APIURL = "http://123.57.7.40:5067/api/examination/";
 let that;
 export default {
   props: ["paperInfo"],
   data: () => ({
     questionNumber: '',
-    questionType: '',
+    questionType: '1',
     trueWord: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
     questionMainContentform: { questionMainContent: '', },
 
@@ -119,6 +121,39 @@ export default {
 
   },
   methods: {
+    insertQuestion (_epId, _schoNumber, _schoContent, _schoOption, _schoTrue, _schoType) {
+      Axios.post(APIURL + 'deleteSpecialchoise', {
+        epId: _epId,
+        schoNumber: _schoNumber
+      }).then(function (response) {
+        console.log(response);
+        that.API_insertQuestion(_epId, _schoNumber, _schoContent, _schoOption, _schoTrue, _schoType);
+      }).catch(function (error) {
+        console.log(error);
+      })
+    },
+    showSuccessMessage () {
+      this.$message({
+        message: 'Add Success',
+        type: 'success'
+      })
+    },
+    API_insertQuestion (_epId, _schoNumber, _schoContent, _schoOption, _schoTrue, _schoType) {
+      Axios.post(APIURL + 'insertSpecialChoise', {
+        epId: _epId,
+        schoNumber: _schoNumber,
+        schoContent: _schoContent,
+        schoOption: _schoOption,
+        schoTrue: _schoTrue,
+        schoType: _schoType
+      }).then(function (response) {
+
+        console.log(response);
+        that.showSuccessMessage();
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
     handleChooseNumber () {
       console.log(this.questionNumber);
     },
@@ -137,12 +172,47 @@ export default {
 
       });
     },
+    checkAllow () {
+      let setLength = this.questionContentform.questions.length;
+      let currentTrueOtionsLength = 0;
+      let currentOptionsLength = 0;
+      for (let i = 0; i < setLength; i++) {
+        if (this.questionContentform.questions[i].trueOption != "") {
+          currentTrueOtionsLength++;
+        }
+        if (this.questionContentform.questions[i].value != "") {
+          currentOptionsLength++;
+        }
+      }
+      console.log(currentTrueOtionsLength);
+      console.log(currentOptionsLength);
+      if (currentTrueOtionsLength == setLength
+        && currentOptionsLength == setLength) {
+        return true;
+      } else {
+        return false
+      }
+    },
     submitForm () {
+      if (!this.checkAllow()) {
+        console.log(1);
+        return false;
+
+      }
       let resArray = new Array();
       resArray.push(this.questionNumber);
       resArray.push(this.questionMainContentform.questionMainContent);
       resArray.push(this.questionContentform.questions);
-      console.log(resArray);
+      let options = new Array();
+      let trueOptions = new Array();
+      for (let i = 0; i < resArray[2].length; i++) {
+        options.push(resArray[2][i].value)
+        trueOptions.push(resArray[2][i].trueOption);
+      }
+      let tempContent = resArray[1].split('\n').join('*');
+      console.log(resArray[0]);
+
+      this.insertQuestion(this.paperInfo.epId, resArray[0], tempContent, options.join("*"), trueOptions.toString(), this.questionType);
     },
     // index to word 
 

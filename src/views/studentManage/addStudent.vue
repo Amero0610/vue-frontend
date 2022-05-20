@@ -2,8 +2,8 @@
  * @Author: Amero
  * @Date: 2022-02-10 19:06:55
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-11 21:38:50
- * @FilePath: \vue-frontend\src\views\studentManage\addStudent.vue
+ * @LastEditTime: 2022-05-14 16:24:18
+ * @FilePath: /vue-frontend/src/views/studentManage/addStudent.vue
 -->
 <template>
   <div id="userinfoBox">
@@ -120,6 +120,11 @@
 }
 </style>
 <script>
+import Axios from 'axios';
+
+//const APIURL = "http://localhost:8000/api/examination/";
+const APIURL = "http://123.57.7.40:5067/api/examination/";
+//let axios = require('axios');
 import comPageTitile from "../../components/publicComponents/comPageTitile.vue";
 export default {
   components: {
@@ -137,6 +142,7 @@ export default {
   methods: {
     submitClick: function () {
       console.log(this.userInfoList);
+      this.api_AddStudent(this.userInfoList.name, this.userInfoList.studentNumber, this.userInfoList.password);
       // submit data to server
       this.$message({
         message: this.userInfoList.name + " has been added",
@@ -149,6 +155,18 @@ export default {
         studentNumber: "",
         password: "",
       };
+
+    },
+    api_AddStudent (_stuName, _stuNumber, _stuPassword) {
+      Axios.post(APIURL + 'insertStudent', {
+        stuName: _stuName,
+        stuNumber: Number(_stuNumber),
+        stuPassword: _stuPassword
+      }).then(result => {
+        console.log(result);
+      }).catch(err => {
+        console.log(err);
+      })
     },
     judgeIsDisable: function (dataList) {
       let jIndex = 0;

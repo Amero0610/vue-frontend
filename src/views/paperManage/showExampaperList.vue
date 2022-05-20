@@ -2,8 +2,8 @@
  * @Author: AmeroL
  * @Date: 2022-04-09 01:25:14
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-11 21:09:27
- * @FilePath: \vue-frontend\src\views\paperManage\showExampaperList.vue
+ * @LastEditTime: 2022-05-17 01:26:18
+ * @FilePath: /vue-frontend/src/views/paperManage/showExampaperList.vue
  * @email: vian8416@163.com
 -->
 <template>
@@ -28,7 +28,7 @@
                        prop="name">
       </el-table-column>
       <el-table-column label="Option"
-                       width="150px">
+                       width="250px">
         <template slot-scope="scope">
           <el-popconfirm title="Confirm to selelct this exampaper"
                          confirm-button-text="Confirm"
@@ -40,12 +40,22 @@
                        size="mini"
                        slot="reference">Review</el-button>
           </el-popconfirm>
+
+          <el-button class="optionBtn2"
+                     @click="deleteExamPaper(scope.row)"
+                     type="danger"
+                     plain
+                     size="mini"
+                     slot="reference">Delete</el-button>
         </template>
+
       </el-table-column>
     </el-table>
   </div>
 </template>
 <script>
+import Axios from 'axios';
+const APIURL = "http://123.57.7.40:5067/api/examination/";
 import router from '@/router';
 import comPageTitile from '../../components/publicComponents/comPageTitile.vue'
 export default {
@@ -56,85 +66,129 @@ export default {
     currentSelectExamPaper: '',
 
     examPaperList: [
-      {
-        name: '4paper1',
-        type: 'cet4',
-        year: '2019',
-        month: '12',
-        index: '02',
-        examPaperType: '4',
-        id: '1'
-      },
-      {
-        name: '4paper2',
-        type: '',
-        year: '',
-        month: '',
-        index: '',
-        examPaperType: '4',
-        id: '2'
-      },
-      {
-        name: '4paper3',
-        type: '',
-        year: '',
-        month: '',
-        index: '',
-        examPaperType: '4',
-        id: '3'
-      },
-      {
-        name: '6paper1',
-        type: '',
-        year: '',
-        month: '',
-        index: '',
-        examPaperType: '6',
-        id: '1'
-      },
-      {
-        name: '6paper2',
-        type: '',
-        year: '',
-        month: '',
-        index: '',
-        examPaperType: '6',
-        id: '2'
-      },
-      {
-        name: '6paper3',
-        type: '',
-        year: '',
-        month: '',
-        index: '',
-        examPaperType: '6',
-        id: '3'
-      }
+
     ],
     showExamPaperList: [
     ],
   }),
   created () {
-    for (let i = 0; i < this.examPaperList.length; i++) {
-      let type = this.examPaperList[i].examPaperType;
-      let year = this.examPaperList[i].year;
-      let month = this.examPaperList[i].month;
-      let index = this.examPaperList[i].index;
-      this.examPaperList[i].name = "CET" + type + "  " + year + "." + month + " " + "No." + index;
-    }
+    this.api_getExampaper('cet4', "4");
+    this.api_getExampaper("cet6", "6");
+
+
+
   },
   methods: {
+    setName () {
+      for (let i = 0; i < this.examPaperList.length; i++) {
+        let type = this.examPaperList[i].examPaperType;
+        let year = this.examPaperList[i].year;
+        let month = this.examPaperList[i].month;
+        let index = this.examPaperList[i].index;
+        this.examPaperList[i].name = "CET" + type + "  " + year + "." + month + " " + "No." + index;
+      }
+    },
+    setList (_cetlist, _typeNumber) {
+      let list = _cetlist.data.data;
+      for (let i = 0; i < list.length; i++) {
+        let tempObj = new Object();
+        tempObj.name = "321";
+        tempObj.epId = list[i].epId;
+        tempObj.type = list[i].epType;
+        tempObj.year = list[i].epYear;
+        tempObj.month = list[i].epMonth;
+        tempObj.index = list[i].epIndex;
+        tempObj.examPaperType = _typeNumber;
+        tempObj.id = this.examPaperList.length + 1;
+        this.examPaperList.push(tempObj);
+      }
+      this.setName();
+    },
+    api_getExampaper (_epType, _typeNumber) {
+      Axios.get(APIURL + 'getExampaper', {
+        params: {
+          epType: _epType
+        }
+      }).then(res => {
+        this.setList(res, _typeNumber);
+      }).catch(error => {
+        console.log(error);
+      })
+    },
+    api_delteExampaper (_epId) {
+      Axios.post(APIURL + 'deleteExampaper', {
+
+        epId: _epId
+
+      }).then(res => {
+        console.log(res);
+      }).catch(error => {
+        console.log(error);
+      })
+    },
+    api_getExampaperInfo (_epId) {
+      Axios.get(APIURL + 'getAllData', {
+        params: {
+          epId: _epId,
+        },
+      })
+        .then((res) => {
+          this.$store.state.currentReviewExamPaper = res.data.data;
+          router.push("reviewexampaper");
+          //console.log(this.$store.state.currentReviewExamPaper);
+        })
+        .catch((err) => {
+          return err;
+        });
+    },
     reviewExamPaper (value) {
-      router.push("reviewexampaper");
-      console.log(value);
+      this.$store.state.currentReviewExamPaper = value;
+      this.api_getExampaperInfo(value.epId);
+
+
 
     },
     selectExamPaperChange (value) {
+
       this.currentSelectExamPaper = value;
       this.showExamPaperList = this.examPaperList.filter(item => {
         return item.examPaperType === value;
       });
+
     },
+    showDeleteConfrim (value) {
+      this.$confirm("This option will delete all of date about this exampaper", 'Tip', {
+        type: 'warning'
+      }).then(() => {
+        let index = 0;
+        for (let i = 0; i < this.examPaperList.length; i++) {
+          if (this.examPaperList[i].id === value.id) {
+            index = i;
+            break;
+          }
+        }
+        this.examPaperList.splice(index, 1);
+        this.showExamPaperList = this.examPaperList.filter(item => {
+          return item.examPaperType === this.currentSelectExamPaper;
+        });
+        this.api_delteExampaper(value.epId);
+        this.$message({
+          message: "Delete success",
+          type: 'success'
+        })
+      }).catch(() => {
+        this.$message({
+          message: "Option Cancel",
+          type: 'info'
+        })
+      })
+    },
+    deleteExamPaper (value) {
+      //console.log(value)
+      this.showDeleteConfrim(value)
+      //delete this item in examPaperList
+
+    }
     //get StudentScoreList
   },
 }
@@ -164,5 +218,8 @@ export default {
 }
 .el-button {
   width: 100px;
+}
+.optionBtn2 {
+  margin-left: 10px;
 }
 </style>

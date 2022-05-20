@@ -2,12 +2,15 @@
  * @Author: AmeroL
  * @Date: 2022-04-08 01:32:21
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-11 21:08:50
- * @FilePath: \vue-frontend\src\router\index.js
+ * @LastEditTime: 2022-05-20 20:20:46
+ * @FilePath: /vue-frontend/src/router/index.js
  * @email: vian8416@163.com
  */
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+
+//studentInfo
+import comStudentInfo from '../views/studentInfo.vue';
 
 //welcome
 import comWelcome from '../views/welcomePage.vue';
@@ -38,6 +41,11 @@ import comSelectExampaper from '../views/examManage/selectExampaper.vue';
 
 import comMainPage from '../views/mainPage.vue';
 
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch((err) => err);
+};
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -57,6 +65,11 @@ const routes = [
     component: comMainPage,
     redirect: '/main/welcome',
     children: [
+      {
+        path: 'studentinfo',
+        name: 'StudentInfo',
+        component: comStudentInfo,
+      },
       {
         path: 'welcome',
         name: 'Welcome',

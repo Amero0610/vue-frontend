@@ -2,8 +2,8 @@
  * @Author: AmeroL
  * @Date: 2022-04-08 01:51:55
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-04-09 20:15:44
- * @FilePath: \vue-frontend\src\views\mainPage.vue
+ * @LastEditTime: 2022-05-14 00:32:30
+ * @FilePath: /vue-frontend/src/views/mainPage.vue
  * @email: vian8416@163.com
 -->
 <!-- this is main page!;

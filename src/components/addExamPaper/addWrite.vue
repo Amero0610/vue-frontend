@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-05-04 01:47:23
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-11 19:35:36
+ * @LastEditTime: 2022-05-18 16:41:58
  * @FilePath: /vue-frontend/src/components/addExamPaper/addWrite.vue
  * @email: vian8416@163.com
 -->
@@ -46,6 +46,9 @@
   </div>
 </template>
 <script>
+let that;
+import Axios from 'axios';
+const APIURL = "http://123.57.7.40:5067/api/examination/";
 export default {
   props: ["paperInfo"],
   name: "AddWrite",
@@ -53,14 +56,47 @@ export default {
     questionType: '1',
     questionContent: '',
   }),
+  created () {
+    that = this;
+  },
   methods: {
     handleSelectChooseQuestion () {
 
+    },
+    insertQuestion (_epId, _subNumber, _subContent) {
+      Axios.post(APIURL + '/deleteSubject', {
+        epId: _epId,
+        subNumber: _subNumber,
+      }).then(res => {
+        console.log(res);
+        that.APi_insertWrite(_epId, _subNumber, _subContent);
+      }).catch(err => {
+        console.log(err);
+      })
+    },
+    showSuccessMessage () {
+      this.$message({
+        message: 'Add Success',
+        type: 'success'
+      })
+    },
+    APi_insertWrite (_epId, _subNumber, _subContent) {
+      Axios.post(APIURL + 'insertSubject', {
+        epId: _epId,
+        subNumber: _subNumber,
+        subContent: _subContent,
+      }).then((res) => {
+        console.log(res);
+        that.showSuccessMessage();
+      }).catch((err) => {
+        console.log(err);
+      })
     },
     submitQuestion () {
       let question = new Array();
       question.push(this.questionType);
       question.push(this.questionContent);
+      this.insertQuestion(this.paperInfo.epId, this.questionType, this.questionContent);
       console.log(this.paperInfo);
       console.log(question);
     }

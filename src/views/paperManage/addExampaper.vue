@@ -2,8 +2,8 @@
  * @Author: AmeroL
  * @Date: 2022-04-09 01:25:32
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-11 21:22:20
- * @FilePath: \vue-frontend\src\views\paperManage\addExampaper.vue
+ * @LastEditTime: 2022-05-19 00:03:23
+ * @FilePath: /vue-frontend/src/views/paperManage/addExampaper.vue
  * @email: vian8416@163.com
 -->
 <template>
@@ -47,11 +47,11 @@
           <el-select v-model="paperInfoForm.index"
                      placeholder="">
             <el-option label="1"
-                       value="01"></el-option>
+                       value="1"></el-option>
             <el-option label="2"
-                       value="02"></el-option>
+                       value="2"></el-option>
             <el-option label="3"
-                       value="03"></el-option>
+                       value="3"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -66,12 +66,12 @@
     <comPageTitle titleContent="Add Exampaper"></comPageTitle>
     <el-tabs type="border-card"
              tab-position="top">
-      <el-tab-pane label="AddListenChooseQuestion">
+      <el-tab-pane label="Add Listening Questions">
         <el-scrollbar style="height: 100%">
           <comAddListeningChoose :paperInfo=paperInfoForm></comAddListeningChoose>
         </el-scrollbar>
       </el-tab-pane>
-      <el-tab-pane label="AddReadingChooseQuestion">
+      <el-tab-pane label="Add Reading Questions">
         <el-scrollbar style="height: 100%"
                       wrapStyle="overflow-x:hidden;">
           <comAddReadingChoose :paperInfo=paperInfoForm></comAddReadingChoose>
@@ -80,12 +80,12 @@
       <el-tab-pane label="AddWriteQuestion">
         <comAddWrite :paperInfo=paperInfoForm></comAddWrite>
       </el-tab-pane>
-      <el-tab-pane label="AddSpecificalChooseQuestion1">
+      <el-tab-pane label="Add Paragraph Matching Questions">
         <el-scrollbar style="height: 100%">
           <comAddSubjectiveQuestion1 :paperInfo=paperInfoForm></comAddSubjectiveQuestion1>
         </el-scrollbar>
       </el-tab-pane>
-      <el-tab-pane label="AddSpecificalChooseQuestion2">
+      <el-tab-pane label="Add Fill in The Blanks Questions">
         <el-scrollbar style="height: 100%">
           <comAddSubjectiveQuestion2 :paperInfo=paperInfoForm></comAddSubjectiveQuestion2>
         </el-scrollbar>
@@ -102,10 +102,11 @@ import comAddReadingChoose from "../../components/addExamPaper/comAddReadingChoo
 import comAddWrite from "../../components/addExamPaper/addWrite.vue";
 import comAddSubjectiveQuestion1 from "../../components/addExamPaper/AddSubjectiveQuestion1.vue"
 import comAddSubjectiveQuestion2 from "../../components/addExamPaper/AddSubjectiveQuestion2.vue"
-
+import Axios from 'axios';
+const APIURL = "http://123.57.7.40:5067/api/examination/";
 export default {
   data: () => ({
-    yearList: ['2020', '2019', '2017', '2016', '2015', '2014', '2013', '2012', '2011', '2010'],
+    yearList: ['2021', '2020', '2018', '2019', '2017', '2016', '2015', '2014'],
     dialogFormVisible: true,
     paperInfoForm: {
       type: '',
@@ -126,6 +127,16 @@ export default {
     submitExamPaperinfo () {
       this.dialogFormVisible = false;
       console.log(this.paperInfoForm)
+      Axios.post(APIURL + 'insertExampaper', {
+        epType: this.paperInfoForm.type,
+        epYear: this.paperInfoForm.year,
+        epMonth: this.paperInfoForm.month,
+        epIndex: this.paperInfoForm.index,
+        epURL: '111',
+      }).then(res => {
+        this.paperInfoForm.epId = res.data.data.epId;
+        console.log(res)
+      })
     }
   }
 }

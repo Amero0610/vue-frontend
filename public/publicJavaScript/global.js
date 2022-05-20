@@ -2,10 +2,11 @@
  * @Author: AmeroL
  * @Date: 2022-05-06 01:27:40
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-10 22:30:26
+ * @LastEditTime: 2022-05-17 00:44:22
  * @FilePath: /vue-frontend/public/publicJavaScript/global.js
  * @email: vian8416@163.com
  */
+
 function stringToArrayWithWrap(str) {
   let a = str.split('\n');
   let objArray = new Array();

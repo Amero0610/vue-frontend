@@ -2,8 +2,8 @@
  * @Author: AmeroL
  * @Date: 2022-04-09 01:22:08
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-11 21:43:56
- * @FilePath: \vue-frontend\src\views\scoreManage\showScoreList.vue
+ * @LastEditTime: 2022-05-19 00:22:19
+ * @FilePath: /vue-frontend/src/views/scoreManage/showScoreList.vue
  * @email: vian8416@163.com
 -->
 <template>
@@ -86,13 +86,15 @@
       <el-table-column label="Reading"
                        prop="scReadScore"></el-table-column>
       <el-table-column label="Writing"
-                       prop="scStudentNumber">
+                       prop="scWriteScore">
         <template slot-scope="scope">{{scope.row|writeScoreFilter}}</template>
       </el-table-column>
       <el-table-column label="scTotalScore"
-                       prop="scTotalScore"></el-table-column>
-      <el-table-column label="scTime"
-                       prop="scTime"></el-table-column>
+                       prop="scTotalScore">
+        <template slot-scope="scope">{{scope.row|totalScoreFilter}}</template>
+      </el-table-column>
+      <!-- <el-table-column label="scTime"
+                       prop="scTime"></el-table-column> -->
       <el-table-column label="Operation"
                        width="180px">
 
@@ -116,6 +118,9 @@
   </div>
 </template>
 <script>
+let that;
+import Axios from 'axios';
+const APIURL = "http://123.57.7.40:5067/api/examination/";
 export default {
   data: () => ({
     activeNames: '1',
@@ -128,47 +133,121 @@ export default {
     {
       writeContent: ["2", "2", "3"],
       translateContent: ["2", "2", "3"],
-      writeScore: "",
-      translateScore: "",
+      writeScore: '',
+      translateScore: '',
     },
+    updateAllInfo: {},
     scoreList: [
-      {
-        scStudentNumber: '20184140',
-        scListenScore: '22',
-        scReadScore: '21',
-        scWriteScore: '33',
-        scTranslateScore: '44',
-        scTotalScore: '66',
-        scTime: '2020-04-09',
-      },
-      {
-        scStudentNumber: '20180000',
-        scListenScore: '222',
-        scReadScore: '212',
-        scWriteScore: '333',
-        scTranslateScore: '414',
-        scTotalScore: '662',
-        scTime: '2020-04-19',
-      },
+
 
     ],
     currentExampaper: '',
     ExampaperList: [
-      {
-        id: '1',
-        name: 'Exampaper1',
-      },
-      {
-        id: '2',
-        name: 'Exampaper2',
-      },
-      {
-        id: '3',
-        name: 'Exampaper3',
-      },
+      // {
+      //   id: '1',
+      //   name: 'CET4-2019-12-01',
+      // },
+      // {
+      //   id: '2',
+      //   name: 'CET4-2019-12-02',
+      // },
+      // {
+      //   id: '3',
+      //   name: 'CET4-2019-06-01',
+      // },
     ],
   }),
+  created () {
+    that = this;
+    this.api_getAllExampaper();
+  },
   methods: {
+    formatName (_data) {
+
+      let _str = "";
+      _str += _data.epType.toUpperCase() + " " + _data.epYear + '.' + _data.epMonth + ' No.' + _data.epIndex;
+      return _str;
+    },
+    pushScoreList (_list) {
+      this.scoreList = [];
+      for (let i = 0; i < _list.length; i++) {
+        let obj = new Object();
+        obj.scStudentNumber = _list[i].stuNumber;
+        obj.scListenScore = _list[i].scListen;
+        obj.scReadScore = _list[i].scRead;
+        obj.scWriteScore = _list[i].scWrite;
+        obj.scTranslateScore = _list[i].scTranslate;
+        obj.scTotalScore = _list[i].scSum;
+        obj.Sub1Ans = _list[i].scSubject1Ans;
+        obj.Sub2Ans = _list[i].scSubject2Ans;
+        obj.scId = _list[i].scId;
+        obj.epId = _list[i].epId;
+        this.scoreList.push(obj);
+      }
+    },
+    showSuccessMessage () {
+      that.$message({
+        message: 'Success',
+        type: 'success'
+      })
+    },
+    pushExampaperList (_list) {
+      for (let i = 0; i < _list.length; i++) {
+        let obj = new Object();
+        obj.id = i;
+        obj.name = this.formatName(_list[i]);
+        obj.epId = _list[i].epId;
+        this.ExampaperList.push(obj);
+      }
+    },
+    api_deleteStudentScore (_obj) {
+      Axios.post(APIURL + 'deleteScore', {
+        stuNumber: _obj.scStudentNumber,
+        epId: _obj.epId,
+      }).then(res => {
+        console.log(res);
+      }).catch(err => {
+        console.log(err);
+      })
+    },
+    api_updateStudentScore (_obj) {
+      console.log(_obj);
+      _obj.scTotalScore = Number(_obj.scWriteScore) + Number(_obj.scListenScore) + Number(_obj.scReadScore) + Number(_obj.scTranslateScore);
+      Axios.post(APIURL + 'updateScore', {
+        stuNumber: _obj.scStudentNumber,
+        epId: _obj.epId,
+        scWrite: _obj.scWriteScore,
+        scListen: _obj.scListenScore,
+        scRead: _obj.scReadScore,
+        scTranslate: _obj.scTranslateScore,
+        scSubject1Ans: _obj.Sub1Ans,
+        scSubject2Ans: _obj.Sub2Ans,
+        scSum: _obj.scTotalScore,
+      }).then(res => {
+        that.showSuccessMessage();
+        console.log(res);
+      }).catch(err => {
+        console.log(err);
+      })
+    },
+    api_getStudentScore (_epId) {
+      Axios.get(APIURL + 'getScore', {
+        params: {
+          epId: _epId
+        }
+      }).then(res => {
+        let remoteList = res.data.data;
+        this.pushScoreList(remoteList)
+
+      })
+    },
+    api_getAllExampaper () {
+      Axios.get(APIURL + 'getAllExampaper')
+        .then(res => {
+          let remoteList = res.data.data;
+          this.pushExampaperList(remoteList);
+        })
+    },
     clearTempInfo () {
       this.updateScoreList.writeScore = '';
       this.updateScoreList.translateScore = '';
@@ -176,46 +255,75 @@ export default {
       this.translateScorePlace = '';
 
     },
+
     showExampaperTitle (_title) {
       this.currentExampaperTitle = _title;
     },
 
-    getCurrentItem () {
+    getCurrentItem (value) {
+
       // get exampaper name
-      for (let i = 0; i < this.ExampaperList.length; i++) {
-        if (this.ExampaperList[i].id == this.currentExampaper) {
-          this.showExampaperTitle(this.ExampaperList[i].name);
-        }
-      }
+      // for (let i = 0; i < this.ExampaperList.length; i++) {
+      //   if (this.ExampaperList[i].id == this.currentExampaper) {
+      //     this.showExampaperTitle(this.ExampaperList[i].name);
+      //   }
+      // }
+      this.currentExampaper = this.ExampaperList[value].name;
+      let epId = this.ExampaperList[value].epId;
+
+      this.api_getStudentScore(epId);
     },
+    updateScore (_obj) {
+      this.api_updateStudentScore(_obj);
+      // Axios.post(APIURL + 'deleteScore', {
+      //   stuNumber: _obj.studentNumber,
+      //   epId: _obj.epId,
+      // }).then(res => {
+      //   this.api_updateStudentScore(_obj);
+      //   console.log(res);
+      // })
+    },
+
     editScore (row) {
+      this.updateAllInfo = row;
       this.dialogVisible = true;
       this.writeScorePlace = row.scWriteScore;
       this.translateScorePlace = row.scTranslateScore;
-      this.updateStudentNumber = row.scStudentNumber;
+      this.updateScoreList.writeScore = row.scWriteScore;
+      this.updateScoreList.translateScore = row.scTranslateScore;
+      this.updateScoreList.writeContent = row.Sub1Ans.split('*');
+      this.updateScoreList.translateContent = row.Sub2Ans.split('*');
     },
     submitUpdate () {
       // update student score
       for (let i = 0; i < this.scoreList.length; i++) {
-        if (this.scoreList[i].scStudentNumber == this.updateStudentNumber) {
+        if (this.scoreList[i].scStudentNumber == this.updateAllInfo.scStudentNumber) {
           this.scoreList[i].scWriteScore = this.updateScoreList.writeScore;
+          this.updateAllInfo.scWriteScore = this.updateScoreList.writeScore;
           this.scoreList[i].scTranslateScore = this.updateScoreList.translateScore;
+          this.updateAllInfo.scTranslateScore = this.updateScoreList.translateScore;
         }
       }
+      this.updateScore(this.updateAllInfo);
       this.clearTempInfo();
       this.dialogVisible = false;
     },
     deleteScore (row) {
-      this.popoveriable = true;
+      this.api_deleteStudentScore(row);
       this.scoreList.splice(this.scoreList.indexOf(row), 1);
     },
 
   },
   filters: {
     writeScoreFilter (value) {
+
       const SCORERES = Number(value.scWriteScore) + Number(value.scTranslateScore);
       return SCORERES;
     },
+    totalScoreFilter (value) {
+      const SCORERES = Number(value.scListenScore) + Number(value.scReadScore) + Number(value.scWriteScore) + Number(value.scTranslateScore);
+      return SCORERES
+    }
   },
   mounted () {
     if (this.currentExampaper == '') {

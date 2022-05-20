@@ -2,8 +2,8 @@
  * @Author: AmeroL
  * @Date: 2022-04-08 21:50:40
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-11 21:54:33
- * @FilePath: \vue-frontend\src\components\comMainPage\comHeader.vue
+ * @LastEditTime: 2022-05-20 20:12:29
+ * @FilePath: /vue-frontend/src/components/comMainPage/comHeader.vue
  * @email: vian8416@163.com
 -->
 <template>
@@ -14,7 +14,7 @@
             justify="space-between">
       <el-col :span="8">
         <div id="Headertitle">
-          <span> This is my management system.</span>
+          <span>Level 4 and Level 6 Mock Exam System</span>
         </div>
       </el-col>
 
@@ -23,14 +23,14 @@
         <el-row type="flex"
                 align="middle"
                 justify="end">
-          <el-col :span="7">
+          <el-col :span="5">
             <div id="HeaderPersonNamw">
               <span id="HeaderPersonName">{{
                 this.$store.state.username
               }}</span>
             </div>
           </el-col>
-          <el-col :span="2">
+          <el-col :span="7">
             <div id="HeaderPersonalIcon">
               <!-- <el-avatar size="large"
                          :src="avatarIconSrc"></el-avatar> -->
@@ -59,6 +59,9 @@
 }
 #Boardbox #HeaderPersonalIcon {
 }
+#HeaderPersonalIcon >>> .el-button {
+  width: 100%;
+}
 #Boardbox #Headertitle {
   text-align: left;
   padding-left: 5%;
@@ -85,9 +88,20 @@ export default {
     };
   },
   methods: {
+    deleteCookies () {
+      this.$cookies.remove('password');
+      this.$cookies.remove('username');
+      this.$cookies.remove('permission');
+      this.$cookies.remove('loginflag');
+      this.$cookies.remove('stuNumber');
+    },
     ExitSystem () {
       this.$confirm("Are you exit this System?", "Tip").then(() => {
-        this.$store.commit('logout');
+        this.deleteCookies();
+        // this.$store.state.username = 'Nologin!';
+        // this.$store.state.userLoginStuNumber = '';
+        // this.$store.state.loginflag = false;
+        // this.$store.state.permission = 0;
         this.$router.push('/userlogin');
       }).catch(() => {
         this.$message('Cancel');

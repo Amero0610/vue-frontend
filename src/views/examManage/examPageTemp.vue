@@ -1,11 +1,14 @@
+<!--
+ * @Author: AmeroL
+ * @Date: 2022-04-09 01:53:53
+ * @LastEditors: AmeroL
+ * @LastEditTime: 2022-05-17 21:32:42
+ * @FilePath: /vue-frontend/src/views/examManage/examPage.vue
+ * @email: vian8416@163.com
+-->
 <template>
   <div id="ExamMainPageBox">
-    <div class="revireOptionArea">
-      <el-button type="primary"
-                 @click="nextPart"
-                 plain> Next Part</el-button>
-    </div>
-    <!-- <comHeader></comHeader> -->
+    <comHeader></comHeader>
     <el-button type="primart"
                plain
                style="display:none"
@@ -67,7 +70,7 @@
                    :disabled="writingBoxToNext"
                    plain
                    round
-                   @click="testInput">input</el-button>
+                   @click="submitWritingPart">input</el-button>
       </div>
 
     </div>
@@ -127,7 +130,7 @@
               <el-form :model="specticalQuestion1Form">
 
                 <el-row type="flex"
-                        justify="start"
+                        justify="center"
                         align="middle"
                         style="flex-wrap:wrap">
                   <el-form-item v-for="(item,index) in specticalQuestion1Form.Options"
@@ -154,7 +157,7 @@
                   <el-form-item v-for="(item,index) in specticalQuestion1Form.Ans"
                                 :key="index">
                     <el-col :span="2">
-                      <p class="specticalQuestion1SelectNumber">{{index+spec1Number|OptionIndexFilter}}</p>
+                      <p class="specticalQuestion1SelectNumber">{{index|OptionIndexFilter}}</p>
                     </el-col>
                     <el-col :span="5">
                       <el-select v-model="specticalQuestion1Form.Ans[index]"
@@ -195,7 +198,7 @@
                                 :key="index">
                     <el-divider></el-divider>
                     <el-col :span="1">
-                      <p class="specticalQuestion2OptionNumber">{{index+spec2Number}}.</p>
+                      <p class="specticalQuestion2OptionNumber">{{index}}.</p>
                     </el-col>
                     <el-col :span="21">
                       <p class="specticalQuestion2OptionContent">{{item}}</p>
@@ -288,78 +291,186 @@
   </div>
 </template>
 <script>
+import Axios from 'axios';
+const APIURL = "http://123.57.7.40:5067/api/examination/";
 let that;
 import comReadingPaper from "../../components/examingCom/readingPaper";
 import comExampaper from "../../components/examingCom/examPaper.vue"
 import global from '../../../public/publicJavaScript/global.js'
-// import comHeader from '../../components/comMainPage/comHeader.vue';
+import comHeader from '../../components/comMainPage/comHeader.vue';
 export default {
   data: () => ({
+    listenScore: "",
+    readScore: "",
+    spec1Score: "",
+    spec2Score: "",
+
+
+    isUserChangeListeningPart: false,
+    isUserChangeReadingPart: false,
     timeFlag: 'false',
     timeDown: '',
     timer: '',
-    spec1Number: '',
-    spec2Number: '',
+    totalTime: '',
     writingPartTime: 0,
+    writingOverTime: 1800,
     ListeningPartTime: 0,
+    ListeningPartOverTime: '',
     ReadingPartTranslatingPartTime: 0,
     active: 0,
     wordLength: '0',
-    writingContent: [{
-      value: ""
-    }],
+    writingContent: [
+      {
+        value: "For this part, you are allowed 30 minutes to write a short essay about a campus activity that has benefited you most.You should state the reasons and write at least 120 words but no more than 180 words"
+      }],
     writingInputContent: '',
     writingBoxToNext: true,
 
 
     listingContent: [
-
+      {
+        userAns: "",
+        questionNo: 1,
+        questionContent: "This is Question10",
+        AnsA: "The man hates to lend his tools to other people",
+        AnsB: "The man has't finished working on the bookshelf",
+        AnsC: "The tools have already been returned to the woman",
+        AnsD: "The tools the man borrowed from the woman are missing",
+      },
+      {
+        userAns: "",
+        questionNo: 2,
+        questionContent: "This is Questdsankdsajhkldh jsakdhjks ahdjksahjkd hjksahd jksahjk shajk hdsjkah jkdsahjk ion10",
+        AnsA: "Save time by a using a computer ",
+        AnsB: "Borrow Martha's computer",
+        AnsC: "Buy her own computer",
+        AnsD: "Stay home and complete her paper",
+      },
+      {
+        userAns: "",
+        questionNo: 3,
+        questionContent: "This is Questiodsnabdsajkd sajkdhjksahdjks ahjk dhjksahjk dsahkn10",
+        AnsA: "10Ans A",
+        AnsB: "10Ans B",
+        AnsC: "10Ans C",
+        AnsD: "10Ans D",
+      },
+      {
+        userAns: "",
+        questionNo: 4,
+        questionContent: "This is Question11",
+        AnsA: "11Ans A",
+        AnsB: "11Ans B",
+        AnsC: "11Ans C",
+        AnsD: "11Ans D",
+      },
     ],
+    listenTrue: [],
     listingAns: [],
     audio: [
       {
-        name: "Nevada",
-        artist: "Vicetone",
-        url: 'http://123.57.7.40:5057/media/Nevada.ba9172c2.mp3',
+        name: "test",
+        artist: "test",
+        url: ''
       },
     ],
 
 
-    specticalQuestion1Content: [],
+    specticalQuestion1Content: ["In the center of a big city there are usually dozens of large office buildings that house big banks, corporation headquarters,and government agencies. Thousands of people work in these buildings. People who do all the office work are called white-collarworkers. 26 and receptionists, bookkeepers and computer operators work for many different kinds of companies",
+      "Many office workers dream of working their way up to the top, from clerk to 27 of a corporation. The way lies throughmiddle management. Middle management includes junior executives, who may fill 28 jobs, supervise other workers in thecompany, 29 action to top management, or see that the company’s policies are 30 .At the very top are the senior executives.They 31 the policies for their own companies, especially 32 .The Chief Executive Officer, or CEO, of a large 33 hasa great deal of power and influence.",
+      "It is believed that one can start out at the bottom and go all the way to the top. Because financial matters are so important,some accountants become top executives. In companies where technology is important, people with an engineering backgrouncan also rise to the top. Nowadays, however, education 34 in the selection of people for management jobs. Universities inmany countries offer courses in business administration. The graduates of these courses often start out in middle managementjobs. From there, they can easily get promoted if they show the necessary 35 and ability"],
     specticalQuestion1True: [],
     specticalQuestion1Info: 'this is info',
     specticalQuestion1Form: {
-      Options: [],
-      AnsOption: [],
-      Ans: [],
+      Options: ['accelerating', 'especially', 'actually', 'future', 'closely', 'led', 'contemporary', 'met', 'courses', 'procedures', 'cirtical', 'propretious', 'declining', 'spheres', 'degrees'],
+      AnsOption: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O'],
+      Ans: ['', '', '', '', '', '', '', '', '', ''],
     },
     specticalQuestion2True: [],
-    specticalQuestion2Content: [],
+    specticalQuestion2Content: ['(A).In [10] flood of darkness, hope is the light. It brings comfort, faith, and confidence. It gives us guidance when we are lost, and gives support when we are afraid. And the moment we give up hope, we give up our lives. The world we live in is disintegrating into a place of malice and hatred, where we need hope and find it harder. In this world of fear, hope to find better, but easier said than done, the more meaningful life of faith will make life meaningful.',
+      "(B).Only when you understand the true meaning of life can you live truly. Bittersweet as life is, it's still wonderful, and it's fascinating even in tragedy. If you're just alive, try harder and try to live wonderfully.",
+      '(C).this is 3',
+      '(D).this is 4'],
     specticalQuestion2Info: [],
     optionsWord: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O'],
     specticalQuestion2Form: {
-      Options: [],
+      Options: ['1',
+        "Only when you understand the true meaning of life can you live truly. Bittersweet as life is, it's still wonderful, and it's fascinating even in tragedy. If you're just alive, try harder and try to live wonderfully.",
+        "If people really understood the horrible consequences of sugary foods and drinks, they would support governmentmeasures against sugar consumption.",
+        '4', '5', '6', '7', '8', '9'],
       Ans: [],
     },
-
+    readingTrue: [],
     readingAns: [],
     readingQuestionForm: [
 
+      {
+        Passage: ['In [10] flood of darkness, hope is the light. It brings comfort, faith, and confidence. It gives us guidance when we are lost, and gives support when we are afraid. And the moment we give up hope, we give up our lives. The world we live in is disintegrating into a place of malice and hatred, where we need hope and find it harder. In this world of fear, hope to find better, but easier said than done, the more meaningful life of faith will make life meaningful.',
+          "Only when you understand the true meaning of life can you live truly. Bittersweet as life is, it's still wonderful, and it's fascinating even in tragedy. If you're just alive, try harder and try to live wonderfully.",
+          'this is 3',
+          'this is 4'],
+        readingPassageQuestion: [
+          {
+            userAns: "",
+            questionNo: 1,
+            questionContent: "This is Question10",
+            AnsA: "10Ans A",
+            AnsB: "10Ans B",
+            AnsC: "10Ans 1",
+            AnsD: "10Ans D",
+
+          },
+          {
+            userAns: "",
+            questionNo: '2',
+            questionContent: 'this is 2',
+            AnsA: "10Ans A",
+            AnsB: "10Ans B",
+            AnsC: "10Ans C",
+            AnsD: "10Ans D",
+          },
+        ],
+      },
+      {
+        Passage: ["this is 3", "this is 4", "this is 5"],
+        readingPassageQuestion: [
+          {
+            userAns: "",
+            questionNo: 1,
+            questionContent: "This is Question10",
+            AnsA: "10Ans A",
+            AnsB: "10Ans B",
+            AnsC: "10Ans 1",
+            AnsD: "10Ans D",
+
+          },
+          {
+            userAns: "",
+            questionNo: '2',
+            questionContent: 'this is 2',
+            AnsA: "10Ans A",
+            AnsB: "10Ans B",
+            AnsC: "10Ans C",
+            AnsD: "10Ans D",
+          },
+        ],
+      },
     ],
-    translatingContent: [],
+    translatingContent: ['In [10] flood of darkness, hope is the light. It brings comfort, faith, and confidence. It gives us guidance when we are lost, and gives support when we are afraid. And the moment we give up hope, we give up our lives. The world we live in is disintegrating into a place of malice and hatred, where we need hope and find it harder. In this world of fear, hope to find better, but easier said than done, the more meaningful life of faith will make life meaningful.',
+      "Only when you understand the true meaning of life can you live truly. Bittersweet as life is, it's still wonderful, and it's fascinating even in tragedy. If you're just alive, try harder and try to live wonderfully.",
+      'this is 3',
+      'this is 4'],
     translatingAns: "",
   }),
   components: {
     comReadingPaper,
-    // comHeader,
+    comHeader,
     comExampaper
   },
   created () {
 
-    let ExampaperQuestion = this.$store.state.currentReviewExamPaper;
-    this.spec1Number = ExampaperQuestion[2][0].schoNumber;
-    this.spec2Number = ExampaperQuestion[2][1].schoNumber;
-
+    this.audio[0].url = this.$store.state.currentExamingExampapeAudioAddr;
+    let ExampaperQuestion = this.$store.state.currentExamingExampaperInfo;
     //console.log(ExampaperQuestion);
     // set write
     this.writingContent[0].value = ExampaperQuestion[1][0].subContent;
@@ -378,7 +489,7 @@ export default {
       obj.AnsC = ExampaperQuestion[0][i].chC;
       obj.AnsD = ExampaperQuestion[0][i].chD;
       this.listingContent.push(obj);
-      this.listingAns.push(ExampaperQuestion[0][i].chTrue);
+      this.listenTrue.push(ExampaperQuestion[0][i].chTrue);
     }
     // set read
     for (let i = 0; i < ExampaperQuestion[3].length; i++) {
@@ -400,7 +511,7 @@ export default {
 
           obj.readingPassageQuestion.push(questionObj);
 
-          this.readingAns.push(ExampaperQuestion[4][j].rdTrue);
+          this.readingTrue.push(ExampaperQuestion[4][j].rdTrue);
         }
       }
       this.readingQuestionForm.push(obj);
@@ -441,21 +552,34 @@ export default {
 
 
 
-    // axios get exampepr info
-    // let loading = this.$loading({
-    //   lock: true,
-    //   background: 'rgba(0, 0, 0, 0.9)'
-    // });
-    // setTimeout(() => {
-    //   loading.close();
-    //   this.active = 0;
-    //   this.startExam();
-    // }, 3 * 1000);
-    // this.$message({
-    //   message: "The exam starts in 3 seconds!",
-    //   type: 'success',
-    //   duration: 3000
-    // });
+
+
+
+
+
+
+    if (this.$store.state.currentExamType == 'cet4') {
+      this.totalTime = 7500;
+      this.ListeningPartOverTime = 1500
+    } else {
+      this.totalTime = 7800;
+      this.ListeningPartOverTime = 1800
+    }
+
+    let loading = this.$loading({
+      lock: true,
+      background: 'rgba(0, 0, 0, 0.9)'
+    });
+    setTimeout(() => {
+      loading.close();
+      this.active = 0;
+      this.startExam();
+    }, 3 * 1000);
+    this.$message({
+      message: "The exam starts in 3 seconds!",
+      type: 'success',
+      duration: 3000
+    });
   },
   mounted () {
     that = this;
@@ -465,24 +589,125 @@ export default {
     }
   },
   methods: {
-    submitPart3Content () {
-      console.log(this.specticalQuestion1Form.Ans);
-      console.log(this.specticalQuestion2Form.Ans);
+    examOver () {
+      // /this.getStudentAns();
+    },
+    formatWriteInput (_input) {
+      let obj = global.stringToArrayWithWrap(_input);
+      let resStr = "";
+      for (let i = 0; i < obj.length; i++) {
+        resStr += obj[i].value + "*";
+      }
+      return resStr;
+
+    },
+    api_insertScore (_stuNumber, _epId, _scWirte, _scListen, _scRead, _scTranslate, _scSubject1Ans, _scSubject2Ans, scNum) {
+      Axios.post(APIURL + "insertScore", {
+        stuNumber: _stuNumber,
+        epId: _epId,
+        scWirte: _scWirte,
+        scListen: _scListen,
+        scRead: _scRead,
+        scTranslate: _scTranslate,
+        scSubject1Ans: _scSubject1Ans,
+        scSubject2Ans: _scSubject2Ans,
+        scNum: scNum
+      }).then(res => {
+        console.log(res);
+      }).catch(err => {
+        console.log(err);
+      })
+
+    },
+    setScore (_ansArray, _trueArray, _itemScore) {
+      let _score = 0;
+      for (let i = 0; i < _ansArray; i++) {
+        if (_ansArray[i] == _trueArray[i]) {
+          _score += _itemScore;
+        }
+      }
+      return _score;
+    },
+
+    setListenScore () {
+      let listenAns = this.$refs.comListeningPartRef.returnAns();
+      for (let i = 0; i < listenAns.length; i++) {
+        if (listenAns[i] == this.listenTrue[i]) {
+          this.listenScore += 10;
+        }
+      }
+    },
+    setReadScore () {
+      let readingAns = this.getReadingAns();
+      for (let i = 0; i < readingAns.length; i++) {
+        if (readingAns[i] == this.readingTrue[i]) {
+          this.readingScore += 20;
+        }
+      }
+    },
+    setSpec1Score () {
+      let spec1Ans = this.specticalQuestion1Form.Ans;
+      for (let i = 0; i < spec1Ans.length; i++) {
+        if (spec1Ans[i] == this.specticalQuestion1True[i]) {
+          this.specticalScore1 += 10;
+        }
+      }
+    },
+    setSpec2Score () { },
+    getStudentAns () {
+      console.log("write ans");
+
+      console.log(this.formatWriteInput(this.writingInputContent));
+      console.log("translate ans");
+      console.log(this.formatWriteInput(this.translatingAns));
+      console.log("listen ans");
+
+
+      console.log("read ans");
       console.log(this.getReadingAns());
-      console.log(this.translatingAns)
-      this.endExam();
+      console.log("spec1 ans");
+      console.log(this.specticalQuestion1Form.Ans);
+      console.log("spec2 ans");
+      console.log(this.specticalQuestion2Form.Ans);
 
 
     },
+    examOverSubmitScore () {
+      console.log(this.$store.state.currentExamInfo.epId);
+      console.log(this.$store.state.userLoginStuNumber);
+      this.getStudentAns();
+
+
+
+      //this.api_insertScore(this.$store.state.userLoginStuNumber,)
+
+    },
+    submitPart3Content () {
+      this.active = 3;
+
+
+
+
+    },
+    setAllScore () {
+      this.listenScore = this.setScore(this.$refs.comListeningPartRef.returnAns(), this.listenTrue, 10);
+      this.readingScore = this.setScore(this.getReadingAns(), this.readingTrue, 20);
+      this.spec1Score = this.setScore(this.specticalQuestion1Form.Ans, this.specticalQuestion1True, 10);
+      this.spec2Score = this.setScore(this.specticalQuestion2Form.Ans, this.specticalQuestion2True, 10);
+    },
     getListeningAns () {
+
       console.log(this.$refs.comListeningPartRef.returnAns());
     },
 
     ListenAns (value) {
+      this.active = 2;
+      this.isUserChangeReadingPart = true;
       this.listingAns = value;
       // this.$loading();
       // setTimeout(() => {
       //   this.active = 2;
+
       //   this.$loading().close();
       // }, 1000);
 
@@ -502,27 +727,7 @@ export default {
 
     },
     startExam () {
-      this.timeFlag = true;
-      if (this.timeFlag == true) {
-        clearInterval(this.timer);
-      }
-      let timeCount = 60 * 60 * 2;
-      this.timer = setInterval(() => {
-        let minutes = Math.floor(timeCount / 60);
-        let seconds = Math.floor(timeCount % 60);
-        if (seconds < 10) {
-          seconds = '0' + seconds;
-        }
-        let msg = '' + minutes + ':' + seconds + '';
-        this.writingPartTime++;
-        this.ListeningPartTime++;
-        timeCount--;
-        this.timeDown = msg;
-        if (timeCount <= 0) {
-          this.submitPart3Content();
-          clearInterval(this.timer);
-        }
-      }, 1000);
+      this.customTimeInterval(this.totalTime);
 
     },
     endExam () {
@@ -542,6 +747,7 @@ export default {
       setTimeout(() => {
         loading.close();
       }, 5 * 1000);
+      this.examOver();
     },
     toMainpage () {
 
@@ -564,6 +770,7 @@ export default {
         let msg = '' + minutes + ':' + seconds + '';
         this.writingPartTime++;
         this.ListeningPartTime++;
+
         timeCount--;
         this.timeDown = msg;
         if (timeCount <= 0) {
@@ -573,18 +780,37 @@ export default {
       }, 1000);
 
     },
-    testInput () {
+    customTimeInterval (time) {
+      this.timeFlag = true;
+      if (this.timeFlag == true) {
+        clearInterval(this.timer);
+      }
+      let timeCount = time;
+      this.timer = setInterval(() => {
+        let minutes = Math.floor(timeCount / 60);
+        let seconds = Math.floor(timeCount % 60);
+        if (seconds < 10) {
+          seconds = '0' + seconds;
+        }
+        let msg = '' + minutes + ':' + seconds + '';
+        this.writingPartTime++;
+        this.ListeningPartTime++;
+        timeCount--;
+        this.timeDown = msg;
+        if (timeCount <= 0) {
+          this.submitPart3Content();
+          clearInterval(this.timer);
+        }
+      }, 1000);
+
+    },
+    submitWritingPart () {
       this.active = 1;
+      this.isUserChangeListeningPart = true;
       this.writingContent = global.stringToArrayWithWrap(this.writingInputContent)
       console.log(this.writingInputContent);
       // this.writingContent = this.writingInputContent;
-    },
-    nextPart () {
-      this.active++;
-      if (this.active == 3) {
-        this.active = 0;
-      }
-    },
+    }
     // deleteCookies() {
     //   this.$cookies.remove('username');
     //   this.$router.push('/main');
@@ -600,20 +826,53 @@ export default {
       },
       deep: true
     },
+    active: {
+      handler: function (val) {
+        switch (val) {
+          case 0: {
+
+            break;
+          }
+          case 1: {
+            that.submitWritingPart();
+            console.log(111);
+            that.totalTime = that.totalTime - 1800;
+            that.customTimeInterval(that.totalTime);
+            that.$refs.aplayer.play();
+            console.log(that.audio[0].url);
+
+            break;
+          }
+          case 2: {
+            that.totalTime = that.totalTime - that.ListeningPartOverTime;
+            that.customTimeInterval(that.totalTime);
+            that.getListeningAns();
+            that.$refs.aplayer.pause();
+            break;
+          }
+          case 3: {
+            that.endExam();
+            that.examOverSubmitScore();
+            that.submitPart3Content();
+            break;
+          }
+        }
+      }, deep: true
+    },
     writingPartTime: {
       handler: function (val) {
-        if (val > 5 && val < 7) {
+        if (val > that.writingOverTime && val < that.writingOverTime + 2 && that.isUserChangeListeningPart == false) {
           this.active = 1;
-          this.testInput();
+
         }
       },
       deep: true
     },
     ListeningPartTime: {
       handler: function (val) {
-        if (val > 9 && val < 11) {
+        if (val > that.writingOverTime + 4 && val < that.ListeningPartOverTime + 2 && that.isUserChangeReadingPart == false) {
 
-          that.getListeningAns();
+
           this.active = 2;
         }
       }
@@ -626,18 +885,16 @@ export default {
       return index[value] + '.';
     },
     OptionIndexFilter (value) {
-      return value + ".";
-    }
+      return value + 1 + ".";
+    },
   }
 };
 </script>
 <style scoped>
-.revireOptionArea {
-  width: 90%;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: left;
+#specticalQuestion1Info {
+  display: none;
 }
+
 .box-card {
   width: 90%;
   text-align: center;
@@ -655,14 +912,12 @@ export default {
   overflow-x: hidden;
 }
 #ExamPageBoxStep {
-  display: none;
   width: 100%;
   margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
 }
 .timeDownArea {
-  display: none;
   width: 100%;
   height: 40px;
   background-color: lightgreen;
@@ -680,16 +935,6 @@ export default {
   margin-left: auto;
   margin-right: auto;
   background-color: white;
-}
-.ExamPagePartBox >>> .el-button {
-  display: none;
-}
-.ExamPagePartBox >>> .el-progress,
-.ExamPagePartBox >>> #fixedBox {
-  display: none;
-}
-.ExamPagePartBox >>> .optiontext_2 {
-  padding-left: 5px;
 }
 
 /* part1 */
@@ -779,7 +1024,6 @@ export default {
 #specticalQuestion2Info,
 .readingQuestionInfo,
 .translatingInfo {
-  display: none;
   margin-top: 10px;
   padding-left: 20px;
   font-size: 16px;

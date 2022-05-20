@@ -2,7 +2,7 @@
  * @Author: Amero
  * @Date: 2022-02-03 19:54:07
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-11 00:52:07
+ * @LastEditTime: 2022-05-15 22:04:49
  
 -->
 
@@ -291,6 +291,9 @@ export default {
   font-weight: 500;
   text-align: center;
   font-family: 'questionFont';
+}
+.quesitonContent {
+  display: none;
 }
 .questionNo {
   padding-left: 10px;

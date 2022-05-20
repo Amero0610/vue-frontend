@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-05-09 17:57:52
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-11 19:39:07
+ * @LastEditTime: 2022-05-18 16:38:02
  * @FilePath: /vue-frontend/src/components/addExamPaper/comAddReadingChoose.vue
  * @email: vian8416@163.com
 -->
@@ -119,6 +119,8 @@
   </div>
 </template>
 <script>
+import Axios from 'axios';
+const APIURL = "http://123.57.7.40:5067/api/examination/";
 let that;
 import GLOBAL from "../../../public/publicJavaScript/global.js"
 export default {
@@ -176,6 +178,75 @@ export default {
     DeletePassage (index) {
       this.ReadingPassageList.splice(index, 1);
     },
+    insertPassage (_epId, _rdPassageNo, _rdPassage) {
+      Axios.post(APIURL + 'deletereadpassage', {
+        epId: _epId,
+        rdPassageNo: _rdPassageNo,
+      }).then(res => {
+        console.log(res)
+        that.api_insertReadpassage(_epId, _rdPassageNo, _rdPassage);
+      }).catch(err => {
+        console.log(err);
+      })
+
+    },
+    insertQuestion (_epId, _rdPassageNo, _rdNumber, _rdContent, _rdOptionA, _rdOptionB, _rdOptionC, _rdOptionD, _rdTrue) {
+      //console.log(_rdNumber, _rdContent, _rdOptionA, _rdOptionB, _rdOptionC, _rdOptionD, _rdTrue);
+      Axios.post(APIURL + 'deleteReadquestion', {
+        epId: _epId,
+        rdPassageNo: _rdPassageNo,
+      }).then(res => {
+        console.log(res)
+        that.api_insertReadquestion(_epId, _rdPassageNo, _rdNumber, _rdContent, _rdOptionA, _rdOptionB, _rdOptionC, _rdOptionD, _rdTrue);
+      }).catch(err => {
+        console.log(err);
+      })
+    },
+    testfun () {
+      console.log("321321321")
+    },
+    showSuccessMessage () {
+      this.$message({
+        message: 'Add Success',
+        type: 'success'
+      })
+    },
+    api_insertReadQuestion (_epId, _rdPassageNo, _rdNumber, _rdContent, _rdOptionA, _rdOptionB, _rdOptionC, _rdOptionD, _rdTrue) {
+      Axios.post(APIURL + "insertReadquestion", {
+        epId: _epId,
+        rdPassageNo: _rdPassageNo,
+        rdNumber: _rdNumber,
+        rdContent: _rdContent,
+        rdOptionA: _rdOptionA,
+        rdOptionB: _rdOptionB,
+        rdOptionC: _rdOptionC,
+        rdOptionD: _rdOptionD,
+        rdTrue: _rdTrue
+      }).then(function (response) {
+        console.log(response);
+        that.showSuccessMessage();
+        // this.$message({
+        //   message: 'Add Reading Question Success',
+        //   type: 'success'
+        // });
+      }).catch(function (error) {
+        console.log(error);
+      })
+    },
+    api_insertReadpassage (_epId, _rdPassageNo, _rdPassage) {
+      Axios.post(APIURL + "insertReadpassage", {
+        epId: _epId,
+        rdPassageNo: _rdPassageNo,
+        rdPassage: _rdPassage
+      }).then(function (response) {
+        that.showSuccessMessage();
+        console.log(response);
+
+      }).catch(function (error) {
+        console.log(error);
+      });
+
+    },
     SubmitReadingQuestion () {
       let readQuestionLength = this.ReadingPassageList.length;
       let ReadQuestionArray = new Array();
@@ -197,7 +268,22 @@ export default {
         tempObj.questionAns = tempQuestionAns;
         ReadQuestionArray.push(tempObj);
       }
+      //console.log(this.ObjectToString(ReadQuestionArray[0].passageContent));
+      for (let i = 0; i < ReadQuestionArray.length; i++) {
+        this.insertPassage(this.paperInfo.epId, i + 1, this.ObjectToString(ReadQuestionArray[i].passageContent));
+        for (let j = 0; j < ReadQuestionArray[i].questions.length; j++) {
+          this.api_insertReadQuestion(this.paperInfo.epId, i + 1, j + 1, ReadQuestionArray[i].questions[j].questionContent, ReadQuestionArray[i].questions[j].questionSelect[0], ReadQuestionArray[i].questions[j].questionSelect[1], ReadQuestionArray[i].questions[j].questionSelect[2], ReadQuestionArray[i].questions[j].questionSelect[3], ReadQuestionArray[i].questionAns[j]);
+        }
+      }
       console.log(ReadQuestionArray);
+    },
+    ObjectToString (_objArray) {
+      let str = "";
+      for (let i = 0; i < _objArray.length; i++) {
+        str += _objArray[i].value.toString() + "*";
+      }
+      return str;
+
     }
   },
   filters: {

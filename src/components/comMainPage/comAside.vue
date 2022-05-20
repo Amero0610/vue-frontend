@@ -36,6 +36,7 @@
 
     <div class="atestbox">
       <el-menu class="el-menu-vertical-demo2"
+               v-if="false"
                @open="handleOpen"
                @close="handleClose"
                :collapse="isCollapse"
@@ -49,6 +50,21 @@
         </el-menu-item>
 
       </el-menu>
+      <el-menu class="el-menu-vertical-demo2"
+               v-if="permission=='2'"
+               @open="handleOpen"
+               @close="handleClose"
+               :collapse="isCollapse"
+               router
+               :default-active="this.$route.path">
+        <el-menu-item index="/main/studentinfo"
+                      route="/main/studentinfo"
+                      class="menuItemContentleft">
+          <i class="myicon-main-sy"></i>
+          <span slot="title">Show Student Information</span>
+        </el-menu-item>
+
+      </el-menu>
       <el-menu :default-active="this.$route.path"
                class="el-menu-vertical-demo"
                @open="handleOpen"
@@ -56,7 +72,8 @@
                :collapse="isCollapse"
                router>
         <el-submenu index="1"
-                    class="menuItemContentleft">
+                    class="menuItemContentleft"
+                    v-if="permission=='1'">
           <template slot="title">
             <i class="myicon-zhanghao"></i>
             <span slot="title">Student Management</span>
@@ -79,6 +96,7 @@
                :collapse="isCollapse"
                router>
         <el-submenu index="3"
+                    v-if="permission=='1'"
                     class="menuItemContentleft">
           <template slot="title">
             <i class="myicon-paper"></i>
@@ -94,6 +112,7 @@
           </el-menu-item-group>
         </el-submenu>
         <el-submenu index="4"
+                    v-if="permission=='2'"
                     class="menuItemContentleft">
           <template slot="title">
             <i class="myicon-exam"></i>
@@ -105,6 +124,7 @@
 
               Select Exampaper</el-menu-item>
             <el-menu-item index="/exam"
+                          v-if="false"
                           route="/exam">
 
               Online Exam
@@ -119,17 +139,19 @@
                router
                :default-active="this.$route.path">
 
-        <el-menu-item index="/main/showscorelist"
+        <el-menu-item v-if="permission=='1'"
+                      index="/main/showscorelist"
                       route="/main/showscorelist"
                       class="menuItemContentleft">
           <i class="myicon-score"></i>
-          <span slot="title"> Show Score List</span>
+          <span slot="title">Score List</span>
         </el-menu-item>
         <el-menu-item index="/main/studentscore"
                       route="/main/studentscore"
+                      v-if="permission=='2'"
                       class="menuItemContentleft">
           <i class="myicon-score"></i>
-          <span slot="title"> Student List</span>
+          <span slot="title"> Score List</span>
         </el-menu-item>
       </el-menu>
 
@@ -226,8 +248,12 @@ i {
 export default {
   data () {
     return {
+      permission: '',
       isCollapse: false,
     };
+  },
+  created () {
+    this.permission = this.$store.state.permission;
   },
   methods: {
     handleOpen (key, keyPath) {

@@ -2,8 +2,8 @@
  * @Author: AmeroL
  * @Date: 2022-05-04 02:47:07
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-09 17:52:43
- * @FilePath: \vue-frontend\src\components\addExamPaper\AddSubjectiveQuestion2.vue
+ * @LastEditTime: 2022-05-18 16:38:35
+ * @FilePath: /vue-frontend/src/components/addExamPaper/AddSubjectiveQuestion2.vue
  * @email: vian8416@163.com
 -->
 <template>
@@ -108,12 +108,14 @@
   </div>
 </template>
 <script>
+import Axios from 'axios';
+const APIURL = "http://123.57.7.40:5067/api/examination/";
 let that;
 export default {
   props: ["paperInfo"],
   data: () => ({
     questionNumber: '',
-    questionType: '',
+    questionType: '2',
     trueOption: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O'],
     questionMainContentform: { questionMainContent: '', },
 
@@ -132,6 +134,39 @@ export default {
 
   },
   methods: {
+    showSuccessMessage () {
+      this.$message({
+        message: 'Add Success',
+        type: 'success'
+      })
+    },
+    insertQuestion (_epId, _schoNumber, _schoContent, _schoOption, _schoTrue, _schoType) {
+      Axios.post(APIURL + 'deleteSpecialchoise', {
+        epId: _epId,
+        schoNumber: _schoNumber
+      }).then(function (response) {
+        console.log(response);
+        that.API_insertQuestion(_epId, _schoNumber, _schoContent, _schoOption, _schoTrue, _schoType);
+      }).catch(function (error) {
+        console.log(error);
+      })
+    },
+    API_insertQuestion (_epId, _schoNumber, _schoContent, _schoOption, _schoTrue, _schoType) {
+      Axios.post(APIURL + 'insertSpecialChoise', {
+        epId: _epId,
+        schoNumber: _schoNumber,
+        schoContent: _schoContent,
+        schoOption: _schoOption,
+        schoTrue: _schoTrue,
+        schoType: _schoType
+      }).then(function (response) {
+        console.log(response);
+        console.log(response);
+        that.showSuccessMessage();
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
     handleChooseNumber () {
       console.log(this.questionNumber);
     },
@@ -153,10 +188,11 @@ export default {
     submitForm () {
       let resArray = new Array();
       resArray.push(this.questionNumber);
-      resArray.push(this.questionMainContentform.questionMainContent);
-      resArray.push(this.questionContentform.questionOptionWord);
-      resArray.push(this.questionContentform.questionTrueOption);
+      resArray.push(this.questionMainContentform.questionMainContent.split('\n').join('*'));
+      resArray.push(this.questionContentform.questionOptionWord.toString());
+      resArray.push(this.questionContentform.questionTrueOption.toString());
       console.log(resArray);
+      this.insertQuestion(this.paperInfo.epId, this.questionNumber, this.questionMainContentform.questionMainContent.split('\n').join('*'), this.questionContentform.questionOptionWord, this.questionContentform.questionTrueOption.toString(), this.questionType);
     },
     // index to word 
 

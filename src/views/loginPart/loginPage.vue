@@ -2,8 +2,8 @@
  * @Author: Amero
  * @Date: 2022-02-06 22:49:01
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-11 21:49:53
- * @FilePath: \vue-frontend\src\views\loginPart\loginPage.vue
+ * @LastEditTime: 2022-05-20 20:13:25
+ * @FilePath: /vue-frontend/src/views/loginPart/loginPage.vue
 -->
 <template>
   <div>
@@ -15,7 +15,14 @@
           <form action=""
                 class="sign-in-form">
             <h2 class="title">Login</h2>
-            <el-tooltip class="item"
+            <div class="input-field">
+              <i class="myicon-user"></i>
+
+              <el-input type="text"
+                        placeholder="StudentNumber"
+                        v-model.trim="loginData.login_stuNumber"></el-input>
+            </div>
+            <!-- <el-tooltip class="item"
                         effect="dark"
                         placement="right"
                         transition="el-zoom-in-center"
@@ -28,14 +35,8 @@
                   {{ item }}
                 </p>
               </div>
-              <div class="input-field">
-                <i class="myicon-user"></i>
-
-                <el-input type="text"
-                          placeholder="Username"
-                          v-model.trim="loginData.login_username"></el-input>
-              </div>
-            </el-tooltip>
+              
+            </el-tooltip> -->
             <el-tooltip class="item"
                         effect="dark"
                         placement="right"
@@ -207,7 +208,9 @@ const key = 'AmeroL';
 const PASSSWORDLAW = /\w{6,18}/;
 //const URL_LOCAL = 'http://127.0.0.1:3000/data/userlogin/user';
 const URL_REMOTE = 'http://123.57.7.40:5000/data/userlogin/user';
+const APIURL = "http://123.57.7.40:5067/api/examination/";
 import axios from 'axios';
+import Axios from 'axios';
 export default {
   data () {
     return {
@@ -233,7 +236,7 @@ export default {
         signUp_password_confirm: '',
       },
       loginData: {
-        login_username: '',
+        login_stuNumber: '',
         login_password: '',
       },
 
@@ -243,6 +246,100 @@ export default {
     };
   },
   methods: {
+    api_selectStudent (_studentNumber, _password) {
+      Axios.get(APIURL + 'getStudents', {
+        params: {
+          stuNumber: _studentNumber
+        }
+      }).then(res => {
+
+        let remoteData = res.data.data;
+        if (remoteData.length != 0) {
+          this.fullscreenLoading = true
+          if (remoteData[0].stuPassword == _password) {
+            setTimeout(() => {
+              this.fullscreenLoading = false;
+              switch (this.$store.state.permission) {
+                case '1': {
+                  this.$router.push({ path: '/main/showstudentlist' });
+                  break;
+                }
+                case '2': {
+                  this.$router.push({ path: '/main/selectexampaper' });
+                  break;
+                }
+              }
+
+            }, 3000);
+            this.$store.state.password = remoteData[0].stuPassword;
+            this.$store.state.username = remoteData[0].stuName;
+            this.$store.state.userLoginStuNumber = remoteData[0].stuNumber;
+            this.$store.state.loginflag = true;
+            this.$store.state.permission = remoteData[0].stuExamLevel;
+
+            this.setCookies();
+          } else {
+            this.fullscreenLoading = false;
+            this.$message.error('Password is incorrect');
+          }
+        } else {
+          this.fullscreenLoading = false;
+          this.$message.error('Student number is incorrect');
+        }
+      })
+    },
+    api_insertStudentWithSelect (_stuName, _stuPassword, _stuNumber) {
+      Axios.get(APIURL + 'getStudents', {
+        params: {
+          stuNumber: _stuNumber
+        }
+      }).then(res => {
+        console.log(res.data.data);
+        if (res.data.data.length == 0) {
+
+          this.api_insertStudent(_stuName, _stuPassword, _stuNumber)
+          this.$notify({
+            title: 'Registration success',
+            message: 'Please log in to your account',
+            type: 'success',
+          });
+          this.jump_signIn();
+          this.loginData.login_username = this.singUpData.signUp_username;
+          this.loginData.login_stuNumber = this.singUpData.signUp_stuNumber;
+          this.loginData.login_password = this.singUpData.signUP_password;
+        } else {
+          this.$notify({
+            title: 'Registration failed',
+            message: 'The account you entered already exists',
+            type: 'error',
+          });
+          return false;
+        }
+      })
+    },
+    api_insertStudent (_stuName, _stuPassword, _stuNumber) {
+      Axios.post(APIURL + 'insertStudent', {
+        stuName: _stuName,
+        stuPassword: _stuPassword,
+        stuNumber: _stuNumber
+      }).then(res => {
+        console.log(res.data.data);
+        this.$message({
+          message: 'Register Success',
+          type: 'success'
+        });
+      }).catch(err => {
+        console.log(err);
+      })
+    },
+
+    setCookies () {
+      this.$cookies.set('password', this.$store.state.password, '1d');
+      this.$cookies.set('username', this.$store.state.username, '1d');
+      this.$cookies.set('permission', this.$store.state.permission, '1d');
+      this.$cookies.set('loginflag', this.$store.state.loginflag, '1d');
+      this.$cookies.set('stuNumber', this.$store.state.userLoginStuNumber, '1d');
+    },
     testani: function () {
       this.$router.push({ path: '/test' });
       // let temparray = document.querySelectorAll(".mytestclass");
@@ -414,19 +511,12 @@ export default {
         this.verifyUsername(_username) &&
         this.verifyPassword(_password)
       ) {
-        const USERID = this.buildUserId(_username);
-        const TOKEN = this.buildToken(_password, _username);
+        //const USERID = this.buildUserId(_username);
+        //const TOKEN = this.buildToken(_password, _username);
 
-        this.api_createNewUserItem(USERID, TOKEN);
+        //this.api_createNewUserItem(USERID, TOKEN);
+        this.api_insertStudentWithSelect(this.singUpData.signUp_username, this.singUpData.signUP_password, this.singUpData.signUp_stuNumber);
 
-        this.$notify({
-          title: 'Registration success',
-          message: 'Please log in to your account',
-          type: 'success',
-        });
-        this.jump_signIn();
-        this.loginData.login_username = this.singUpData.signUp_username;
-        this.loginData.login_password = this.singUpData.signUP_password;
       }
     },
     // testname
@@ -447,17 +537,18 @@ export default {
       this.dialogVisible = false;
     },
     login_Btn: function () {
-      let inputUsername = this.loginData.login_username;
+      let inputNumber = this.loginData.login_stuNumber;
       let inputPassword = this.loginData.login_password;
-      const USERID = this.buildUserId(inputUsername);
-      const TOKEN = this.buildToken(inputPassword, inputUsername);
+      //const USERID = this.buildUserId(inputUsername);
+      //const TOKEN = this.buildToken(inputPassword, inputUsername);
 
       if (
-        this.verifyUsername(inputUsername) &&
+
         this.verifyPassword(inputPassword)
       ) {
         this.clearData(this.loginData);
-        this.api_checkAccountExist(USERID, TOKEN);
+        this.api_selectStudent(inputNumber, inputPassword);
+        //this.api_checkAccountExist(USERID, TOKEN);
       }
     },
 
