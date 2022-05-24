@@ -2,25 +2,25 @@
  * @Author: AmeroL
  * @Date: 2022-04-09 01:13:58
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-20 19:31:29
+ * @LastEditTime: 2022-05-24 14:51:19
  * @FilePath: /vue-frontend/src/views/studentManage/showStudentList.vue
  * @email: vian8416@163.com
 -->
 <template>
   <div id="studentList">
-    <comPageTitile titleContent="Student list"></comPageTitile>
+    <comPageTitile titleContent="学生列表"></comPageTitile>
 
-    <el-dialog title="Update Student Info"
+    <el-dialog title="修改学生信息"
                :visible.sync="dialogVisible">
       <div id="scoreInputBox">
         <el-form label-position="right"
                  label-width="150px"
                  v-model="studentInfoList">
-          <el-form-item label="Name:">
+          <el-form-item label="用户名:">
             <el-input v-model="studentInfoList.name"
                       :placeholder="namePlace"></el-input>
           </el-form-item>
-          <el-form-item label="StudentNumber:">
+          <el-form-item label="考生号:">
             <el-input v-model="studentInfoList.studentNumber"
                       :placeholder="studentNumberPlace"
                       disabled></el-input>
@@ -29,7 +29,7 @@
             <el-input v-model="studentInfoList.permission"
                       :placeholder="permissionPlace"></el-input>
           </el-form-item> -->
-          <el-form-item label="Password:">
+          <el-form-item label="密码:">
             <el-input v-model="studentInfoList.password"
                       :placeholder="passwordPlace"></el-input>
           </el-form-item>
@@ -38,37 +38,37 @@
       </div>
       <div slot="footer"
            class="dialog-footer">
-        <el-button @click="dialogVisible = false">Cancel</el-button>
+        <el-button @click="dialogVisible = false">取消</el-button>
         <el-button type="primary"
-                   @click="submitUpdate">Confirm</el-button>
+                   @click="submitUpdate">确认</el-button>
       </div>
     </el-dialog>
 
     <el-table :data="studentList"
               :border="true">
-      <el-table-column label="Name"
+      <el-table-column label="用户名"
                        prop="name"></el-table-column>
-      <el-table-column label="StudentNumber"
+      <el-table-column label="考生号"
                        prop="studentNumber"></el-table-column>
-      <el-table-column label="Role"
+      <el-table-column label="角色"
                        prop="permission">
         <template slot-scope="scope">
           {{scope.row.permission| permissionFilter}}
         </template>
       </el-table-column>
-      <el-table-column label="Operation"
+      <el-table-column label="操作"
                        width="260">
         <template slot-scope="scope">
           <el-button @click="showStudentInfo(scope.row)"
                      type="primary"
-                     size="mini">Score</el-button>
+                     size="mini">成绩</el-button>
           <el-button type="success"
                      @click="editStudentInfo(scope.row)"
-                     size="mini">Edit</el-button>
+                     size="mini">编辑</el-button>
           <el-button type="danger"
                      plain
                      @click="deleteStudent(scope.row)"
-                     size="mini">Delete</el-button>
+                     size="mini">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -224,7 +224,9 @@ export default {
     },
     deleteStudent (value) {
 
-      this.$confirm('This option will delete this student all of data', 'Tip', {
+      this.$confirm('是否删除该学生的信息？', '提示', {
+        cancelButtonText: '取消',
+        confirmButtonText: '确定',
         type: 'warning',
       }).then(() => {
         let index = 0;
@@ -248,11 +250,11 @@ export default {
   filters: {
     permissionFilter (value) {
       if (value == 1) {
-        return "Admin";
+        return "管理员";
       } else if (value == 2) {
-        return "Student";
+        return "学生";
       } else if (value == 3) {
-        return "Student";
+        return "学生";
       }
     }
   }

@@ -2,7 +2,7 @@
  * @Author: Amero
  * @Date: 2022-02-06 22:49:01
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-20 20:13:25
+ * @LastEditTime: 2022-05-24 14:20:36
  * @FilePath: /vue-frontend/src/views/loginPart/loginPage.vue
 -->
 <template>
@@ -14,12 +14,12 @@
         <div class="signin-signup">
           <form action=""
                 class="sign-in-form">
-            <h2 class="title">Login</h2>
+            <h2 class="title">登录</h2>
             <div class="input-field">
               <i class="myicon-user"></i>
 
               <el-input type="text"
-                        placeholder="StudentNumber"
+                        placeholder="考生号"
                         v-model.trim="loginData.login_stuNumber"></el-input>
             </div>
             <!-- <el-tooltip class="item"
@@ -53,7 +53,7 @@
                 <i class="myicon-lock"></i>
 
                 <el-input type="password"
-                          placeholder="Password"
+                          placeholder="密码"
                           show-password
                           v-model.trim="loginData.login_password"></el-input>
               </div>
@@ -64,11 +64,11 @@
                        class="signLoginBtn"
                        @click="login_Btn"
                        v-loading.fullscreen.lock="fullscreenLoading">
-              Login
+              登录
             </el-button>
           </form>
           <form class="sign-up-form">
-            <h2 class="title">Sign up</h2>
+            <h2 class="title">注册</h2>
             <el-tooltip class="item"
                         effect="dark"
                         placement="right"
@@ -84,14 +84,14 @@
               <div class="input-field">
                 <i class="myicon-user"></i>
                 <el-input type="text"
-                          placeholder="Username"
+                          placeholder="用户名"
                           v-model.trim="singUpData.signUp_username"></el-input>
               </div>
             </el-tooltip>
             <div class="input-field">
               <i class="myicon-user"></i>
               <el-input type="text"
-                        placeholder="StudentNumber"
+                        placeholder="考生号"
                         v-model.trim="singUpData.signUp_stuNumber"></el-input>
             </div>
             <el-tooltip class="item"
@@ -113,7 +113,7 @@
                           maxlength="18"
                           show-password
                           type="password"
-                          placeholder="Password"
+                          placeholder="密码"
                           v-model.trim="singUpData.signUP_password"></el-input>
               </div>
 
@@ -124,7 +124,7 @@
                         maxlength="18"
                         show-password
                         type="password"
-                        placeholder="Confirm Password"
+                        placeholder="确认密码"
                         v-model.trim="singUpData.signUp_password_confirm"></el-input>
             </div>
             <el-button type="primary"
@@ -132,7 +132,7 @@
                        class="signLoginBtn"
                        :disabled="isSignUpBtnDisabled"
                        @click="signup_Btn">
-              Sign up
+              注册
             </el-button>
           </form>
         </div>
@@ -141,32 +141,31 @@
       <el-dialog title="Tip"
                  :visible.sync="dialogVisible"
                  width="30%">
-        <span>The account you entered does not exist, do you want to register
-          now?</span>
+        <span>该账号不存在，是否立即注册？</span>
         <span slot="footer"
               class="dialog-footer">
-          <el-button @click="dialogVisible = false">Cancel</el-button>
+          <el-button @click="dialogVisible = false">取消</el-button>
           <el-button type="primary"
-                     @click="loginPageSignUp()">register</el-button>
+                     @click="loginPageSignUp()">注册</el-button>
         </span>
       </el-dialog>
 
       <div class="panels-container">
         <div class="panel left-panel">
           <div class="content">
-            <h3>Level 4 and Level 6 Mock Exam System</h3>
+            <h3>大学英语四六级模拟考试系统</h3>
 
             <div class="mttestTextarea">
               <p>
-                Please enter your username and password to log in.
+                请输入你的用户名和密码登录。
                 <br />
-                If you do not have an account, please click the button below
+                如果没有账号，请点击下方的按钮注册。
               </p>
             </div>
             <button class="btn transparent"
                     id="sign-up-btn"
                     @click="jump_signUp">
-              Sign up
+              立即注册
             </button>
           </div>
           <!-- img/log.svg -->
@@ -176,18 +175,18 @@
         </div>
         <div class="panel right-panel">
           <div class="content">
-            <h3>Please register</h3>
+            <h3>大学英语四六级模拟考试系统</h3>
             <div class="mttestTextarea">
               <p>
-                Please enter your username, password to register an account
+                请输入你的用户名和密码登录。
                 <br />
-                If you already have an account, please click the button below.
+                如果已经有账号，请点击下方的按钮登录。
               </p>
             </div>
             <button class="btn transparent"
                     id="sign-in-btn"
                     @click="jump_signIn">
-              Sign in
+              登录
             </button>
           </div>
           <img :src="sign_upPic"

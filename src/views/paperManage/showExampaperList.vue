@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-04-09 01:25:14
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-17 01:26:18
+ * @LastEditTime: 2022-05-24 15:03:47
  * @FilePath: /vue-frontend/src/views/paperManage/showExampaperList.vue
  * @email: vian8416@163.com
 -->
@@ -10,35 +10,35 @@
   <div id="selectExampaperBox">
     <!-- <p id="pageTitle">Select Exampaper</p>
     <el-divider></el-divider> -->
-    <comPageTitile titleContent="PaperList"></comPageTitile>
+    <comPageTitile titleContent="试卷列表"></comPageTitile>
     <el-select v-model="currentSelectExamPaper"
                @change="selectExamPaperChange"
-               placeholder="Please Select Exampaper Type">
+               placeholder="请选择试卷的类型">
       <el-option label="CET-4"
                  value="4"></el-option>
       <el-option label="CET-6"
                  value="6"></el-option>
     </el-select>
-    <el-empty description="Please Select Exampaper"
+    <el-empty description="请选择试卷"
               v-show="!showExamPaperList.length"></el-empty>
     <el-table :data="showExamPaperList"
               :border="true"
               v-show="showExamPaperList.length">
-      <el-table-column label="ExamPaperName"
+      <el-table-column label="试卷名"
                        prop="name">
       </el-table-column>
-      <el-table-column label="Option"
+      <el-table-column label="操作"
                        width="250px">
         <template slot-scope="scope">
-          <el-popconfirm title="Confirm to selelct this exampaper"
-                         confirm-button-text="Confirm"
+          <el-popconfirm title="是否选择该试卷预览？"
+                         confirm-button-text="确认"
                          @confirm="reviewExamPaper(scope.row)"
                          cancel-button-text="Cancel"
                          style="margin-left:10px">
             <el-button type="success"
                        plain
                        size="mini"
-                       slot="reference">Review</el-button>
+                       slot="reference">预览</el-button>
           </el-popconfirm>
 
           <el-button class="optionBtn2"
@@ -46,7 +46,7 @@
                      type="danger"
                      plain
                      size="mini"
-                     slot="reference">Delete</el-button>
+                     slot="reference">删除</el-button>
         </template>
 
       </el-table-column>

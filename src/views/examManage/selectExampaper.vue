@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-04-09 18:37:38
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-17 21:11:09
+ * @LastEditTime: 2022-05-24 14:29:33
  * @FilePath: /vue-frontend/src/views/examManage/selectExampaper.vue
  * @email: vian8416@163.com
 -->
@@ -10,36 +10,36 @@
   <div id="selectExampaperBox">
     <!-- <p id="pageTitle">Select Exampaper</p>
     <el-divider></el-divider> -->
-    <comPageTitile titleContent="Select Exampaper"></comPageTitile>
+    <comPageTitile titleContent="选择试卷"></comPageTitile>
     <el-select v-model="currentSelectExamPaper"
                @change="selectExamPaperChange"
-               placeholder="Please Select Exampaper Type">
+               placeholder="请选择试卷类型">
       <el-option label="CET-4"
                  value="4"></el-option>
       <el-option label="CET-6"
                  value="6"></el-option>
     </el-select>
-    <el-empty description="Please Select Exampaper"
+    <el-empty description="请选择试卷类型"
               v-show="!showExamPaperList.length"></el-empty>
     <el-table :data="showExamPaperList"
               :border="true"
               v-show="showExamPaperList.length">
-      <el-table-column label="ExamPaperName"
+      <el-table-column label="试卷名称"
                        class="TitleName"
                        prop="name">
       </el-table-column>
-      <el-table-column label="Option"
+      <el-table-column label="操作"
                        width="150px">
         <template slot-scope="scope">
-          <el-popconfirm title="Confirm to selelct this exampaper"
-                         confirm-button-text="Confirm"
+          <el-popconfirm title="是否选择该试卷"
+                         confirm-button-text="确认"
                          @confirm="selectExamPaper(scope.row)"
-                         cancel-button-text="Cancel"
+                         cancel-button-text="取消"
                          style="margin-left:10px">
             <el-button type="success"
                        plain
                        size="mini"
-                       slot="reference">Exam</el-button>
+                       slot="reference">考试</el-button>
           </el-popconfirm>
         </template>
       </el-table-column>

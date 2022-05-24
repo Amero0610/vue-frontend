@@ -2,13 +2,13 @@
  * @Author: AmeroL
  * @Date: 2022-04-09 01:25:32
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-19 00:03:23
+ * @LastEditTime: 2022-05-24 14:55:04
  * @FilePath: /vue-frontend/src/views/paperManage/addExampaper.vue
  * @email: vian8416@163.com
 -->
 <template>
   <div id="addExampaperMainBox">
-    <el-dialog title="Input ExamPaper Information"
+    <el-dialog title="请输入试卷的信息"
                :close-on-click-modal="false"
                :close-on-press-escape="false"
                :show-close="true"
@@ -16,7 +16,7 @@
       <el-form :model="paperInfoForm"
                label-width="90px"
                label-position="left">
-        <el-form-item label="Type">
+        <el-form-item label="类型">
           <el-select v-model="paperInfoForm.type"
                      placeholder="">
             <el-option label="CET-4"
@@ -25,7 +25,7 @@
                        value="cet6"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="Year">
+        <el-form-item label="年份">
           <el-select v-model="paperInfoForm.year"
                      placeholder="">
             <el-option v-for="(item ,index) in yearList"
@@ -34,7 +34,7 @@
                        :value="item"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="Month">
+        <el-form-item label="月份">
           <el-select v-model="paperInfoForm.month"
                      placeholder="">
             <el-option label="6"
@@ -43,7 +43,7 @@
                        value="12"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="index">
+        <el-form-item label="序号">
           <el-select v-model="paperInfoForm.index"
                      placeholder="">
             <el-option label="1"
@@ -60,32 +60,32 @@
         <el-button type="success"
                    plain
                    round
-                   @click="submitExamPaperinfo">Confirm</el-button>
+                   @click="submitExamPaperinfo">确认</el-button>
       </div>
     </el-dialog>
-    <comPageTitle titleContent="Add Exampaper"></comPageTitle>
+    <comPageTitle titleContent="添加试卷"></comPageTitle>
     <el-tabs type="border-card"
              tab-position="top">
-      <el-tab-pane label="Add Listening Questions">
+      <el-tab-pane label="添加听力题">
         <el-scrollbar style="height: 100%">
           <comAddListeningChoose :paperInfo=paperInfoForm></comAddListeningChoose>
         </el-scrollbar>
       </el-tab-pane>
-      <el-tab-pane label="Add Reading Questions">
+      <el-tab-pane label="添加阅读题">
         <el-scrollbar style="height: 100%"
                       wrapStyle="overflow-x:hidden;">
           <comAddReadingChoose :paperInfo=paperInfoForm></comAddReadingChoose>
         </el-scrollbar>
       </el-tab-pane>
-      <el-tab-pane label="AddWriteQuestion">
+      <el-tab-pane label="添加主观题">
         <comAddWrite :paperInfo=paperInfoForm></comAddWrite>
       </el-tab-pane>
-      <el-tab-pane label="Add Paragraph Matching Questions">
+      <el-tab-pane label="添加段落匹配题">
         <el-scrollbar style="height: 100%">
           <comAddSubjectiveQuestion1 :paperInfo=paperInfoForm></comAddSubjectiveQuestion1>
         </el-scrollbar>
       </el-tab-pane>
-      <el-tab-pane label="Add Fill in The Blanks Questions">
+      <el-tab-pane label="添加选词填空题">
         <el-scrollbar style="height: 100%">
           <comAddSubjectiveQuestion2 :paperInfo=paperInfoForm></comAddSubjectiveQuestion2>
         </el-scrollbar>

@@ -2,26 +2,26 @@
  * @Author: AmeroL
  * @Date: 2022-05-20 19:15:00
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-21 00:50:21
+ * @LastEditTime: 2022-05-24 14:27:43
  * @FilePath: /vue-frontend/src/views/studentInfo.vue
  * @email: vian8416@163.com
 -->
 <template>
   <div id="studentInfoArea">
-    <el-dialog title="Update Student Info"
+    <el-dialog title="更新个人系逆袭"
                :visible.sync="dialogVisible">
       <div id="scoreInputBox">
         <el-form label-position="right"
                  label-width="150px"
                  v-model="studentInfoList">
-          <el-form-item label="Name:">
+          <el-form-item label="用户名:">
             <el-input v-model="studentInfoList.studentName"></el-input>
           </el-form-item>
-          <el-form-item label="StudentNumber:">
+          <el-form-item label="考生号:">
             <el-input v-model="studentInfoList.studentNumber"
                       disabled></el-input>
           </el-form-item>
-          <el-form-item label="Password:">
+          <el-form-item label="密码:">
             <el-input v-model="studentInfoList.studentPassword"></el-input>
           </el-form-item>
         </el-form>
@@ -29,24 +29,24 @@
       </div>
       <div slot="footer"
            class="dialog-footer">
-        <el-button @click="dialogVisible = false">Cancel</el-button>
+        <el-button @click="dialogVisible = false">取消</el-button>
         <el-button type="primary"
-                   @click="submitUpdate">Confirm</el-button>
+                   @click="submitUpdate">提交</el-button>
       </div>
     </el-dialog>
-    <comPageTitile titleContent="Student Information"></comPageTitile>
+    <comPageTitile titleContent="个人信息"></comPageTitile>
     <el-descriptions size="medium"
                      border="true"
                      :column="1">
-      <el-descriptions-item label="StudentName">{{studentInfoList.studentName}}</el-descriptions-item>
-      <el-descriptions-item label="StudentNumber">{{studentInfoList.studentNumber}}</el-descriptions-item>
-      <el-descriptions-item label="Role">
-        <el-tag size="small">Student</el-tag>
+      <el-descriptions-item label="用户名">{{studentInfoList.studentName}}</el-descriptions-item>
+      <el-descriptions-item label="考生号">{{studentInfoList.studentNumber}}</el-descriptions-item>
+      <el-descriptions-item label="角色">
+        <el-tag size="small">学生</el-tag>
       </el-descriptions-item>
     </el-descriptions>
     <el-button type="success"
                plain
-               @click="EditStudentInfo">Edit</el-button>
+               @click="EditStudentInfo">编辑</el-button>
   </div>
 </template>
 <script>

@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-04-20 21:44:50
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-19 00:22:54
+ * @LastEditTime: 2022-05-24 14:47:56
  * @FilePath: /vue-frontend/src/views/studentManage/studentScore.vue
  * @email: vian8416@163.com
 -->
@@ -14,17 +14,17 @@
     <el-page-header @back="goBack">
     </el-page-header>
 
-    <el-dialog title="UpdateScore"
+    <el-dialog title="修改成绩"
                :visible.sync="dialogVisible">
       <el-collapse v-model="activeNames"
                    accordion>
-        <el-collapse-item title="Write Content"
+        <el-collapse-item title="写作作答内容"
                           name="1">
           <p class="AnsContent"
              v-for="(item,index) in updateScoreList.writeContent"
              :key="index">{{item}}</p>
         </el-collapse-item>
-        <el-collapse-item title="Translate Content"
+        <el-collapse-item title="翻译作答内容"
                           name="2">
           <p class="AnsContent"
              v-for="(item,index) in updateScoreList.translateContent"
@@ -36,11 +36,11 @@
                  label-width="150px"
                  v-model="updateScoreList"
                  :status-icon="true">
-          <el-form-item label="WriteScore:">
+          <el-form-item label="写作成绩:">
             <el-input v-model.number="updateScoreList.writeScore"
                       :placeholder="writeScorePlace"></el-input>
           </el-form-item>
-          <el-form-item label="TranslateScore:">
+          <el-form-item label="翻译成绩:">
             <el-input v-model.number="updateScoreList.translateScore"
                       :placeholder="translateScorePlace"></el-input>
           </el-form-item>
@@ -49,9 +49,9 @@
       </div>
       <div slot="footer"
            class="dialog-footer">
-        <el-button @click="dialogVisible = false">Cancel</el-button>
+        <el-button @click="dialogVisible = false">取消</el-button>
         <el-button type="primary"
-                   @click="submitUpdate">Confirm</el-button>
+                   @click="submitUpdate">确认</el-button>
       </div>
     </el-dialog>
     <!-- 
@@ -62,29 +62,29 @@
 
     <el-table :data="studentScoreList"
               height="800px">
-      <el-table-column label="Name"
+      <el-table-column label="试卷名"
                        prop="examPaperName"></el-table-column>
-      <el-table-column label="ListenScore"
+      <el-table-column label="听力成绩"
                        prop="listenScore"></el-table-column>
-      <el-table-column label="ReadScore"
+      <el-table-column label="阅读成绩"
                        prop="readScore"></el-table-column>
-      <el-table-column label="WriteScore"
+      <el-table-column label="写作成绩"
                        prop="writeScore">
         <template slot-scope="scope">{{scope.row|writeScoreFilter}}</template>
 
       </el-table-column>
-      <el-table-column label="TotalScore"
+      <el-table-column label="总成绩"
                        prop="totalScore">
         <template slot-scope="scope">{{scope.row|totalScoreFilter}}</template>
       </el-table-column>
 
-      <el-table-column label="Operation">
+      <el-table-column label="操作">
 
         <template slot-scope="scope">
           <el-button @click="editScore(scope.row)"
                      type="primary"
-                     size="mini">Edit</el-button>
-          <el-popconfirm title="Confirm to delete this item"
+                     size="mini">编辑</el-button>
+          <el-popconfirm title="确认删除?"
                          confirm-button-text="Confirm"
                          @confirm="deleteScore(scope.row)"
                          cancel-button-text="Cancel"
@@ -92,7 +92,7 @@
             <el-button type="danger"
                        plain
                        size="mini"
-                       slot="reference">Delete</el-button>
+                       slot="reference">删除</el-button>
           </el-popconfirm>
         </template>
 

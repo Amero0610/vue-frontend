@@ -2,27 +2,27 @@
  * @Author: AmeroL
  * @Date: 2022-04-09 01:22:14
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-18 01:40:01
+ * @LastEditTime: 2022-05-24 14:44:58
  * @FilePath: /vue-frontend/src/views/scoreManage/studentScorePage.vue
  * @email: vian8416@163.com
  * @Show Score at student page
 -->
 <template>
   <div>
-    <comPageTitile titleContent="Student Score Page"></comPageTitile>
+    <comPageTitile titleContent="成绩列表"></comPageTitile>
     <el-table :data="scoreList"
               :border="true">
-      <el-table-column label="ExamPaperName"
+      <el-table-column label="试卷名"
                        prop="scExampaperName"></el-table-column>
-      <el-table-column label="Listening"
+      <el-table-column label="听力成绩"
                        prop="scListenScore"></el-table-column>
-      <el-table-column label="Reading"
+      <el-table-column label="阅读成绩"
                        prop="scReadScore"></el-table-column>
-      <el-table-column label="Writing"
+      <el-table-column label="写作成绩"
                        prop="scStudentNumber">
         <template slot-scope="scope">{{scope.row|writeScoreFilter}}</template>
       </el-table-column>
-      <el-table-column label="scTotalScore"
+      <el-table-column label="总成绩"
                        prop="scTotalScore"></el-table-column>
       <!-- <el-table-column label="scTime"
                        prop="scTime"></el-table-column> -->

@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-04-09 01:53:53
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-19 00:20:02
+ * @LastEditTime: 2022-05-24 14:33:31
  * @FilePath: /vue-frontend/src/views/examManage/examPage.vue
  * @email: vian8416@163.com
 -->
@@ -70,7 +70,7 @@
                    :disabled="writingBoxToNext"
                    plain
                    round
-                   @click="submitWritingPart">Submit</el-button>
+                   @click="submitWritingPart">提交</el-button>
       </div>
 
     </div>
@@ -119,7 +119,7 @@
       <el-scrollbar style="height: 100%">
         <div id="specticalQuestionBox1">
           <el-card class="specticalQuestionBox1Card">
-            <p id="specticalQuestion1Title">specticalQuestion1</p>
+            <p id="specticalQuestion1Title">选词填空</p>
             <p id="specticalQuestion1Info">{{specticalQuestion1Info}}</p>
             <div id="specticalQuestion1ContentArea">
               <p class="specticalQuestion1ContentText"
@@ -178,7 +178,7 @@
         <el-divider></el-divider>
         <div id="specticalQuestionBox2">
           <el-card class="specticalQuestionBox2Card">
-            <p id="specticalQuestion2Title">title</p>
+            <p id="specticalQuestion2Title">段落匹配</p>
             <p id="specticalQuestion2Info">Information</p>
             <div id="specticalQuestion2ContentArea">
               <p class="specticalQuestion2ContentText"
@@ -224,7 +224,7 @@
         </div>
         <el-divider></el-divider>
         <div id="readingQuestionBox">
-          <p class="readingQuestionTitle">readingQuestionTitle</p>
+          <p class="readingQuestionTitle">阅读理解</p>
           <p class="readingQuestionInfo">readingQuestionInfo</p>
           <div class="readingQuestionArea"
                v-for="(readingitem,readingIndex) in readingQuestionForm"
@@ -249,7 +249,7 @@
         </div>
         <el-divider></el-divider>
         <div id="translatingQuestionBox">
-          <p class="translatingTitle">Title</p>
+          <p class="translatingTitle">翻译</p>
           <p class="translatingInfo">Info</p>
           <div class="translatingArea">
             <el-card>
@@ -278,7 +278,7 @@
                      plain
                      class="part3SubmitButton"
                      @click="submitPart3Content"
-                     round>Submit</el-button>
+                     round>提交</el-button>
         </div>
       </el-scrollbar>
 

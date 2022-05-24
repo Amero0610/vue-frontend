@@ -2,20 +2,20 @@
  * @Author: Amero
  * @Date: 2022-02-10 19:06:55
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-14 16:24:18
+ * @LastEditTime: 2022-05-24 14:39:34
  * @FilePath: /vue-frontend/src/views/studentManage/addStudent.vue
 -->
 <template>
   <div id="userinfoBox">
-    <comPageTitile titleContent="Add Student"></comPageTitile>
+    <comPageTitile titleContent="添加学生"></comPageTitile>
     <el-result icon="success"
                title="Success"
-               subTitle="Add new student successfully!"
+               subTitle="添加成功!"
                v-show="showResult">
       <template slot="extra">
         <el-button type="primary"
                    @click="ResultBack"
-                   size="medium">Back</el-button>
+                   size="medium">返回</el-button>
       </template>
     </el-result>
 
@@ -26,7 +26,7 @@
                 justify="center"
                 align="middle">
           <el-col :span="3">
-            <p>User Name:</p>
+            <p>用户名:</p>
           </el-col>
           <el-col :span="9"
                   class="inputBox">
@@ -64,13 +64,13 @@
                 justify="center"
                 align="middle">
           <el-col :span="3">
-            <p>StudentNumber:</p>
+            <p>考生号:</p>
           </el-col>
           <el-col :span="9"
                   class="inputBox">
             <el-input class="myinputbox"
                       v-model="userInfoList.studentNumber"
-                      placeholder="Please input Student Number"></el-input>
+                      placeholder="请输入学生的考生号"></el-input>
           </el-col>
         </el-row>
       </div>
@@ -79,13 +79,13 @@
                 justify="center"
                 align="middle">
           <el-col :span="3">
-            <p>password:</p>
+            <p>密码:</p>
           </el-col>
           <el-col :span="9"
                   class="inputBox">
             <el-input class="myinputbox"
                       v-model="userInfoList.password"
-                      placeholder="Please input your password"></el-input>
+                      placeholder="请输入密码"></el-input>
           </el-col>
         </el-row>
       </div>
@@ -94,7 +94,7 @@
         <el-button class="subBtn"
                    type="primary"
                    :disabled="isSubmit"
-                   @click="submitClick">Submit</el-button>
+                   @click="submitClick">提交</el-button>
       </div>
     </div>
   </div>
@@ -145,7 +145,7 @@ export default {
       this.api_AddStudent(this.userInfoList.name, this.userInfoList.studentNumber, this.userInfoList.password);
       // submit data to server
       this.$message({
-        message: this.userInfoList.name + " has been added",
+        message: this.userInfoList.name + " 已经添加成功",
         type: "success",
       });
       this.showResult = true;

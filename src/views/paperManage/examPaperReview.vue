@@ -3,7 +3,7 @@
     <div class="revireOptionArea">
       <el-button type="primary"
                  @click="nextPart"
-                 plain> Next Part</el-button>
+                 plain>下一部分</el-button>
     </div>
     <!-- <comHeader></comHeader> -->
     <el-button type="primart"
@@ -116,7 +116,7 @@
       <el-scrollbar style="height: 100%">
         <div id="specticalQuestionBox1">
           <el-card class="specticalQuestionBox1Card">
-            <p id="specticalQuestion1Title">specticalQuestion1</p>
+            <p id="specticalQuestion1Title">选词填空</p>
             <p id="specticalQuestion1Info">{{specticalQuestion1Info}}</p>
             <div id="specticalQuestion1ContentArea">
               <p class="specticalQuestion1ContentText"
@@ -175,7 +175,7 @@
         <el-divider></el-divider>
         <div id="specticalQuestionBox2">
           <el-card class="specticalQuestionBox2Card">
-            <p id="specticalQuestion2Title">title</p>
+            <p id="specticalQuestion2Title">段落匹配</p>
             <p id="specticalQuestion2Info">Information</p>
             <div id="specticalQuestion2ContentArea">
               <p class="specticalQuestion2ContentText"
@@ -221,7 +221,7 @@
         </div>
         <el-divider></el-divider>
         <div id="readingQuestionBox">
-          <p class="readingQuestionTitle">readingQuestionTitle</p>
+          <p class="readingQuestionTitle">阅读理解</p>
           <p class="readingQuestionInfo">readingQuestionInfo</p>
           <div class="readingQuestionArea"
                v-for="(readingitem,readingIndex) in readingQuestionForm"
@@ -246,7 +246,7 @@
         </div>
         <el-divider></el-divider>
         <div id="translatingQuestionBox">
-          <p class="translatingTitle">Title</p>
+          <p class="translatingTitle">翻译</p>
           <p class="translatingInfo">Info</p>
           <div class="translatingArea">
             <el-card>

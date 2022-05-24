@@ -61,7 +61,7 @@
                       route="/main/studentinfo"
                       class="menuItemContentleft">
           <i class="myicon-main-sy"></i>
-          <span slot="title">Show Student Information</span>
+          <span slot="title">个人信息</span>
         </el-menu-item>
 
       </el-menu>
@@ -76,13 +76,13 @@
                     v-if="permission=='1'">
           <template slot="title">
             <i class="myicon-zhanghao"></i>
-            <span slot="title">Student Management</span>
+            <span slot="title">学生管理</span>
           </template>
           <el-menu-item-group class="menuItemContentcenter">
             <el-menu-item index="/main/showstudentlist"
-                          route="/main/showstudentlist">Student List</el-menu-item>
+                          route="/main/showstudentlist">学生列表</el-menu-item>
             <el-menu-item index="/main/addstudent"
-                          route="/main/addstudent">Add Student</el-menu-item>
+                          route="/main/addstudent">添加学生</el-menu-item>
             <!-- <el-menu-item index="/main/updatestudent"
                           route="/main/updatestudent">Update Student</el-menu-item> -->
           </el-menu-item-group>
@@ -100,13 +100,13 @@
                     class="menuItemContentleft">
           <template slot="title">
             <i class="myicon-paper"></i>
-            <span slot="title">Exampaper Management</span>
+            <span slot="title">试卷管理</span>
           </template>
           <el-menu-item-group class="menuItemContentcenter">
             <el-menu-item index="/main/addexampaper"
-                          route="/main/addexampaper">Add Exampaper</el-menu-item>
+                          route="/main/addexampaper">添加试卷</el-menu-item>
             <el-menu-item index="/main/showexampaperlist"
-                          route="/main/showexampaperlist">Show Exampaper List</el-menu-item>
+                          route="/main/showexampaperlist">试卷列表</el-menu-item>
             <!-- <el-menu-item index="/main/updateexampaper"
                           route="/main/updateexampaper">Update Exampaper</el-menu-item> -->
           </el-menu-item-group>
@@ -116,18 +116,18 @@
                     class="menuItemContentleft">
           <template slot="title">
             <i class="myicon-exam"></i>
-            <span slot="title">Online Exam Management</span>
+            <span slot="title">考试管理</span>
           </template>
           <el-menu-item-group class="menuItemContentcenter">
             <el-menu-item index="/main/selectexampaper"
                           route="/main/selectexampaper">
 
-              Select Exampaper</el-menu-item>
+              选择试卷</el-menu-item>
             <el-menu-item index="/exam"
                           v-if="false"
                           route="/exam">
 
-              Online Exam
+              在线考试
             </el-menu-item>
           </el-menu-item-group>
         </el-submenu>
@@ -144,14 +144,14 @@
                       route="/main/showscorelist"
                       class="menuItemContentleft">
           <i class="myicon-score"></i>
-          <span slot="title">Score List</span>
+          <span slot="title">成绩列表</span>
         </el-menu-item>
         <el-menu-item index="/main/studentscore"
                       route="/main/studentscore"
                       v-if="permission=='2'"
                       class="menuItemContentleft">
           <i class="myicon-score"></i>
-          <span slot="title"> Score List</span>
+          <span slot="title">成绩列表</span>
         </el-menu-item>
       </el-menu>
 

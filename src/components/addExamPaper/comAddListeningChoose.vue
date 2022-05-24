@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-05-04 01:26:03
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-19 00:03:53
+ * @LastEditTime: 2022-05-24 14:55:53
  * @FilePath: /vue-frontend/src/components/addExamPaper/comAddListeningChoose.vue
  * @email: vian8416@163.com
 -->
@@ -24,7 +24,7 @@
               align="middle">
         <el-col :span="5">
           <p id="descriptText">
-            Select Number :
+            题号 :
           </p>
         </el-col>
         <el-col :span="5">
@@ -37,7 +37,7 @@
 
         <el-col :span="5">
           <p id="descriptText">
-            Select True Option :
+            正确选项 :
           </p>
         </el-col>
         <el-col :span="5">
@@ -92,7 +92,7 @@
           </el-form-item>
           <el-form-item id="buttonArea">
             <el-button type="primary"
-                       @click="submitForm">Submit</el-button>
+                       @click="submitForm">提交</el-button>
             <!-- <el-button @click="addOption">Add</el-button> -->
           </el-form-item>
         </el-form>

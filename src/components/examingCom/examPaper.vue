@@ -2,7 +2,7 @@
  * @Author: Amero
  * @Date: 2022-02-03 19:54:07
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-15 22:04:49
+ * @LastEditTime: 2022-05-24 14:31:38
  
 -->
 
@@ -138,7 +138,7 @@
                  @click="getValue()"
                  round
                  :disabled="isDisabled"
-                 plain>Submit Answer</el-button>
+                 plain>提交</el-button>
     </div>
   </div>
 </template>
@@ -235,6 +235,9 @@ export default {
 };
 </script>
 <style scoped>
+#submitBtn >>> .el-button {
+  width: 130px;
+}
 #fixedBox {
   left: 15px;
   position: fixed;

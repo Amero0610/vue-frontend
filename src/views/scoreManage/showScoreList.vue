@@ -2,24 +2,24 @@
  * @Author: AmeroL
  * @Date: 2022-04-09 01:22:08
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-19 00:22:19
+ * @LastEditTime: 2022-05-24 15:09:51
  * @FilePath: /vue-frontend/src/views/scoreManage/showScoreList.vue
  * @email: vian8416@163.com
 -->
 <template>
   <div>
-    <el-dialog title="UpdateScore"
+    <el-dialog title="修改成绩"
                :visible.sync="dialogVisible">
       <div class="studentAnsContent">
         <el-collapse v-model="activeNames"
                      accordion>
-          <el-collapse-item title="Write Content"
+          <el-collapse-item title="写作作答内容"
                             name="1">
             <p class="AnsContent"
                v-for="(item,index) in updateScoreList.writeContent"
                :key="index">{{item}}</p>
           </el-collapse-item>
-          <el-collapse-item title="Translate Content"
+          <el-collapse-item title="翻译作答内容"
                             name="2">
             <p class="AnsContent"
                v-for="(item,index) in updateScoreList.translateContent"
@@ -44,9 +44,9 @@
       </div>
       <div slot="footer"
            class="dialog-footer">
-        <el-button @click="dialogVisible = false">Cancel</el-button>
+        <el-button @click="dialogVisible = false">取消</el-button>
         <el-button type="primary"
-                   @click="submitUpdate">Confirm</el-button>
+                   @click="submitUpdate">确认</el-button>
       </div>
     </el-dialog>
     <div id="ScoreListTable">
@@ -60,7 +60,7 @@
         <el-col :span="8">
           <el-select v-model="currentExampaper"
                      id="selectExamPaperArea"
-                     placeholder="Please Select Exampaper"
+                     placeholder="请选择试卷"
                      @change="getCurrentItem">
             <el-option v-for="item in ExampaperList"
                        :key="item.id"
@@ -269,6 +269,7 @@ export default {
       //   }
       // }
       this.currentExampaper = this.ExampaperList[value].name;
+      this.currentExampaperTitle = this.ExampaperList[value].name
       let epId = this.ExampaperList[value].epId;
 
       this.api_getStudentScore(epId);

@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-05-09 17:57:52
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-18 16:38:02
+ * @LastEditTime: 2022-05-24 14:57:30
  * @FilePath: /vue-frontend/src/components/addExamPaper/comAddReadingChoose.vue
  * @email: vian8416@163.com
 -->
@@ -16,7 +16,7 @@
               align="middle">
         <el-col :span="5">
           <p id="descriptText">
-            Please Select Number :
+            题号 :
           </p>
         </el-col>
         <el-col :span="5">
@@ -41,7 +41,7 @@
         <el-button type="danger"
                    plain
                    @click="DeletePassage(passageIndex)"
-                   round> Delete this passage</el-button>
+                   round> 删除文章</el-button>
 
       </div>
       <div class="QuestionArea"
@@ -60,7 +60,7 @@
                   align="middle">
             <el-col :span="10">
               <el-select v-model="questionItem.questionAns"
-                         placeholder="TrueOption">
+                         placeholder="正确选项">
                 <el-option v-for="(optionWordItem,optionWordIndex) in optionWord"
                            :key="optionWordIndex"
                            :label="optionWordItem"
@@ -72,7 +72,7 @@
               <el-button type="danger"
                          @click="DeleteQuestionItem(passageIndex,questionIndex)"
                          plain
-                         round>Delete Question</el-button>
+                         round>删除问题</el-button>
             </el-col>
           </el-row>
 
@@ -104,17 +104,17 @@
       <div class="QuestonButtonArea">
         <el-button type="success"
                    @click="AddQuestion(passageIndex)"
-                   round>Add Question</el-button>
+                   round>添加问题</el-button>
         <el-divider></el-divider>
       </div>
     </div>
     <div class="ReadingPassageButtonArea">
       <el-button type="primary"
                  plain
-                 @click="AddPassage">Add Passage</el-button>
+                 @click="AddPassage">添加文章</el-button>
       <el-button type="success"
                  plain
-                 @click="SubmitReadingQuestion">Submit</el-button>
+                 @click="SubmitReadingQuestion">提交</el-button>
     </div>
   </div>
 </template>

@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-04-08 21:50:40
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-20 20:12:29
+ * @LastEditTime: 2022-05-24 14:22:46
  * @FilePath: /vue-frontend/src/components/comMainPage/comHeader.vue
  * @email: vian8416@163.com
 -->
@@ -14,7 +14,7 @@
             justify="space-between">
       <el-col :span="8">
         <div id="Headertitle">
-          <span>Level 4 and Level 6 Mock Exam System</span>
+          <span>大学英语四六级模拟考试系统</span>
         </div>
       </el-col>
 
@@ -36,7 +36,7 @@
                          :src="avatarIconSrc"></el-avatar> -->
               <el-button type="danger"
                          @click="ExitSystem"
-                         plain>Exit</el-button>
+                         plain>退出</el-button>
             </div>
           </el-col>
         </el-row>

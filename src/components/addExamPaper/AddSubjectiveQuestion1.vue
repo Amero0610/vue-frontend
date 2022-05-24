@@ -6,9 +6,9 @@
               type="flex"
               justify="center"
               align="middle">
-        <el-col :span="7">
+        <el-col :span="2">
           <p id="descriptText">
-            Please First Question Number :
+            题号 :
           </p>
         </el-col>
         <el-col :span="5">
@@ -25,7 +25,7 @@
         <el-form label-position="top"
                  label-width="100px"
                  :model="questionMainContentform">
-          <el-form-item :label="'QuestionContent'"
+          <el-form-item :label="'题目内容'"
                         prop="desc"
                         id="questionMainContent">
             <el-input type="textarea"
@@ -64,7 +64,7 @@
                           2">
                 <el-button type="danger"
                            plain
-                           @click.prevent="removeDomain(domain)">Delete</el-button>
+                           @click.prevent="removeDomain(domain)">删除</el-button>
               </el-col>
 
             </el-row>
@@ -72,8 +72,8 @@
           </el-form-item>
           <el-form-item id="buttonArea">
             <el-button type="primary"
-                       @click="submitForm">Submit</el-button>
-            <el-button @click="addOption">Add</el-button>
+                       @click="submitForm">提交</el-button>
+            <el-button @click="addOption">添加</el-button>
           </el-form-item>
         </el-form>
       </div>

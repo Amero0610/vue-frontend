@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-05-04 01:47:23
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-18 16:41:58
+ * @LastEditTime: 2022-05-24 14:58:34
  * @FilePath: /vue-frontend/src/components/addExamPaper/addWrite.vue
  * @email: vian8416@163.com
 -->
@@ -14,15 +14,15 @@
               align="middle">
         <el-col :span="5">
           <p id="descriptText">
-            Please Select Type :
+            主观题类型 :
           </p>
         </el-col>
         <el-col :span="5">
           <el-select v-model="questionType"
                      @change="handleSelectChooseQuestion">
-            <el-option label="WriteQuestion"
+            <el-option label="写作题"
                        value="1"></el-option>
-            <el-option label="TranslateQuestion"
+            <el-option label="翻译题"
                        value="2"></el-option>
           </el-select>
         </el-col>
@@ -39,7 +39,7 @@
               align="middle">
         <el-col :span="10">
           <el-button type="primary"
-                     @click="submitQuestion"> Submit</el-button>
+                     @click="submitQuestion"> 提交</el-button>
         </el-col>
       </el-row>
     </div>

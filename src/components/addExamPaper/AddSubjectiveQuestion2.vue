@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-05-04 02:47:07
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-18 16:38:35
+ * @LastEditTime: 2022-05-24 15:02:04
  * @FilePath: /vue-frontend/src/components/addExamPaper/AddSubjectiveQuestion2.vue
  * @email: vian8416@163.com
 -->
@@ -13,9 +13,9 @@
               type="flex"
               justify="center"
               align="middle">
-        <el-col :span="7">
+        <el-col :span="2">
           <p id="descriptText">
-            Please First Question Number :
+            题号 :
           </p>
         </el-col>
         <el-col :span="5">
@@ -32,7 +32,7 @@
         <el-form label-position="top"
                  label-width="100px"
                  :model="questionMainContentform">
-          <el-form-item :label="'QuestionContent'"
+          <el-form-item :label="'题目内容'"
                         prop="desc"
                         id="questionMainContent">
             <el-input type="textarea"
@@ -99,8 +99,9 @@
         </el-form>
         <div id="ButtonArea">
           <el-button type="primary"
-                     @click="submitForm">Submit</el-button>
-          <el-button @click="addOption">Add</el-button>
+                     @click="submitForm">提交</el-button>
+          <el-button @click="addOption"
+                     style="display:none">Add</el-button>
         </div>
       </div>
     </div>
