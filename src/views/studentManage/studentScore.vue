@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-04-20 21:44:50
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-24 14:47:56
+ * @LastEditTime: 2022-05-27 02:31:55
  * @FilePath: /vue-frontend/src/views/studentManage/studentScore.vue
  * @email: vian8416@163.com
 -->
@@ -85,9 +85,9 @@
                      type="primary"
                      size="mini">编辑</el-button>
           <el-popconfirm title="确认删除?"
-                         confirm-button-text="Confirm"
+                         confirm-button-text="确认"
                          @confirm="deleteScore(scope.row)"
-                         cancel-button-text="Cancel"
+                         cancel-button-text="取消"
                          style="margin-left:10px">
             <el-button type="danger"
                        plain
@@ -151,7 +151,7 @@ export default {
     },
     showSuccessMessage () {
       that.$message({
-        message: 'Success',
+        message: '成功！',
         type: 'success'
       })
     },

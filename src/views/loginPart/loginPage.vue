@@ -2,7 +2,7 @@
  * @Author: Amero
  * @Date: 2022-02-06 22:49:01
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-24 14:20:36
+ * @LastEditTime: 2022-05-27 02:27:24
  * @FilePath: /vue-frontend/src/views/loginPart/loginPage.vue
 -->
 <template>
@@ -216,14 +216,14 @@ export default {
       fullscreenLoading: false,
       dialogVisible: false,
       usernameTipList: [
-        'Start with a letter',
-        'Allow 4-15 characters',
-        'Allow alphanumeric underscore',
+        '使用字母开头',
+        '长度为4-15个字符',
+        '允许字母数字和下划线',
       ],
       passwordTipList: [
-        'Allow 6-18 characters',
-        'Allow alphanumeric underscore',
-        "Can't contain special characters",
+        '长度为6-18个字符',
+        '允许字母数字和下划线',
+        "不要包含特殊字符",
       ],
       isSignUpBtnDisabled: true,
       isloginBtnDisabled: true,
@@ -255,15 +255,19 @@ export default {
         let remoteData = res.data.data;
         if (remoteData.length != 0) {
           this.fullscreenLoading = true
+
           if (remoteData[0].stuPassword == _password) {
+
             setTimeout(() => {
               this.fullscreenLoading = false;
               switch (this.$store.state.permission) {
                 case '1': {
+                  this.showLoginMessage();
                   this.$router.push({ path: '/main/showstudentlist' });
                   break;
                 }
                 case '2': {
+                  this.showLoginMessage();
                   this.$router.push({ path: '/main/selectexampaper' });
                   break;
                 }
@@ -279,11 +283,11 @@ export default {
             this.setCookies();
           } else {
             this.fullscreenLoading = false;
-            this.$message.error('Password is incorrect');
+            this.$message.error('密码错误');
           }
         } else {
           this.fullscreenLoading = false;
-          this.$message.error('Student number is incorrect');
+          this.$message.error('考生号不正确');
         }
       })
     },
@@ -298,8 +302,8 @@ export default {
 
           this.api_insertStudent(_stuName, _stuPassword, _stuNumber)
           this.$notify({
-            title: 'Registration success',
-            message: 'Please log in to your account',
+            title: '注册成功',
+            message: '请登录你的账户',
             type: 'success',
           });
           this.jump_signIn();
@@ -308,8 +312,8 @@ export default {
           this.loginData.login_password = this.singUpData.signUP_password;
         } else {
           this.$notify({
-            title: 'Registration failed',
-            message: 'The account you entered already exists',
+            title: '注册失败',
+            message: '账户已经存在',
             type: 'error',
           });
           return false;
@@ -324,14 +328,19 @@ export default {
       }).then(res => {
         console.log(res.data.data);
         this.$message({
-          message: 'Register Success',
+          message: '注册成功',
           type: 'success'
         });
       }).catch(err => {
         console.log(err);
       })
     },
-
+    showLoginMessage () {
+      this.$message({
+        message: '登录成功！',
+        type: 'success'
+      })
+    },
     setCookies () {
       this.$cookies.set('password', this.$store.state.password, '1d');
       this.$cookies.set('username', this.$store.state.username, '1d');

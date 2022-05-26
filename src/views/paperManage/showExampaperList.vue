@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-04-09 01:25:14
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-24 15:03:47
+ * @LastEditTime: 2022-05-27 02:33:14
  * @FilePath: /vue-frontend/src/views/paperManage/showExampaperList.vue
  * @email: vian8416@163.com
 -->
@@ -33,7 +33,7 @@
           <el-popconfirm title="是否选择该试卷预览？"
                          confirm-button-text="确认"
                          @confirm="reviewExamPaper(scope.row)"
-                         cancel-button-text="Cancel"
+                         cancel-button-text="取消"
                          style="margin-left:10px">
             <el-button type="success"
                        plain
@@ -157,7 +157,7 @@ export default {
 
     },
     showDeleteConfrim (value) {
-      this.$confirm("This option will delete all of date about this exampaper", 'Tip', {
+      this.$confirm("这个操作将会删除这张试卷！", '提示', {
         type: 'warning'
       }).then(() => {
         let index = 0;
@@ -173,12 +173,12 @@ export default {
         });
         this.api_delteExampaper(value.epId);
         this.$message({
-          message: "Delete success",
+          message: "删除成功！",
           type: 'success'
         })
       }).catch(() => {
         this.$message({
-          message: "Option Cancel",
+          message: "操作取消！",
           type: 'info'
         })
       })

@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-04-08 21:50:40
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-24 14:22:46
+ * @LastEditTime: 2022-05-27 02:36:41
  * @FilePath: /vue-frontend/src/components/comMainPage/comHeader.vue
  * @email: vian8416@163.com
 -->
@@ -96,7 +96,11 @@ export default {
       this.$cookies.remove('stuNumber');
     },
     ExitSystem () {
-      this.$confirm("Are you exit this System?", "Tip").then(() => {
+      this.$confirm("是否退出系统?", "提示", {
+        cancelButtonText: '取消',
+        confirmButtonText: '确定',
+        type: 'warning'
+      }).then(() => {
         this.deleteCookies();
         // this.$store.state.username = 'Nologin!';
         // this.$store.state.userLoginStuNumber = '';
@@ -104,7 +108,7 @@ export default {
         // this.$store.state.permission = 0;
         this.$router.push('/userlogin');
       }).catch(() => {
-        this.$message('Cancel');
+        this.$message('取消退出');
       });
     }
   }

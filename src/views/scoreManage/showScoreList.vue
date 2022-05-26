@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-04-09 01:22:08
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-24 15:09:51
+ * @LastEditTime: 2022-05-27 02:34:47
  * @FilePath: /vue-frontend/src/views/scoreManage/showScoreList.vue
  * @email: vian8416@163.com
 -->
@@ -73,44 +73,44 @@
     </div>
 
     <el-divider></el-divider>
-    <el-empty description="Please Select Exampaper"
+    <el-empty description="请选择试卷"
               v-show="!currentExampaper.length"></el-empty>
 
     <el-table v-show="currentExampaper.length"
               :data="scoreList"
               :border="true">
-      <el-table-column label="StudentNumber"
+      <el-table-column label="考生号"
                        prop="scStudentNumber"></el-table-column>
-      <el-table-column label="Listening"
+      <el-table-column label="听力成绩"
                        prop="scListenScore"></el-table-column>
-      <el-table-column label="Reading"
+      <el-table-column label="阅读成绩"
                        prop="scReadScore"></el-table-column>
-      <el-table-column label="Writing"
+      <el-table-column label="写作成绩"
                        prop="scWriteScore">
         <template slot-scope="scope">{{scope.row|writeScoreFilter}}</template>
       </el-table-column>
-      <el-table-column label="scTotalScore"
+      <el-table-column label="总成绩"
                        prop="scTotalScore">
         <template slot-scope="scope">{{scope.row|totalScoreFilter}}</template>
       </el-table-column>
       <!-- <el-table-column label="scTime"
                        prop="scTime"></el-table-column> -->
-      <el-table-column label="Operation"
+      <el-table-column label="操作"
                        width="180px">
 
         <template slot-scope="scope">
           <el-button @click="editScore(scope.row)"
                      type="primary"
-                     size="mini">Edit</el-button>
-          <el-popconfirm title="Confirm to delete this item"
-                         confirm-button-text="Confirm"
+                     size="mini">编辑</el-button>
+          <el-popconfirm title="是否删除该项？"
+                         confirm-button-text="确认"
                          @confirm="deleteScore(scope.row)"
-                         cancel-button-text="Cancel"
+                         cancel-button-text="取消"
                          style="margin-left:10px">
             <el-button type="danger"
                        plain
                        size="mini"
-                       slot="reference">Delete</el-button>
+                       slot="reference">删除</el-button>
           </el-popconfirm>
         </template>
       </el-table-column>
@@ -328,7 +328,7 @@ export default {
   },
   mounted () {
     if (this.currentExampaper == '') {
-      this.currentExampaperTitle = "Please Select Exampaper";
+      this.currentExampaperTitle = "请选择试卷";
     }
   },
 }

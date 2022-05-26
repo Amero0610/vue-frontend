@@ -111,6 +111,7 @@
                           route="/main/updateexampaper">Update Exampaper</el-menu-item> -->
           </el-menu-item-group>
         </el-submenu>
+        <!-- 
         <el-submenu index="4"
                     v-if="permission=='2'"
                     class="menuItemContentleft">
@@ -130,7 +131,7 @@
               在线考试
             </el-menu-item>
           </el-menu-item-group>
-        </el-submenu>
+        </el-submenu> -->
       </el-menu>
       <el-menu class="el-menu-vertical-demo2"
                @open="handleOpen"
@@ -145,6 +146,13 @@
                       class="menuItemContentleft">
           <i class="myicon-score"></i>
           <span slot="title">成绩列表</span>
+        </el-menu-item>
+        <el-menu-item v-if="permission=='2'"
+                      class="menuItemContentleft"
+                      index="/main/selectexampaper"
+                      route="/main/selectexampaper">
+          <i class="myicon-exam"></i>
+          选择试卷
         </el-menu-item>
         <el-menu-item index="/main/studentscore"
                       route="/main/studentscore"

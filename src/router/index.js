@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-04-08 01:32:21
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-20 20:20:46
+ * @LastEditTime: 2022-05-27 02:20:07
  * @FilePath: /vue-frontend/src/router/index.js
  * @email: vian8416@163.com
  */
@@ -52,7 +52,7 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    redirect: 'Main',
+    redirect: 'UserLogin',
   },
   {
     path: '/userlogin',
