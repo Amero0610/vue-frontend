@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-04-09 01:53:53
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-24 14:33:31
+ * @LastEditTime: 2022-05-28 03:58:07
  * @FilePath: /vue-frontend/src/views/examManage/examPage.vue
  * @email: vian8416@163.com
 -->
@@ -87,7 +87,7 @@
       </div>
 
       <el-scrollbar style="height: 100%">
-        <comExampaper :questionList="listingContent"
+        <comExampaper :questionList="this.$store.state.listenContent"
                       ref="comListeningPartRef"
                       @sendAns="ListenAns"></comExampaper>
       </el-scrollbar>
@@ -364,6 +364,7 @@ export default {
     readingQuestionForm: [
 
     ],
+    tempListenContent: [],
     translatingContent: [],
     translatingAns: "",
   }),
@@ -372,6 +373,7 @@ export default {
     comHeader,
     comExampaper
   },
+
   created () {
 
     this.audio[0].url = this.$store.state.currentExamingExampapeAudioAddr;
@@ -385,16 +387,23 @@ export default {
     temparray.push(ExampaperQuestion[1][1].subContent)
     this.translatingContent = temparray;
     // set listen
+
+    //this.listingContent = [];
+    //this.listingContent = new Array(ExampaperQuestion[0].length).fill(0);
+
+
     for (let i = 0; i < ExampaperQuestion[0].length; i++) {
       let obj = new Object();
       obj.userAns = "";
       obj.questionNo = ExampaperQuestion[0][i].chNumber;
-      obj.questionContent = "";
+
+      //let index = obj.questionNo - 1;
       obj.AnsA = ExampaperQuestion[0][i].chA;
       obj.AnsB = ExampaperQuestion[0][i].chB;
       obj.AnsC = ExampaperQuestion[0][i].chC;
       obj.AnsD = ExampaperQuestion[0][i].chD;
       this.listingContent.push(obj);
+      //this.listingContent[index] = obj;
       this.listenTrue.push(ExampaperQuestion[0][i].chTrue);
     }
     // set read
@@ -487,8 +496,13 @@ export default {
       duration: 3000
     });
   },
+  beforeMount () {
+    this.$store.state.listenContent = this.listingContent
+  },
   mounted () {
     that = this;
+    this.$store.state.listenContent = this.listingContent;
+    //this.tempListenContent = this.listingContent;
     let length = this.specticalQuestion2Form.Options.length;
     for (let i = 0; i < length; i++) {
       this.specticalQuestion2Form.Ans[i] = "";

@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-05-04 01:26:03
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-24 14:55:53
+ * @LastEditTime: 2022-05-28 02:24:32
  * @FilePath: /vue-frontend/src/components/addExamPaper/comAddListeningChoose.vue
  * @email: vian8416@163.com
 -->
@@ -203,6 +203,12 @@ export default {
       })
 
     },
+    toLiteral (str) {
+      var dict = { '\b': 'b', '\t': 't', '\n': 'n', '\v': 'v', '\f': 'f' };
+      return str.replace(/([\\'"\b\t\n\v\f])/g, function ($0, $1) {
+        return '\\' + (dict[$1] || $1);
+      })
+    },
     submitForm () {
       let questionContentObj = new Object();
       questionContentObj.questionNumber = this.questionNumber;
@@ -210,7 +216,7 @@ export default {
       tempArray.push(this.questionContentform.questions);
       questionContentObj.questionContent = tempArray;
       questionContentObj.questionAns = this.questionAns;
-      this.insertQuestion(this.paperInfo.epId, questionContentObj.questionNumber, " ", questionContentObj.questionContent[0][0].value, questionContentObj.questionContent[0][1].value, questionContentObj.questionContent[0][2].value, questionContentObj.questionContent[0][3].value, questionContentObj.questionAns);
+      this.insertQuestion(this.paperInfo.epId, questionContentObj.questionNumber, " ", this.toLiteral(questionContentObj.questionContent[0][0].value), this.toLiteral(questionContentObj.questionContent[0][1].value), this.toLiteral(questionContentObj.questionContent[0][2].value), this.toLiteral(questionContentObj.questionContent[0][3].value), questionContentObj.questionAns);
 
 
     },

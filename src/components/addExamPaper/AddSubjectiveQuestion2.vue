@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-05-04 02:47:07
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-24 15:02:04
+ * @LastEditTime: 2022-05-28 01:09:23
  * @FilePath: /vue-frontend/src/components/addExamPaper/AddSubjectiveQuestion2.vue
  * @email: vian8416@163.com
 -->
@@ -142,15 +142,16 @@ export default {
       })
     },
     insertQuestion (_epId, _schoNumber, _schoContent, _schoOption, _schoTrue, _schoType) {
-      Axios.post(APIURL + 'deleteSpecialchoise', {
-        epId: _epId,
-        schoNumber: _schoNumber
-      }).then(function (response) {
-        console.log(response);
-        that.API_insertQuestion(_epId, _schoNumber, _schoContent, _schoOption, _schoTrue, _schoType);
-      }).catch(function (error) {
-        console.log(error);
-      })
+      that.API_insertQuestion(_epId, _schoNumber, _schoContent, _schoOption, _schoTrue, _schoType);
+
+      // Axios.post(APIURL + 'deleteSpecialchoise', {
+      //   epId: _epId,
+      //   schoNumber: _schoNumber
+      // }).then(function (response) {
+      //   console.log(response);
+      // }).catch(function (error) {
+      //   console.log(error);
+      // })
     },
     API_insertQuestion (_epId, _schoNumber, _schoContent, _schoOption, _schoTrue, _schoType) {
       Axios.post(APIURL + 'insertSpecialChoise', {

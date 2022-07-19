@@ -122,14 +122,21 @@ export default {
   },
   methods: {
     insertQuestion (_epId, _schoNumber, _schoContent, _schoOption, _schoTrue, _schoType) {
-      Axios.post(APIURL + 'deleteSpecialchoise', {
-        epId: _epId,
-        schoNumber: _schoNumber
-      }).then(function (response) {
-        console.log(response);
-        that.API_insertQuestion(_epId, _schoNumber, _schoContent, _schoOption, _schoTrue, _schoType);
-      }).catch(function (error) {
-        console.log(error);
+      that.API_insertQuestion(_epId, _schoNumber, _schoContent, _schoOption, _schoTrue, _schoType);
+
+      // Axios.post(APIURL + 'deleteSpecialchoise', {
+      //   epId: _epId,
+      //   schoNumber: _schoNumber
+      // }).then(function (response) {
+      //   console.log(response);
+      // }).catch(function (error) {
+      //   console.log(error);
+      // })
+    },
+    toLiteral (str) {
+      var dict = { '\b': 'b', '\t': 't', '\n': 'n', '\v': 'v', '\f': 'f' };
+      return str.replace(/([\\'"\b\t\n\v\f])/g, function ($0, $1) {
+        return '\\' + (dict[$1] || $1);
       })
     },
     showSuccessMessage () {
@@ -212,7 +219,7 @@ export default {
       let tempContent = resArray[1].split('\n').join('*');
       console.log(resArray[0]);
 
-      this.insertQuestion(this.paperInfo.epId, resArray[0], tempContent, options.join("*"), trueOptions.toString(), this.questionType);
+      this.insertQuestion(this.paperInfo.epId, resArray[0], that.toLiteral(tempContent), options.join("*"), trueOptions.toString(), this.questionType);
     },
     // index to word 
 

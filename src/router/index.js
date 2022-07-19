@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-04-08 01:32:21
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-27 02:20:07
+ * @LastEditTime: 2022-05-28 04:17:14
  * @FilePath: /vue-frontend/src/router/index.js
  * @email: vian8416@163.com
  */
@@ -141,6 +141,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
+  // mode: 'history',
   routes,
 });
 

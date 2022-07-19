@@ -354,6 +354,10 @@ export default {
     // comHeader,
     comExampaper
   },
+  beforeCreate () {
+
+
+  },
   created () {
 
     let ExampaperQuestion = this.$store.state.currentReviewExamPaper;
@@ -368,36 +372,45 @@ export default {
     temparray.push(ExampaperQuestion[1][1].subContent)
     this.translatingContent = temparray;
     // set listen
+    this.listingContent = new Array(ExampaperQuestion[0].length).fill(0);
+    this.listingAns = new Array(ExampaperQuestion[0].length).fill(0);
     for (let i = 0; i < ExampaperQuestion[0].length; i++) {
       let obj = new Object();
       obj.userAns = "";
       obj.questionNo = ExampaperQuestion[0][i].chNumber;
+      let index = obj.questionNo - 1;
+
       obj.questionContent = "";
       obj.AnsA = ExampaperQuestion[0][i].chA;
       obj.AnsB = ExampaperQuestion[0][i].chB;
       obj.AnsC = ExampaperQuestion[0][i].chC;
       obj.AnsD = ExampaperQuestion[0][i].chD;
-      this.listingContent.push(obj);
-      this.listingAns.push(ExampaperQuestion[0][i].chTrue);
+
+      this.listingContent[index] = (obj);
+
+      this.listingAns[index] = ExampaperQuestion[0][i].chTrue;
     }
     // set read
+    //this.readingAns = new Array(ExampaperQuestion[4].length).fill(0);
     for (let i = 0; i < ExampaperQuestion[3].length; i++) {
       let array = new Array();
       array = ExampaperQuestion[3][i].rdPassage.split("*");
       let obj = new Object();
       obj.Passage = array;
       obj.readingPassageQuestion = [];
+      //obj.readingPassageQuestion = new Array(ExampaperQuestion[4].length).fill(0);
       for (let j = 0; j < ExampaperQuestion[4].length; j++) {
         if (ExampaperQuestion[4][j].rdPassageNo == i + 1) {
           let questionObj = new Object();
           questionObj.userAns = "";
           questionObj.questionNo = ExampaperQuestion[4][j].rdNumber;
+          //let index = questionObj.questionNo - 1;
           questionObj.questionContent = ExampaperQuestion[4][j].rdContent;
           questionObj.AnsA = ExampaperQuestion[4][j].rdOptionA;
           questionObj.AnsB = ExampaperQuestion[4][j].rdOptionB;
           questionObj.AnsC = ExampaperQuestion[4][j].rdOptionC;
           questionObj.AnsD = ExampaperQuestion[4][j].rdOptionD;
-
+          //obj.readingPassageQuestion[index] = (questionObj);
           obj.readingPassageQuestion.push(questionObj);
 
           this.readingAns.push(ExampaperQuestion[4][j].rdTrue);

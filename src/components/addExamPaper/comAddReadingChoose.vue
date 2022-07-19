@@ -2,7 +2,7 @@
  * @Author: AmeroL
  * @Date: 2022-05-09 17:57:52
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-24 14:57:30
+ * @LastEditTime: 2022-05-28 02:12:20
  * @FilePath: /vue-frontend/src/components/addExamPaper/comAddReadingChoose.vue
  * @email: vian8416@163.com
 -->
@@ -247,6 +247,12 @@ export default {
       });
 
     },
+    toLiteral (str) {
+      var dict = { '\b': 'b', '\t': 't', '\n': 'n', '\v': 'v', '\f': 'f' };
+      return str.replace(/([\\'"\b\t\n\v\f])/g, function ($0, $1) {
+        return '\\' + (dict[$1] || $1);
+      })
+    },
     SubmitReadingQuestion () {
       let readQuestionLength = this.ReadingPassageList.length;
       let ReadQuestionArray = new Array();
@@ -270,9 +276,9 @@ export default {
       }
       //console.log(this.ObjectToString(ReadQuestionArray[0].passageContent));
       for (let i = 0; i < ReadQuestionArray.length; i++) {
-        this.insertPassage(this.paperInfo.epId, i + 1, this.ObjectToString(ReadQuestionArray[i].passageContent));
+        this.insertPassage(this.paperInfo.epId, i + 1, that.toLiteral(this.ObjectToString(ReadQuestionArray[i].passageContent)));
         for (let j = 0; j < ReadQuestionArray[i].questions.length; j++) {
-          this.api_insertReadQuestion(this.paperInfo.epId, i + 1, j + 1, ReadQuestionArray[i].questions[j].questionContent, ReadQuestionArray[i].questions[j].questionSelect[0], ReadQuestionArray[i].questions[j].questionSelect[1], ReadQuestionArray[i].questions[j].questionSelect[2], ReadQuestionArray[i].questions[j].questionSelect[3], ReadQuestionArray[i].questionAns[j]);
+          this.api_insertReadQuestion(this.paperInfo.epId, i + 1, j + 1, that.toLiteral(ReadQuestionArray[i].questions[j].questionContent), that.toLiteral(ReadQuestionArray[i].questions[j].questionSelect[0]), that.toLiteral(ReadQuestionArray[i].questions[j].questionSelect[1]), that.toLiteral(ReadQuestionArray[i].questions[j].questionSelect[2]), that.toLiteral(ReadQuestionArray[i].questions[j].questionSelect[3]), ReadQuestionArray[i].questionAns[j]);
         }
       }
       console.log(ReadQuestionArray);

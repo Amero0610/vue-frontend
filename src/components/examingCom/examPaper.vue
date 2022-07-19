@@ -2,7 +2,7 @@
  * @Author: Amero
  * @Date: 2022-02-03 19:54:07
  * @LastEditors: AmeroL
- * @LastEditTime: 2022-05-24 14:31:38
+ * @LastEditTime: 2022-05-28 03:45:19
  
 -->
 
@@ -145,9 +145,15 @@
 <script>
 export default {
   props: ["questionList"],
+  beforeMount () {
+    //console.log(this.$store.state.listenContent)
+    //this.questionList = this.$store.state.listenContent;
+    //console.log(this.questionList)
+  },
   data () {
     return {
       Ans: [],
+      //questionList: [],
       SubmitStatus: "Unsubmitted",
       isDisabled: true,
       processStatus: null,
