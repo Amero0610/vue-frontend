@@ -13,6 +13,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    
+testAlter:'',
     userLoginStatus: '',
     userLoginUserName: '',
     userLoginUserId: '',
